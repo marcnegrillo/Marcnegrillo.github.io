@@ -33,18 +33,10 @@
   <div class="tech-grid">
     <div class="tech-card">
       <img src="images/email-automation.png" alt="Email Automation" class="sample-img">
-      <h3>Email Automation</h3>
-      <p>Automated direct mail campaigns using AI-driven triggers in n8n.</p>
-    </div>
-    <div class="tech-card">
-      <img src="images/twitter-scheduler.png" alt="Twitter Scheduler" class="sample-img">
-      <h3>Twitter Scheduler</h3>
-      <p>Posts tweets based on analytics and schedules without manual intervention.</p>
-    </div>
-    <div class="tech-card">
-      <img src="images/ai-report-generator.png" alt="AI Report Generator" class="sample-img">
-      <h3>AI Report Generator</h3>
-      <p>Generates automated reports using AI and workflow integration.</p>
+      <h3>Contact Form → Google Sheets</h3>
+      <p>This workflow collects contact form submissions and automatically stores them in Google Sheets using n8n.
+
+It ensures all messages are saved with proper formatting and timestamps, making it easy to track and manage inquiries without manual work.</p>
     </div>
   </div>
 </section>
@@ -54,20 +46,49 @@
   <div class="workflow-grid">
     <div class="workflow-card">
       <img src="images/workflow1.png" alt="Workflow 1">
-      <p>Example of email automation workflow in n8n.</p>
+      <p>Workflow Steps
+
+Form Trigger (On Form Submission)
+A public contact form collects:
+
+Name
+
+Email
+
+Message
+
+When the form is submitted, n8n is triggered instantly.
+
+Form Completion Message
+After submission, the user sees a confirmation message:
+
+“Thank you! Your message has been submitted successfully.”
+
+Edit Fields (Set Node)
+The submitted data is cleaned and structured:
+
+Name
+
+Email
+
+Message
+
+Date (automatically generated using the current timestamp)
+
+Google Sheets – Append Row
+The processed data is appended as a new row in Google Sheets, creating a structured log of all submissions.
+
+Tools & Technologies
+
+n8n
+
+n8n Form Trigger
+
+Google Sheets API
+
+Webhook-based automation</p>
     </div>
-    <div class="workflow-card">
-      <img src="images/workflow2.png" alt="Workflow 2">
-      <p>Data collection bot workflow example.</p>
-    </div>
-    <div class="workflow-card">
-      <img src="images/workflow3.png" alt="Workflow 3">
-      <p>Twitter scheduling workflow demonstration.</p>
-    </div>
-    <div class="workflow-card">
-      <img src="images/workflow4.png" alt="Workflow 4">
-      <p>AI report generation workflow example.</p>
-    </div>
+
   </div>
 </section>
 
