@@ -3,123 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marc Negrillo | Landing Page</title>
+  <title>Marc Negrillo Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <img src="file:///C:/Users/THUNDEROBOT/Downloads/Mn%20Logo.png" alt="Marc Negrillo Logo">
+      </div>
 
-  <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="#hero">Home</a></li>
-      <li><a href="#features">What I Build</a></li>
-      <li><a href="#resume">Resume</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-  <!-- Hero Section -->
-  <header id="hero">
-    <div class="hero-content">
-      <h1>Hi, I’m Marc</h1>
-      <p>I build automation projects and modern web tools that simplify your life.</p>
-      <a href="#features" class="btn">Discover More</a>
-    </div>
-  </header>
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+      <h1>Marc Negrillo</h1>
+      <p>
+        Crafting landing pages and AI automation with
+        <span class="highlight">code, creativity, and curiosity</span>.
+      </p>
+      <div class="buttons">
+        <a href="#projects" class="primary">View Projects</a>
+        <a href="#contact" class="secondary">Contact Me</a>
+      </div>
+    </section>
 
-  <!-- Features Section -->
-  <section id="features">
-    <h2>What I Build</h2>
-    <div class="features-grid">
-      
-      <div class="feature-card">
-        <div class="icon">⚡</div>
-        <h3>Automation Tools</h3>
-        <p>Streamline workflows using automation platforms like n8n and Google Sheets.</p>
-        <div class="feature-image">
-          <img src="images/automation-screenshot.jpg" alt="Automation Screenshot">
+    <!-- Technical Arsenal -->
+    <section id="skills">
+      <h2>Technical Arsenal</h2>
+      <div class="tech-grid">
+        <div class="tech-card">Programming Languages: C, C++, JavaScript</div>
+        <div class="tech-card">Web Development: HTML, CSS, JavaScript, Responsive Design</div>
+        <div class="tech-card">Automation & AI: n8n Workflows, Agentic AI, Intelligent Reasoning</div>
+        <div class="tech-card">Tools & Practices: Git, GitHub, Web Performance Optimization</div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="projects">
+        <!-- AI Automation clickable card -->
+        <a href="ai-automation.html" class="project-card">
+          <h3>AI Automation</h3>
+        </a>
+
+        <!-- Web Development clickable card -->
+        <a href="web-development.html" class="project-card">
+          <h3>Web Development</h3>
+        </a>
+      </div>
+    </section>
+
+    <!-- Education & Experience -->
+    <section class="grid-two">
+      <div class="card">
+        <h2>Education</h2>
+        <div class="education-item">
+          <h3>CEGUERA TECHNOLOGICAL COLLEGES</h3>
+          <p>Bachelor of Science in Information Technology</p>
+          <span class="edu-year">(2021 – 2025)</span>
         </div>
       </div>
-      
-      <div class="feature-card">
-        <div class="icon">💻</div>
-        <h3>Web Development</h3>
-        <p>Create responsive websites with clean, professional designs and performance in mind.</p>
-        <div class="feature-image">
-          <img src="images/webdev-screenshot.jpg" alt="Web Development Screenshot">
+
+      <div class="card">
+        <h2>Experience</h2>
+        <div class="experience-item">
+          <h3>Equity Track PH</h3>
+          <ul class="exp-list">
+            <li>Basic automation</li>
+            <li>Direct mail</li>
+            <li>Web Development</li>
+          </ul>
         </div>
       </div>
-      
-    </div>
-  </section>
+    </section>
 
- <!-- Resume Section -->
-<section id="resume">
-  <h2>Resume</h2>
-
-  <div class="resume-grid">
-
-    <!-- Personal Info -->
-    <div class="resume-card">
-      <h3>About Me</h3>
-      <p>Hi, I’m Marc Lyndon Negrillo, a BSIT graduate from Ceguera Technological Colleges. I specialize in automation, web development, and basic graphic design.</p>
-    </div>
-
-    <!-- Skills -->
-    <div class="resume-card">
-      <h3>Skills</h3>
-      <ul>
-        <li>Automation Tools (n8n, Google Sheets)</li>
-        <li>Web Development (HTML, CSS, JS)</li>
-        <li>Computer Troubleshooting & IT Support</li>
-        <li>Graphic Design & Photoshop</li>
-        <li>Landing Page Design & UI/UX</li>
-      </ul>
-    </div>
-
-    <!-- Education -->
-    <div class="resume-card">
-      <h3>Education</h3>
-      <ul>
-        <li>CEGUERA TECHNOLOGICAL COLLEGES – BS Information Technology (2021–2025)</li>
-        <li>MIZPAH COMMUNITY CHRISTIAN ACADEME INC. – Senior High School, GAS Strand (2019–2021)</li>
-        <li>MIZPAH COMMUNITY CHRISTIAN ACADEME INC. – High School (2016–2019)</li>
-        <li>Elementary – Equity Track Ph (2010–2015)</li>
-      </ul>
-    </div>
-
-<!-- Experience -->
-<div class="resume-card">
-  <h3>Experience</h3>
-  <div class="resume-card-inner">
-    <h4>Equity Track Ph</h4>
-    <p><strong>Department:</strong></p>
-    <ul>
-      <li>Web Development</li>
-      <li>Basic Automation</li>
-      <li>Direct Mail</li>
-    </ul>
+    <!-- Footer CTA -->
+    <section class="cta" id="contact">
+      <h2>Let's Build The Future</h2>
+      <!-- <a href="email.html" class="primary">Email</a> -->
+      <a href="resume.html" class="secondary">Resume</a>
+    </section>
   </div>
-</div>
 
-
-  </div>
-</section>
-
-
-
-  <!-- Contact Section -->
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <p>Email: <a href="mailto:marc@example.com">marc@example.com</a></p>
-    <p>LinkedIn: <a href="https://linkedin.com/in/marcnegrillo" target="_blank">linkedin.com/in/marcnegrillo</a></p>
-    <p>GitHub: <a href="https://github.com/marcnegrillo" target="_blank">github.com/marcnegrillo</a></p>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2026 Marc Negrillo. Built with ❤️ and code.</p>
-  </footer>
-
+  <!-- Link your JS file here -->
+  <script src="script.js"></script>
 </body>
 </html>
