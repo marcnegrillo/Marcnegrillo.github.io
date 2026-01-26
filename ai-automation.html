@@ -9,8 +9,9 @@
 </head>
 <body>
   <div class="container">
+
     <!-- Header -->
-  <header>
+    <header>
       <div class="logo">
         <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="Marc Negrillo">
       </div>
@@ -19,109 +20,88 @@
       </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
       <h1>AI Automation Samples</h1>
       <p>
-        Explore examples of AI-powered workflows and automations I’ve created using <span class="highlight">n8n and Agentic AI</span>.
+        Explore examples of AI-powered workflows and automations I’ve created using
+        <span class="highlight">n8n and Agentic AI</span>.
       </p>
     </section>
 
-<!-- Samples Grid -->
-<section>
-  <h2>Sample Workflows</h2>
-  <div class="tech-grid">
-    <div class="tech-card">
-      <h3>Contact Form → Google Sheets</h3>
-      <p>This workflow collects contact form submissions and automatically stores them in Google Sheets using n8n.
+    <!-- Sample Workflows -->
+    <section>
+      <h2>Sample Workflows</h2>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3>Contact Form → Google Sheets</h3>
+          <p>
+            This workflow collects contact form submissions and automatically stores
+            them in Google Sheets using n8n.
+          </p>
+        </div>
+      </div>
+    </section>
 
-It ensures all messages are saved with proper formatting and timestamps, making it easy to track and manage inquiries without manual work.</p>
-    </div>
-  </div>
-</section>
-<!-- Workflow Examples -->
-<section>
-  <h2>Workflow Examples</h2>
-  <div class="workflow-grid">
-    <div class="workflow-card">
- 
-<!-- Workflow Images Box -->
-<div class="workflow-images">
-  <div class="image-box">
-    <img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Workflow 1">
-  </div>
-  <div class="image-box">
-    <img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Workflow 2">
-  </div>
-  <div class="image-box">
-    <img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Workflow 3">
-  </div>
-  <div class="image-box">
-    <img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Workflow 4">
-  </div>
-</div>
+    <!-- Workflow Examples -->
+    <section>
+      <h2>Workflow Examples</h2>
+      <div class="workflow-grid">
+        <div class="workflow-card">
 
-  <h3>Workflow Steps</h3>
+          <!-- STEP-BY-STEP IMAGES -->
+          <div class="workflow-steps-visual">
 
-  <h4>1. Form Trigger (On Form Submission)</h4>
-  <p>
-    A public contact form collects the following information:
-  </p>
-  <ul>
-    <li>Name</li>
-    <li>Email</li>
-    <li>Message</li>
-  </ul>
-  <p>
-    Once the form is submitted, the workflow is instantly triggered in n8n.
-  </p>
+            <div class="workflow-step">
+              <span class="step-number">1</span>
+              <img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Form Trigger">
+              <p>Form Trigger – User submits the contact form</p>
+            </div>
 
-  <h4>2. Form Completion Message</h4>
-  <p>
-    After submission, the user receives a confirmation message:
-  </p>
-  <blockquote>
-    “Thank you! Your message has been submitted successfully.”
-  </blockquote>
+            <div class="workflow-step">
+              <span class="step-number">2</span>
+              <img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Confirmation Message">
+              <p>Confirmation Message – User receives success notice</p>
+            </div>
 
-  <h4>3. Edit Fields (Set Node)</h4>
-  <p>
-    The submitted data is cleaned and structured into the following fields:
-  </p>
-  <ul>
-    <li>Name</li>
-    <li>Email</li>
-    <li>Message</li>
-    <li>Date (automatically generated timestamp)</li>
-  </ul>
+            <div class="workflow-step">
+              <span class="step-number">3</span>
+              <img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Set Node">
+              <p>Set Node – Data cleaned and structured</p>
+            </div>
 
-  <h4>4. Google Sheets – Append Row</h4>
-  <p>
-    The processed data is appended as a new row in Google Sheets, creating a
-    structured and organized record of all submissions.
-  </p>
+            <div class="workflow-step">
+              <span class="step-number">4</span>
+              <img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Google Sheets">
+              <p>Google Sheets – Submission saved as a new row</p>
+            </div>
 
-  <h4>Tools & Technologies</h4>
-  <ul>
-    <li>n8n</li>
-    <li>n8n Form Trigger</li>
-    <li>Google Sheets API</li>
-    <li>Webhook-based automation</li>
-  </ul>
-</div>
+          </div>
 
-  </div>
-</section>
+          <!-- TEXT STEPS -->
+          <h3>Workflow Steps</h3>
 
+          <h4>1. Form Trigger (On Form Submission)</h4>
+          <p>Once the form is submitted, the workflow is triggered in n8n.</p>
 
+          <h4>2. Form Completion Message</h4>
+          <blockquote>“Thank you! Your message has been submitted successfully.”</blockquote>
+
+          <h4>3. Edit Fields (Set Node)</h4>
+          <p>Data is cleaned and structured with timestamps.</p>
+
+          <h4>4. Google Sheets – Append Row</h4>
+          <p>Each submission is saved in Google Sheets.</p>
+
+        </div>
+      </div>
+    </section>
 
     <!-- Footer CTA -->
     <section class="cta">
       <a href="index.html" class="primary">Back to Portfolio</a>
     </section>
-  </div>
 
-  <!-- Link JS -->
-  <script src="script.js"></script>
+  </div>
 </body>
 </html>
