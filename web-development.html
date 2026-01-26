@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development | Marc Negrillo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f0f15;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container { width: 90%; max-width: 1200px; margin: auto; padding: 2rem 0; }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+    }
+    header h1 { color: #8b5cf6; font-size: 1.8rem; }
+    nav a { margin-left: 2rem; font-weight: 600; color: #aaa; transition: 0.3s; }
+    nav a:hover { color: #8b5cf6; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem;
+    }
+    .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; color: #8b5cf6; }
+    .hero p { font-size: 1.2rem; color: #aaa; margin-bottom: 2rem; }
+    .hero a { display: inline-block; background-color: #8b5cf6; color: #0f0f15; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; transition: background 0.3s; }
+    .hero a:hover { background-color: #6d3fc0; }
+
+    /* Services */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+    .service {
+      background-color: #1a1a29;
+      padding: 2rem;
+      border-radius: 16px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .service:hover { transform: translateY(-5px); }
+    .service h3 { color: #8b5cf6; margin-bottom: 1rem; }
+    .service p { color: #aaa; }
+
+    /* Portfolio */
+    .portfolio {
+      margin: 4rem 0;
+    }
+    .portfolio h2 { text-align: center; margin-bottom: 3rem; color: #8b5cf6; }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .project {
+      background-color: #1a1a29;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .project:hover { transform: scale(1.05); }
+    .project img { width: 100%; display: block; }
+    .project h3 { padding: 1rem; color: #8b5cf6; }
+    
+    /* Contact */
+    .contact {
+      text-align: center;
+      padding: 4rem 2rem;
+      background-color: #1a1a29;
+      border-radius: 16px;
+      margin-bottom: 4rem;
+    }
+    .contact h2 { color: #8b5cf6; margin-bottom: 1rem; }
+    .contact p { color: #aaa; margin-bottom: 2rem; }
+    .contact a { display: inline-block; background-color: #8b5cf6; color: #0f0f15; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; transition: background 0.3s; }
+    .contact a:hover { background-color: #6d3fc0; }
+
+    /* Footer */
+    footer { text-align: center; padding: 2rem 0; color: #aaa; border-top: 1px solid #333; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <a href="index.html" class="back-to-top">Back to main</a>
+      <h1>Marc Negrillo</h1>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h2>Building Modern & Responsive Websites</h2>
+      <p>I create clean, fast, and responsive web solutions for businesses and individuals.</p>
+      <a href="#contact">Hire Me</a>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="services">
+      <div class="service">
+        <h3>Web Development</h3>
+        <p>Full-stack development using modern technologies for fast and responsive websites.</p>
+      </div>
+      <div class="service">
+        <h3>UI/UX Design</h3>
+        <p>Designing interfaces that are both visually appealing and easy to use.</p>
+      </div>
+    </section>
+
+   <!-- Portfolio -->
+<section id="portfolio" class="portfolio">
+  <h2>Matrixgroupone sample</h2>
+  <div class="projects">
+    <div class="project">
+      <img src="file:///C:/website%20images/Matrixgroupone%20service%20areas.png" alt="Project 1">
+      <h3>Project One</h3>
+    </div>
+    <div class="project">
+      <img src="file:///C:/website%20images/Matrixgroupone%20kithcen.png" alt="Project 2">
+      <h3>Project Two</h3>
+    </div>
+    <div class="project">
+      <img src="file:///C:/website%20images/home%20remodeling.png" alt="Project 3">
+      <h3>Project Three</h3>
+    </div>
+  </div>
+</section>
+
+
+</body>
+</html>
