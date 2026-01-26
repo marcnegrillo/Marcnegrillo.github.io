@@ -103,5 +103,33 @@
     </section>
 
   </div>
+
+  <!-- CLICK-TO-ZOOM SCRIPT -->
+  <script>
+    const steps = document.querySelectorAll(".workflow-step");
+    const container = document.querySelector(".workflow-steps-visual");
+
+    steps.forEach(step => {
+      step.addEventListener("click", () => {
+        const isZoomed = step.classList.contains("zoomed");
+
+        steps.forEach(s => s.classList.remove("zoomed"));
+        container.classList.remove("zoom-active");
+
+        if (!isZoomed) {
+          step.classList.add("zoomed");
+          container.classList.add("zoom-active");
+        }
+      });
+    });
+
+    // Click outside to close
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".workflow-step")) {
+        steps.forEach(s => s.classList.remove("zoomed"));
+        container.classList.remove("zoom-active");
+      }
+    });
+  </script>
 </body>
 </html>
