@@ -6,6 +6,63 @@
   <title>AI Automation Samples - Marc Negrillo</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ============================= */
+    /* Click-to-Fullscreen Zoom Styles */
+    /* ============================= */
+
+    /* Dark overlay behind zoomed box */
+    .workflow-steps-visual.zoom-active::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 998;
+    }
+
+    /* Zoomed workflow-step */
+    .workflow-step.zoomed {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) scale(1) !important;
+      width: auto !important;
+      max-width: 90% !important;
+      height: auto !important;
+      max-height: 90% !important;
+      z-index: 999 !important;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5),
+                  0 30px 80px rgba(0, 0, 0, 0.8);
+      cursor: zoom-out;
+      border-radius: 1rem;
+      background: #1a1a27;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Zoomed image scaling */
+    .workflow-step.zoomed img {
+      width: 100%;
+      height: auto;
+      max-height: 80vh;
+      object-fit: contain;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Workflow-step box style */
+    .workflow-step {
+      transition: all 0.35s ease;
+      cursor: zoom-in;
+      z-index: 1;
+    }
+
+    /* Optional: add smooth overlay transition */
+    .workflow-steps-visual::before {
+      transition: background 0.3s ease;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -35,10 +92,7 @@
       <div class="tech-grid">
         <div class="tech-card">
           <h3>Contact Form → Google Sheets</h3>
-          <p>
-            This workflow collects contact form submissions and automatically stores
-            them in Google Sheets using n8n.
-          </p>
+          <p>This workflow collects contact form submissions and automatically stores them in Google Sheets using n8n.</p>
         </div>
       </div>
     </section>
@@ -48,8 +102,6 @@
       <h2>Workflow Examples</h2>
       <div class="workflow-grid">
         <div class="workflow-card">
-
-          <!-- STEP-BY-STEP IMAGES -->
           <div class="workflow-steps-visual">
 
             <div class="workflow-step">
@@ -80,19 +132,14 @@
 
           <!-- TEXT STEPS -->
           <h3>Workflow Steps</h3>
-
           <h4>1. Form Trigger (On Form Submission)</h4>
           <p>Once the form is submitted, the workflow is triggered in n8n.</p>
-
           <h4>2. Form Completion Message</h4>
           <blockquote>“Thank you! Your message has been submitted successfully.”</blockquote>
-
           <h4>3. Edit Fields (Set Node)</h4>
           <p>Data is cleaned and structured with timestamps.</p>
-
           <h4>4. Google Sheets – Append Row</h4>
           <p>Each submission is saved in Google Sheets.</p>
-
         </div>
       </div>
     </section>
@@ -104,15 +151,17 @@
 
   </div>
 
-  <!-- CLICK-TO-ZOOM SCRIPT -->
+  <!-- CLICK-TO-FULLSCREEN SCRIPT -->
   <script>
     const steps = document.querySelectorAll(".workflow-step");
     const container = document.querySelector(".workflow-steps-visual");
 
     steps.forEach(step => {
-      step.addEventListener("click", () => {
+      step.addEventListener("click", (e) => {
+        e.stopPropagation();
         const isZoomed = step.classList.contains("zoomed");
 
+        // Close any zoomed step
         steps.forEach(s => s.classList.remove("zoomed"));
         container.classList.remove("zoom-active");
 
@@ -124,11 +173,9 @@
     });
 
     // Click outside to close
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".workflow-step")) {
-        steps.forEach(s => s.classList.remove("zoomed"));
-        container.classList.remove("zoom-active");
-      }
+    document.addEventListener("click", () => {
+      steps.forEach(s => s.classList.remove("zoomed"));
+      container.classList.remove("zoom-active");
     });
   </script>
 </body>
