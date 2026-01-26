@@ -258,4 +258,56 @@ h2 {
 
 /* AI Automation & Workflow styles remain unchanged */
 
+/* ============================= */
+/* Workflow Step-by-Step Visual */
+/* ============================= */
+
+.workflow-steps-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin: 2rem 0 3rem;
+}
+
+.workflow-step {
+  position: relative;
+  background: #1a1a27;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.workflow-step img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin: 1rem 0;
+  display: block;
+  object-fit: cover;
+}
+
+.workflow-step p {
+  color: #b3b3c6;
+  font-size: 0.95rem;
+}
+
+/* Step number badge */
+.step-number {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  width: 36px;
+  height: 36px;
+  background: #8b5cf6;
+  color: #0f0f15;
+  border-radius: 50%;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
