@@ -58,12 +58,16 @@ header#hero {
   color: #fff;
 }
 
-header#hero h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  background: linear-gradient(to right, #008000, #004d00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Hero / Landing Section */
+header#hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #00a000, #006400); /* Green → Dark Green */
+  color: #fff; /* Keep text readable on green background */
 }
 
 
