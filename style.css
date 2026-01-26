@@ -1,162 +1,348 @@
-INSERT THAT CODE IN MY CSS 
+/* Reset & base */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: 'Inter', sans-serif;
+background-color: #0f0f15;
+color: #fff;
+line-height: 1.6;
+}
+a { text-decoration: none; color: inherit; }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Automation Samples - Marc Negrillo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* Full-screen zoom overlay */
-    .workflow-steps-visual.zoom-active::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 998;
-    }
+/* Container */
+.container { width: 90%; max-width: 1200px; margin: auto; padding: 2rem 0; }
 
-    .workflow-step.zoomed {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: auto;
-      max-width: 90%;
-      height: auto;
-      max-height: 90%;
-      transform: translate(-50%, -50%) scale(1);
-      z-index: 999;
-      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5),
-                  0 30px 80px rgba(0, 0, 0, 0.8);
-      cursor: zoom-out;
-      border-radius: 1rem;
-      background: #1a1a27;
-      padding: 1rem;
-    }
+/* Header */
+header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 2rem 0;
+}
+header nav a {
+margin-left: 2rem;
+font-weight: 600;
+color: #aaa;
+transition: 0.3s;
+}
+header nav a:hover { color: #8b5cf6; }
 
-    /* Smooth transition */
-    .workflow-step {
-      transition: all 0.35s ease;
-      cursor: zoom-in;
-      z-index: 1;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
+/* Logo */
+.logo img {
+height: 90px; /* adjust size here */
+width: auto;
+display: block;
+}
 
-    <!-- Header -->
-    <header>
-      <div class="logo">
-        <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="Marc Negrillo">
-      </div>
-      <nav>
-        <a href="index.html">Back to Portfolio</a>
-      </nav>
-    </header>
+/* Hero */
+.hero {
+text-align: center;
+padding: 6rem 1rem;
+}
+.hero h1 {
+font-size: 3rem;
+margin-bottom: 1rem;
+}
+.hero p {
+font-size: 1.2rem;
+color: #aaa;
+margin-bottom: 2rem;
+}
+.hero .buttons a {
+display: inline-block;
+margin: 0 1rem;
+padding: 0.8rem 2rem;
+border-radius: 0.5rem;
+font-weight: 600;
+transition: 0.3s;
+}
+.hero .buttons a.primary { background: #8b5cf6; color: #fff; }
+.hero .buttons a.primary:hover { background: #a47dfd; }
+.hero .buttons a.secondary { border: 2px solid #8b5cf6; color: #8b5cf6; }
+.hero .buttons a.secondary:hover { background: #8b5cf6; color: #fff; }
 
-    <!-- Hero -->
-    <section class="hero">
-      <h1>AI Automation Samples</h1>
-      <p>
-        Explore examples of AI-powered workflows and automations I’ve created using
-        <span class="highlight">n8n and Agentic AI</span>.
-      </p>
-    </section>
+/* Section Titles */
+h2 {
+color: #fff;
+font-size: 2rem;
+margin-bottom: 1rem;
+}
+.highlight { color: #8b5cf6; }
 
-    <!-- Sample Workflows -->
-    <section>
-      <h2>Sample Workflows</h2>
-      <div class="tech-grid">
-        <div class="tech-card">
-          <h3>Contact Form → Google Sheets</h3>
-          <p>This workflow collects contact form submissions and automatically stores them in Google Sheets using n8n.</p>
-        </div>
-      </div>
-    </section>
+/* ============================= */
+/* Technical Arsenal (UPDATED)  */
+/* ============================= */
 
-    <!-- Workflow Examples -->
-    <section>
-      <h2>Workflow Examples</h2>
-      <div class="workflow-grid">
-        <div class="workflow-card">
-          <div class="workflow-steps-visual">
+.tech-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 1.5rem;
+margin-bottom: 4rem;
+}
 
-            <div class="workflow-step">
-              <span class="step-number">1</span>
-              <img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Form Trigger">
-              <p>Form Trigger – User submits the contact form</p>
-            </div>
+.tech-card {
+background: linear-gradient(145deg, #171725, #1f1f35);
+padding: 1.6rem;
+border-radius: 1rem;
+min-height: 140px;
+box-shadow:
+0 0 0 1px rgba(139, 92, 246, 0.15),
+0 10px 30px rgba(0, 0, 0, 0.4);
+transition: all 0.3s ease;
+opacity: 0;
+transform: translateY(20px);
+}
 
-            <div class="workflow-step">
-              <span class="step-number">2</span>
-              <img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Confirmation Message">
-              <p>Confirmation Message – User receives success notice</p>
-            </div>
+.tech-card:hover {
+transform: translateY(-6px);
+box-shadow:
+0 0 0 1px rgba(139, 92, 246, 0.4),
+0 20px 40px rgba(0, 0, 0, 0.6);
+}
 
-            <div class="workflow-step">
-              <span class="step-number">3</span>
-              <img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Set Node">
-              <p>Set Node – Data cleaned and structured</p>
-            </div>
+.tech-card h3 {
+font-size: 1.1rem;
+margin-bottom: 0.6rem;
+color: #8b5cf6;
+}
 
-            <div class="workflow-step">
-              <span class="step-number">4</span>
-              <img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Google Sheets">
-              <p>Google Sheets – Submission saved as a new row</p>
-            </div>
+.tech-card p {
+font-size: 0.95rem;
+color: #b3b3c6;
+line-height: 1.5;
+}
 
-          </div>
+/* ============================= */
+/* Projects (Fixed)              */
+/* ============================= */
+.projects {
+display: grid;
+grid-template-columns: 1fr;
+gap: 2rem;
+margin-bottom: 4rem;
+}
 
-          <!-- TEXT STEPS -->
-          <h3>Workflow Steps</h3>
-          <h4>1. Form Trigger (On Form Submission)</h4>
-          <p>Once the form is submitted, the workflow is triggered in n8n.</p>
-          <h4>2. Form Completion Message</h4>
-          <blockquote>“Thank you! Your message has been submitted successfully.”</blockquote>
-          <h4>3. Edit Fields (Set Node)</h4>
-          <p>Data is cleaned and structured with timestamps.</p>
-          <h4>4. Google Sheets – Append Row</h4>
-          <p>Each submission is saved in Google Sheets.</p>
-        </div>
-      </div>
-    </section>
+.project-card {
+background: #1a1a27;
+border-radius: 1rem;
+display: flex;
+flex-direction: column;
+transition: 0.3s;
+overflow: hidden;      /* hides excess space */
+}
 
-    <!-- Footer CTA -->
-    <section class="cta">
-      <a href="index.html" class="primary">Back to Portfolio</a>
-    </section>
+.project-card img {
+width: 100%;
+height: auto;          /* auto height so no blank space */
+object-fit: cover;
+border-radius: 1rem 1rem 0 0;
+display: block;
+}
 
-  </div>
+.project-card h3 {
+margin: 1rem;
+color: #8b5cf6;
+}
 
-  <!-- CLICK-TO-FULLSCREEN SCRIPT -->
-  <script>
-    const steps = document.querySelectorAll(".workflow-step");
-    const container = document.querySelector(".workflow-steps-visual");
+/* ============================= */
+/* Education & Experience */
+.grid-two {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 2rem;
+margin-bottom: 4rem;
+}
+.card {
+background: #1a1a27;
+padding: 1.5rem;
+border-radius: 1rem;
+}
+.education-item {
+margin-top: 1rem;
+}
 
-    steps.forEach(step => {
-      step.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const isZoomed = step.classList.contains("zoomed");
+.education-item h3 {
+font-size: 1.05rem;
+color: #8b5cf6;
+margin-bottom: 0.3rem;
+}
 
-        // Close any zoomed step
-        steps.forEach(s => s.classList.remove("zoomed"));
-        container.classList.remove("zoom-active");
+.education-item p {
+color: #b3b3c6;
+font-size: 0.95rem;
+}
 
-        if (!isZoomed) {
-          step.classList.add("zoomed");
-          container.classList.add("zoom-active");
-        }
-      });
-    });
+.edu-year {
+display: block;
+margin-top: 0.2rem;
+font-size: 0.85rem;
+color: #8a8aa3;
+}
+.experience-item {
+margin-top: 1rem;
+}
 
-    // Click outside to close
-    document.addEventListener("click", () => {
-      steps.forEach(s => s.classList.remove("zoomed"));
-      container.classList.remove("zoom-active");
-    });
-  </script>
-</body>
-</html>
+.experience-item h3 {
+font-size: 1.05rem;
+color: #8b5cf6;
+margin-bottom: 0.4rem;
+}
+
+.exp-role {
+font-size: 0.95rem;
+color: #ffffff;
+margin-bottom: 0.4rem;
+}
+
+.exp-list {
+list-style: disc;
+padding-left: 1.2rem;
+color: #b3b3c6;
+font-size: 0.9rem;
+}
+
+.exp-list li {
+margin-bottom: 0.25rem;
+}
+
+/* Achievements */
+.achievements {
+display: flex;
+flex-wrap: wrap;
+gap: 1rem;
+margin-bottom: 4rem;
+}
+.achievement {
+background: #1a1a27;
+padding: 1rem 1.5rem;
+border-radius: 0.5rem;
+flex: 1 1 200px;
+text-align: center;
+transition: 0.3s;
+opacity: 0;
+transform: translateY(20px);
+}
+.achievement:hover { background: #2a2a40; }
+
+/* Fade-in animation class added by JS */
+.fade-in {
+opacity: 1;
+transform: translateY(0);
+transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Footer / Call to Action */
+.cta {
+text-align: center;
+padding: 4rem 1rem;
+background: #111;
+border-top: 1px solid #2a2a40;
+}
+.cta a {
+margin: 0 1rem;
+padding: 0.8rem 2rem;
+border-radius: 0.5rem;
+font-weight: 600;
+transition: 0.3s;
+}
+.cta a.primary { background: #8b5cf6; color: #fff; }
+.cta a.primary:hover { background: #a47dfd; }
+.cta a.secondary { border: 2px solid #8b5cf6; color: #8b5cf6; }
+.cta a.secondary:hover { background: #8b5cf6; color: #fff; }
+
+/* Responsive */
+@media(max-width:768px){
+.grid-two { grid-template-columns: 1fr; }
+header { flex-direction: column; }
+header nav { margin-top: 1rem; }
+}
+
+/* AI Automation & Workflow styles remain unchanged */
+
+/* ============================= */
+/* Workflow Step-by-Step Visual */
+/* Workflow Images – Boxed & Same Size */
+/* ============================= */
+
+.workflow-grid {
+  margin-bottom: 4rem;
+}
+
+.workflow-steps-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin: 2rem 0 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.workflow-step {
+  position: relative;
+background: #1a1a27;
+  padding: 1.5rem;
+border-radius: 1rem;
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.2);
+}
+
+/* Step number badge */
+.step-number {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #8b5cf6;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+}
+
+/* Image container box */
+.workflow-step img {
+width: 100%;
+  height: auto;
+  height: 180px;          /* SAME HEIGHT FOR ALL */
+  object-fit: contain;   /* keeps full image visible */
+  background: #0f0f15;
+border-radius: 0.75rem;
+  margin: 1rem 0;
+  padding: 0.75rem;
+display: block;
+  object-fit: cover;
+  margin-bottom: 0.75rem;
+}
+
+/* Caption text */
+.workflow-step p {
+  font-size: 0.9rem;
+color: #b3b3c6;
+  font-size: 0.95rem;
+}
+
+/* Step number badge */
+.step-number {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  width: 36px;
+  height: 36px;
+  background: #8b5cf6;
+  color: #0f0f15;
+  border-radius: 50%;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.4;
+}
+
+
+~
