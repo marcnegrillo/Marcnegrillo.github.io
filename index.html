@@ -2,33 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marc Negrillo | Portfolio</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Introduction -->
-<header id="hero">
-  <h1>Hi, I’m Marc</h1>
-  <p>I build automation projects and simple web tools.</p>
-</header>
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
+  <!-- Hero Section -->
+  <header id="hero">
+    <h1>Hi, I’m Marc</h1>
+    <p>I build automation projects and simple web tools.</p>
+    <a href="#projects" class="btn">View My Work</a>
+  </header>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hello! I’m Marc, a passionate programmer who loves building automation workflows, web tools, and small apps that make life easier. I focus on clean, efficient code and creating practical solutions.</p>
+  </section>
 
   <!-- Projects Section -->
   <section id="projects">
     <h2>Projects</h2>
     <ul>
-      <li>Contact Form Automation → n8n + Google Sheets</li>
-      <li>Discord Notification Automation</li>
-      <li>Twitter Post Tracker → Google Sheets</li>
+      <li>
+        <h3>Contact Form Automation</h3>
+        <p>Automates contact form submissions using n8n integrated with Google Sheets. Saves time and streamlines notifications.</p>
+      </li>
+      <li>
+        <h3>Discord Notification Automation</h3>
+        <p>Automates sending notifications to Discord channels based on triggers and schedules, improving team communication.</p>
+      </li>
+      <li>
+        <h3>Twitter Post Tracker</h3>
+        <p>Tracks Twitter posts (text and video) and logs them in Google Sheets for analytics and record-keeping.</p>
+      </li>
     </ul>
   </section>
 
   <!-- Contact Section -->
   <section id="contact">
     <h2>Contact Me</h2>
-    <p>Email: marc@example.com</p>
+    <p>Email: <a href="mailto:marc@example.com">marc@example.com</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/marcnegrillo" target="_blank">linkedin.com/in/marcnegrillo</a></p>
+    <p>GitHub: <a href="https://github.com/marcnegrillo" target="_blank">github.com/marcnegrillo</a></p>
   </section>
-  
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Marc Negrillo. Built with ❤️ and code.</p>
+  </footer>
+
 </body>
 </html>
