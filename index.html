@@ -6,6 +6,141 @@
   <title>Marc Negrillo Portfolio</title>
   <link href="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f0f15;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+    }
+    h1, h2, h3 {
+      color: #8b5cf6;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .hero p, .about-me p, .tech-card, .projects h3, .education-item p, .experience-item li {
+      color: #b3b3c6;
+    }
+    .hero .buttons a {
+      display: inline-block;
+      margin: 1rem 0.5rem 0;
+      padding: 0.8rem 2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .hero .primary {
+      background: #8b5cf6;
+      color: #fff;
+    }
+    .hero .primary:hover {
+      background: #a47dfd;
+    }
+    .hero .secondary {
+      background: #1a1a27;
+      color: #fff;
+      border: 2px solid #8b5cf6;
+    }
+    .hero .secondary:hover {
+      background: #8b5cf6;
+      color: #fff;
+    }
+    /* About Me Section */
+    .about-me {
+      background: #1a1a27;
+      padding: 2rem;
+      border-radius: 1rem;
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .about-me h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .about-me p {
+      text-align: justify;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    /* Tech Grid */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .tech-card {
+      background: #1a1a27;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+    /* Projects Grid */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .project-card {
+      background: #1a1a27;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(139,92,246,0.5);
+    }
+    /* Education & Experience */
+    .grid-two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: #1a1a27;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .edu-year {
+      display: block;
+      color: #888;
+      margin-top: 0.3rem;
+    }
+    /* Footer CTA */
+    .cta .back-button {
+      display: inline-block;
+      margin: 1rem 0.5rem 0;
+      padding: 0.8rem 2rem;
+      border-radius: 0.5rem;
+      background: #8b5cf6;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .cta .back-button:hover {
+      background: #a47dfd;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -14,7 +149,6 @@
       <div class="logo">
         <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="Marc Negrillo">
       </div>
-
       <nav>
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
@@ -35,6 +169,17 @@
       </div>
     </section>
 
+    <!-- About Me Section -->
+    <section class="about-me" id="about-me">
+      <h2>About Me</h2>
+      <p>
+      Hello! I’m <Strong>Marc Negrillo</Strong>. I build websites and simple automations using tools like n8n. I enjoy creating landing pages, automating tasks, and learning new technologies.
+      </p>
+      <p>
+       I like to combine creativity and curiosity in my projects. Outside of coding, I explore AI tools, web design ideas, and ways to make everyday tasks easier.
+      </p>
+    </section>
+
     <!-- Technical Arsenal -->
     <section id="skills">
       <h2>Technical Arsenal</h2>
@@ -50,12 +195,9 @@
     <section id="projects">
       <h2>Projects</h2>
       <div class="projects">
-        <!-- AI Automation clickable card -->
         <a href="ai-automation.html" class="project-card">
           <h3>AI Automation</h3>
         </a>
-
-        <!-- Web Development clickable card -->
         <a href="web-development.html" class="project-card">
           <h3>Web Development</h3>
         </a>
@@ -86,15 +228,12 @@
       </div>
     </section>
 
-   <!-- Footer CTA -->
+    <!-- Footer CTA -->
     <section class="cta" id="contact">
-    <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/" class="back-button">Linked
-    </a>
-
+      <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/" class="back-button">LinkedIn</a>
+      <a href="mailto:marcnegrillo2002@gmail.com" class="back-button">Gmail</a>
     </section>
   </div>
-
-
 
   <!-- Link your JS file here -->
   <script src="script.js"></script>
