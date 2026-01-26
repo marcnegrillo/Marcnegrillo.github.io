@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marc Negrillo Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f0f15;
+      color: #fff;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+    }
+    h1 {
+      color: #8b5cf6;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 2rem;
+      padding: 0.8rem 2rem;
+      background: #8b5cf6;
+      color: #fff;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #a47dfd;
+    }
+    .resume-content {
+      background: #1a1a27;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .resume-section {
+      margin-bottom: 2rem;
+    }
+    .resume-section h2 {
+      color: #8b5cf6;
+      margin-bottom: 0.5rem;
+    }
+    .resume-section p, .resume-section li {
+      color: #b3b3c6;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    /* Responsive */
+    @media(max-width:768px){
+      .container {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">← Back to Portfolio</a>
+    
+    <h1>Marc Negrillo Resume</h1>
+
+    <div class="resume-content">
+      <!-- Education Section -->
+      <div class="resume-section">
+        <h2>Education</h2>
+        <p><strong>CEGUERA TECHNOLOGICAL COLLEGES</strong></p>
+        <p>Bachelor of Science in Information Technology (2021 – 2025)</p>
+      </div>
+
+      <!-- Experience Section -->
+      <div class="resume-section">
+        <h2>Experience</h2>
+        <p><strong>Equity Track PH</strong></p>
+        <ul>
+          <li>Basic Automation</li>
+          <li>Direct Mail Campaigns</li>
+          <li>Web Development</li>
+        </ul>
+      </div>
+
+      <!-- Technical Skills Section -->
+      <div class="resume-section">
+        <h2>Technical Skills</h2>
+        <ul>
+          <li>Programming Languages: C, C++,JavaScript</li>
+          <li>Web Development: HTML, CSS, JavaScript, Responsive Design</li>
+          <li>Automation & AI: n8n Workflows, Agentic AI</li>
+          <li>Tools & Practices: Git, GitHub, Web Performance</li>
+        </ul>
+      </div>
+
+      <!-- Achievements Section -->
+      <div class="resume-section">
+        <h2>Achievements</h2>
+        <ul>
+          <li>Created multiple AI automation workflows</li>
+          <li>Designed responsive landing pages</li>
+        </ul>
+      </div>
+
+      <!-- Optional: Embed PDF -->
+      <!--
+      <div class="resume-section">
+        <h2>Full Resume PDF</h2>
+        <iframe src="MarcNegrilloResume.pdf" width="100%" height="600px" style="border:none;"></iframe>
+      </div>
+      -->
+    </div>
+  </div>
+</body>
+</html>
