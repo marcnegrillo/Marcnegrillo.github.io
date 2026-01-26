@@ -262,25 +262,24 @@ h2 {
 /* Workflow Step Image Sizing Fix */
 /* ============================= */
 
-/* Default workflow-step image */
+/* Default workflow-step image in grid */
 .workflow-step img {
   width: 100%;
-  height: 180px;          /* Fixed uniform height in grid */
-  object-fit: contain;    /* Keep image aspect ratio */
+  height: 180px;          /* fixed uniform height for grid layout */
+  object-fit: contain;    /* maintain aspect ratio without cropping */
   border-radius: 0.75rem;
   padding: 0.75rem;
   display: block;
   margin-bottom: 0.75rem;
-  transition: all 0.35s ease; /* smooth transition when zooming */
+  transition: all 0.35s ease; /* smooth zoom transition */
 }
 
-/* Zoomed workflow-step */
+/* Zoomed workflow-step image */
 .workflow-step.zoomed img {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 80vh;       /* fit viewport height */
+  max-height: 80vh;       /* scale to viewport height */
   object-fit: contain;
   margin-bottom: 0.75rem;
 }
-
