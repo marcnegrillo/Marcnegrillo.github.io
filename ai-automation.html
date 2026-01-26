@@ -62,6 +62,35 @@
     .workflow-steps-visual::before {
       transition: background 0.3s ease;
     }
+
+    /* ============================= */
+    /* Fixed sizes for logo and workflow images */
+    /* ============================= */
+
+    /* Logo size */
+    .logo img {
+      width: 120px;   /* adjust as needed */
+      height: auto;
+      display: block;
+    }
+
+    /* Workflow step images */
+    .workflow-step img {
+      width: 300px;    /* fixed width for grid view */
+      height: auto;
+      object-fit: contain;
+      margin-bottom: 0.75rem;
+      border-radius: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    /* Zoomed image */
+    .workflow-step.zoomed img {
+      width: auto;
+      max-width: 90%;
+      height: auto;
+      max-height: 80vh;
+    }
   </style>
 </head>
 <body>
