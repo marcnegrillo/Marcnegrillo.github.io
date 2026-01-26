@@ -100,6 +100,19 @@ section h2 {
   font-size: 2.5rem;
   margin-bottom: 50px;
   color: #333;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+section h2::after {
+  content: '';
+  display: block;
+  height: 4px;
+  width: 50%;
+  background: linear-gradient(90deg, #00ff7f, #00b000);
+  border-radius: 2px;
+  margin-top: 8px;
 }
 
 /* Features Grid */
@@ -109,17 +122,74 @@ section h2 {
   gap: 30px;
 }
 
+/* Feature Card Design */
 .feature-card {
   background: #fff;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Gradient overlay on hover */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: linear-gradient(135deg, #00ff7f, #00b000, #00ff7f);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 0;
+  border-radius: 20px;
+}
+
+.feature-card:hover::before {
+  opacity: 0.1;
+}
+
+/* Card Content */
+.feature-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #00b000;
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
+.feature-card p {
+  color: #555;
+  font-size: 1rem;
+  z-index: 1;
+}
+
+/* Add icon placeholder */
+.feature-card .icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #00b000;
+  z-index: 1;
+}
+
+/* Hover effect: scale & shadow */
 .feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Responsive */
+@media(max-width: 768px){
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Testimonials Grid */
