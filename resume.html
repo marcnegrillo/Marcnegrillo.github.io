@@ -5,26 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marc Negrillo</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
   <style>
+    /* ============================= */
+    /* Base Styles */
+    /* ============================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
       background-color: #0f0f15;
       color: #fff;
       line-height: 1.6;
-      margin: 0;
-      padding: 0;
     }
+    a { text-decoration: none; }
+
     .container {
       max-width: 900px;
       margin: 2rem auto;
       padding: 1rem 2rem;
     }
-    h1 {
-      color: #8b5cf6;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
+
+    /* Back Button */
     .back-btn {
       display: inline-block;
       margin-bottom: 2rem;
@@ -33,52 +33,93 @@
       color: #fff;
       border-radius: 0.5rem;
       font-weight: 600;
-      text-decoration: none;
       transition: 0.3s;
     }
     .back-btn:hover {
       background: #a47dfd;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(139,92,246,0.4);
     }
+
+    /* Header */
+    h1 {
+      color: #fff;
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Resume Sections */
     .resume-content {
       background: #1a1a27;
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
+
     .resume-section {
       margin-bottom: 2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
+    .resume-section:last-child { border-bottom: none; }
+
     .resume-section h2 {
       color: #8b5cf6;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.75rem;
     }
     .resume-section p, .resume-section li {
-      color: #b3b3c6;
+      color: #ccc;
+      margin-bottom: 0.5rem;
     }
+
     ul {
-      padding-left: 1.2rem;
+      padding-left: 1.5rem;
+      list-style-type: disc;
     }
+
     /* Responsive */
     @media(max-width:768px){
       .container {
         padding: 1rem;
       }
+      h1 { font-size: 2rem; }
+      .resume-section h2 { font-size: 1.5rem; }
     }
+
+    /* Subtle section hover effect for eye-catching feel */
+    .resume-section:hover {
+      transform: translateY(-2px);
+      transition: transform 0.3s ease;
+    }
+
   </style>
 </head>
 <body>
   <div class="container">
     <a href="index.html" class="back-btn">← Back to Portfolio</a>
     
-    <h1>Marc Negrillo </h1>
+    <h1>Marc Negrillo</h1>
 
     <div class="resume-content">
-      <!-- Education Section -->
-      <div class="resume-section">
-        <h2>Education</h2>
-        <p><strong>CEGUERA TECHNOLOGICAL COLLEGES</strong></p>
-        <p>Bachelor of Science in Information Technology (2021 – 2025)</p>
-      </div>
+
+    <!-- Education Section -->
+<div class="resume-section">
+  <h2>Education</h2>
+  
+  <p><strong>ELEMENTARY</strong></p>
+  <p>CEGUERA TECHNOLOGICAL COLLEGES (2010 - 2015)</p>
+
+  <p><strong>HIGH SCHOOL</strong></p>
+  <p>MIZPAH COMMUNITY CHRISTIAN ACADEME INC. (2016 - 2019)</p>
+
+  <p><strong>SENIOR HIGH SCHOOL</strong></p>
+  <p>MIZPAH COMMUNITY CHRISTIAN ACADEME INC. – GAS Strand (2019 - 2021)</p>
+
+  <p><strong>COLLEGE</strong></p>
+  <p>CEGUERA TECHNOLOGICAL COLLEGES – Bachelor of Science in Information Technology (2021 - 2025)</p>
+</div>
 
       <!-- Experience Section -->
       <div class="resume-section">
@@ -95,7 +136,7 @@
       <div class="resume-section">
         <h2>Technical Skills</h2>
         <ul>
-          <li>Programming Languages: C, C++,JavaScript</li>
+          <li>Programming Languages: C, C++, JavaScript</li>
           <li>Web Development: HTML, CSS, JavaScript, Responsive Design</li>
           <li>Automation & AI: n8n Workflows, Agentic AI</li>
           <li>Tools & Practices: Git, GitHub, Web Performance</li>
@@ -111,13 +152,6 @@
         </ul>
       </div>
 
-      <!-- Optional: Embed PDF -->
-      <!--
-      <div class="resume-section">
-        <h2>Full Resume PDF</h2>
-        <iframe src="MarcNegrilloResume.pdf" width="100%" height="600px" style="border:none;"></iframe>
-      </div>
-      -->
     </div>
   </div>
 </body>
