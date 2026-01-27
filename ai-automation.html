@@ -1,200 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Automation Samples - Marc Negrillo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Base Styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background-color: #0f0f15; color: #fff; line-height: 1.6; }
-    a { text-decoration: none; color: inherit; }
-    .container { width: 90%; max-width: 1200px; margin: auto; padding: 2rem 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Automation Samples - Marc Negrillo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Base Styles */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background-color: #0f0f15; color: #fff; line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
+  .container { width: 90%; max-width: 1200px; margin: auto; padding: 2rem 0; }
 
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-    .logo img { width: 140px; height: auto; }
-    nav a { font-weight: 600; color: #aaa; transition: 0.3s; }
-    nav a:hover { color: #8b5cf6; }
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+  .logo img { width: 140px; height: auto; }
+  nav a { font-weight: 600; color: #aaa; transition: 0.3s; }
+  nav a:hover { color: #8b5cf6; }
 
-    h1 { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; }
-    h2 { font-size: 2rem; text-align: center; margin: 2rem 0 1rem; }
-    h3 { font-size: 1.5rem; margin-top: 1.5rem; }
-    h4 { font-size: 1.25rem; margin-top: 1rem; }
-    p, blockquote { margin-bottom: 1rem; color: #ccc; }
-    blockquote { padding-left: 1rem; border-left: 3px solid #8b5cf6; font-style: italic; }
-    .highlight { color: #8b5cf6; font-weight: 600; }
+  h1 { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; }
+  h2 { font-size: 2rem; text-align: center; margin: 2rem 0 1rem; }
+  h3 { font-size: 1.5rem; margin-top: 1.5rem; }
+  h4 { font-size: 1.25rem; margin-top: 1rem; }
+  p, blockquote { margin-bottom: 1rem; color: #ccc; }
+  blockquote { padding-left: 1rem; border-left: 3px solid #8b5cf6; font-style: italic; }
+  .highlight { color: #8b5cf6; font-weight: 600; }
 
-    /* Fixed Top Back Button */
-    .back-portfolio-fixed {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-    }
-    .back-portfolio-fixed a {
-      display: inline-block;
-      background-color: #8b5cf6;
-      color: #fff;
-      font-weight: 600;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-    .back-portfolio-fixed a:hover {
-      background-color: #a47dfd;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(139,92,246,0.5);
-    }
+  /* Fixed Back Button */
+  .back-portfolio-fixed { position: fixed; top: 20px; left: 20px; z-index: 1000; }
+  .back-portfolio-fixed a {
+    display: inline-block;
+    background-color: #8b5cf6;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .back-portfolio-fixed a:hover {
+    background-color: #a47dfd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139,92,246,0.5);
+  }
 
-    /* Workflow Grid */
-    .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
-    .workflow-step {
-      background: #1a1a27;
-      padding: 1rem;
-      border-radius: 1rem;
-      cursor: zoom-in;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .workflow-step:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
-    .workflow-step img { width: 100%; max-width: 300px; border-radius: 0.75rem; margin-bottom: 0.75rem; object-fit: contain; }
+  /* Workflow Grid */
+  .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
+  .workflow-step {
+    background: #1a1a27;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: zoom-in;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .workflow-step:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
+  .workflow-step img { width: 100%; max-width: 300px; border-radius: 0.75rem; margin-bottom: 0.75rem; object-fit: contain; }
 
-    /* Step Number */
-    .workflow-step .step-number {
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      width: 32px;
-      height: 32px;
-      background: #8b5cf6;
-      color: #fff;
-      font-weight: 700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-    }
+  /* Step Number */
+  .workflow-step .step-number {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 32px;
+    height: 32px;
+    background: #8b5cf6;
+    color: #fff;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
 
-    /* Zoomed Image */
-    .workflow-step.zoomed {
-      position: fixed !important;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) !important;
-      width: auto; max-width: 90%; height: auto; max-height: 90%;
-      z-index: 999;
-      background: #1a1a27;
-      border-radius: 1rem;
-      padding: 1rem;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
-      cursor: zoom-out;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .workflow-step.zoomed img { max-width: 90%; max-height: 80vh; }
+  /* Zoomed Workflow Step */
+  .workflow-step.zoomed {
+    position: fixed !important;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) !important;
+    width: auto; max-width: 90%; height: auto; max-height: 90%;
+    z-index: 999;
+    background: #1a1a27;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    cursor: zoom-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .workflow-step.zoomed img { max-width: 90%; max-height: 80vh; }
 
-    /* Workflow Text Steps */
-    .workflow-text { margin-top: 3rem; max-width: 800px; margin-left: auto; margin-right: auto; }
-    .workflow-text h4 { color: #8b5cf6; }
-    .workflow-text p, .workflow-text blockquote { color: #ccc; }
+  /* Workflow Text Steps */
+  .workflow-text { margin-top: 3rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .workflow-text h4 { color: #8b5cf6; }
 
-    /* Footer CTA */
-    .cta { text-align: center; margin: 3rem 0; }
-    .cta .primary { display: inline-block; background: #8b5cf6; color: #fff; padding: 0.75rem 2rem; border-radius: 0.75rem; font-weight: 600; transition: 0.3s; }
-    .cta .primary:hover { background: #7c3aed; }
+  /* Footer CTA */
+  .cta { text-align: center; margin: 3rem 0; }
+  .cta .primary { display: inline-block; background: #8b5cf6; color: #fff; padding: 0.75rem 2rem; border-radius: 0.75rem; font-weight: 600; transition: 0.3s; }
+  .cta .primary:hover { background: #7c3aed; }
 
-    @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      h2 { font-size: 1.75rem; }
-      .workflow-step img { max-width: 90%; }
-      .back-portfolio-fixed { top: 10px; left: 10px; }
-    }
-  </style>
+  @media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    .workflow-step img { max-width: 90%; }
+    .back-portfolio-fixed { top: 10px; left: 10px; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- Fixed Back Button -->
-  <div class="back-portfolio-fixed">
-    <a href="index.html">Back to Portfolio</a>
-  </div>
+<!-- Fixed Back Button -->
+<div class="back-portfolio-fixed">
+  <a href="index.html">Back to Portfolio</a>
+</div>
 
-  <div class="container">
+<div class="container">
 
-    <header>
-      <div class="logo"><img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="Marc Negrillo"></div>
-    </header>
+  <header>
+    <div class="logo"><img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="Marc Negrillo"></div>
+  </header>
 
-    <section class="hero">
-      <h1>AI Automation Samples</h1>
-      <p style="text-align: center;">
-        Explore AI-powered workflows and automations using <span class="highlight">n8n</span> and <span class="highlight">Agentic AI</span>.
-      </p>
-    </section>
+  <section class="hero">
+    <h1>AI Automation Samples</h1>
+    <p style="text-align: center;">
+      Explore AI-powered workflows and automations using <span class="highlight">n8n</span> and <span class="highlight">Agentic AI</span>.
+    </p>
+  </section>
 
-    <!-- Workflow Examples -->
-    <section>
-      <h2>Workflow Examples</h2>
-      <div class="workflow-grid">
-        <div class="workflow-step">
-          <span class="step-number">1</span>
-          <img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Form Trigger">
-          <p>Form Trigger – User submits the contact form</p>
-        </div>
-        <div class="workflow-step">
-          <span class="step-number">2</span>
-          <img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Confirmation Message">
-          <p>Confirmation Message – User receives success notice</p>
-        </div>
-        <div class="workflow-step">
-          <span class="step-number">3</span>
-          <img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Set Node">
-          <p>Set Node – Data cleaned and structured</p>
-        </div>
-        <div class="workflow-step">
-          <span class="step-number">4</span>
-          <img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Google Sheets">
-          <p>Google Sheets – Submission saved as a new row</p>
-        </div>
+  <!-- Workflow Examples -->
+  <section>
+    <h2>Workflow Examples</h2>
+    <div class="workflow-grid">
+      <div class="workflow-step">
+        <span class="step-number">1</span>
+        <img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Form Trigger">
+        <p>Form Trigger – User submits the contact form</p>
       </div>
-
-      <!-- Workflow Text Steps -->
-      <div class="workflow-text">
-        <h3>Workflow Steps Details</h3>
-        <h4>1. Form Trigger</h4>
-        <p>When the user submits the form, the workflow automatically triggers in n8n.</p>
-
-        <h4>2. Confirmation Message</h4>
-        <blockquote>“Thank you! Your message has been submitted successfully.”</blockquote>
-
-        <h4>3. Edit Fields (Set Node)</h4>
-        <p>Data is cleaned, formatted, and structured with timestamps for easy tracking.</p>
-
-        <h4>4. Google Sheets – Append Row</h4>
-        <p>All form submissions are saved automatically as new rows in Google Sheets.</p>
+      <div class="workflow-step">
+        <span class="step-number">2</span>
+        <img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Confirmation Message">
+        <p>Confirmation Message – User receives success notice</p>
       </div>
+      <div class="workflow-step">
+        <span class="step-number">3</span>
+        <img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Set Node">
+        <p>Set Node – Data cleaned and structured</p>
+      </div>
+      <div class="workflow-step">
+        <span class="step-number">4</span>
+        <img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Google Sheets">
+        <p>Google Sheets – Submission saved as a new row</p>
+      </div>
+    </div>
 
-    </section>
+    <!-- Workflow Text Steps -->
+    <div class="workflow-text">
+      <h3>Workflow Steps Details</h3>
+      <h4>1. Form Trigger</h4>
+      <p>When the user submits the form, the workflow automatically triggers in n8n.</p>
 
-  </div>
+      <h4>2. Confirmation Message</h4>
+      <blockquote>“Thank you! Your message has been submitted successfully.”</blockquote>
 
-  <!-- Click-to-Zoom Script -->
-  <script>
-    const steps = document.querySelectorAll(".workflow-step");
-    steps.forEach(step => {
-      step.addEventListener("click", e => {
-        e.stopPropagation();
-        const isZoomed = step.classList.contains("zoomed");
-        steps.forEach(s => s.classList.remove("zoomed"));
-        if(!isZoomed) step.classList.add("zoomed");
-      });
+      <h4>3. Edit Fields (Set Node)</h4>
+      <p>Data is cleaned, formatted, and structured with timestamps for easy tracking.</p>
+
+      <h4>4. Google Sheets – Append Row</h4>
+      <p>All form submissions are saved automatically as new rows in Google Sheets.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const steps = document.querySelectorAll('.workflow-step');
+
+  steps.forEach(step => {
+    step.addEventListener('click', () => {
+      if (step.classList.contains('zoomed')) {
+        step.classList.remove('zoomed');
+      } else {
+        // Remove zoom from other steps
+        steps.forEach(s => s.classList.remove('zoomed'));
+        step.classList.add('zoomed');
+      }
     });
-    document.addEventListener("click", () => steps.forEach(s => s.classList.remove("zoomed")));
-  </script>
+  });
+
+  // Close zoom on clicking anywhere outside
+  document.addEventListener('click', e => {
+    steps.forEach(step => {
+      if (step.classList.contains('zoomed') && !step.contains(e.target)) {
+        step.classList.remove('zoomed');
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
