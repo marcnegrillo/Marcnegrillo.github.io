@@ -14,31 +14,40 @@
       color: #fff;
       line-height: 1.6;
     }
-
     a { text-decoration: none; color: inherit; }
 
-    .container { width: 90%; max-width: 1200px; margin: auto; padding: 2rem 0; }
-
-    /* Header */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem 0;
+    /* Fixed Top Button */
+    .back-portfolio-fixed {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
     }
-    header h1 { color: #8b5cf6; font-size: 1.8rem; }
-    nav a { margin-left: 2rem; font-weight: 600; color: #aaa; transition: 0.3s; }
-    nav a:hover { color: #8b5cf6; }
+    .back-portfolio-fixed a {
+      display: inline-block;
+      background-color: #8b5cf6;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .back-portfolio-fixed a:hover {
+      background-color: #a47dfd;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139,92,246,0.5);
+    }
+
+    /* Container */
+    .container { width: 90%; max-width: 1200px; margin: auto; padding: 2rem 0; }
 
     /* Hero */
     .hero {
       text-align: center;
-      padding: 6rem 2rem;
+      padding: 6rem 2rem 6rem 2rem;
     }
     .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; color: #8b5cf6; }
     .hero p { font-size: 1.2rem; color: #aaa; margin-bottom: 2rem; }
-    .hero a { display: inline-block; background-color: #8b5cf6; color: #0f0f15; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; transition: background 0.3s; }
-    .hero a:hover { background-color: #6d3fc0; }
 
     /* Services */
     .services {
@@ -77,20 +86,25 @@
     .project:hover { transform: scale(1.05); }
     .project img { width: 100%; display: block; }
     .project h3 { padding: 1rem; color: #8b5cf6; }
-    
 
     /* Footer */
     footer { text-align: center; padding: 2rem 0; color: #aaa; border-top: 1px solid #333; }
+
+    /* Responsive */
+    @media(max-width:768px){
+      .hero { padding: 4rem 1rem 4rem 1rem; }
+      .back-portfolio-fixed { top: 10px; left: 10px; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-<!-- Header -->
-<header>
-<a href="index.html" class="back-to-main">← Back to Main</a>
-</header>
+  <!-- Fixed Back Button -->
+  <div class="back-portfolio-fixed">
+    <a href="index.html">Back to Portfolio</a>
+  </div>
 
+  <div class="container">
     <!-- Hero -->
     <section class="hero">
       <h2>Building Modern & Responsive Websites</h2>
@@ -107,27 +121,27 @@
         <h3>UI/UX Design</h3>
         <p>Designing interfaces that are both visually appealing and easy to use.</p>
       </div>
-         <div class="service">
+      <div class="service">
         <h3>Tools</h3>
         <p>Git, GitHub, Web Performance Optimization, Word press, WP Engine, Sublime, VS studio.</p>
       </div>
     </section>
 
-   <!-- Portfolio -->
-<section id="portfolio" class="portfolio">
-  <h2>Sample Works</h2>
-  <div class="projects">
-    <div class="project">
-       <h3>Home Remodeling</h3>
-      <img src="https://compact-gold-aeg2tqs7xm.edgeone.app/home%20remodeling.png" alt="Project 1">
-    </div>
-    <div class="project">
-        <h3>kitchen remodeling</h3>
-      <img src="https://organisational-scarlet-9eebwdygic.edgeone.app/Matrixgroupone%20kithcen.png" alt="Project 2">
-    </div>
+    <!-- Portfolio -->
+    <section id="portfolio" class="portfolio">
+      <h2>Sample Works</h2>
+      <div class="projects">
+        <div class="project">
+          <h3>Home Remodeling</h3>
+          <img src="https://compact-gold-aeg2tqs7xm.edgeone.app/home%20remodeling.png" alt="Project 1">
+        </div>
+        <div class="project">
+          <h3>Kitchen Remodeling</h3>
+          <img src="https://organisational-scarlet-9eebwdygic.edgeone.app/Matrixgroupone%20kithcen.png" alt="Project 2">
+        </div>
+      </div>
+    </section>
   </div>
-</section>
-
 
 </body>
 </html>
