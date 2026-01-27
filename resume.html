@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marc Negrillo</title>
+  <title>Marc Negrillo | Resume</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     /* ============================= */
@@ -41,89 +41,155 @@
       box-shadow: 0 5px 15px rgba(139,92,246,0.4);
     }
 
-    /* Header */
-    h1 {
+    /* ============================= */
+    /* Branded Resume Header */
+    /* ============================= */
+    .resume-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .logo-container img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #8b5cf6;
+      padding: 5px;
+      background: #1a1a27;
+    }
+    .header-text h1 {
+      font-size: 2.5rem;
       color: #fff;
       text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 0.3rem;
+    }
+    .header-text .tagline {
+      text-align: center;
+      color: #ccc;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     /* Resume Sections */
     .resume-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .resume-section {
       background: #1a1a27;
-      padding: 2rem;
+      padding: 1.5rem 2rem;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
     }
-
-    .resume-section {
-      margin-bottom: 2rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+    .resume-section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
-    .resume-section:last-child { border-bottom: none; }
-
+    .resume-section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(139,92,246,0.4);
+    }
     .resume-section h2 {
       color: #8b5cf6;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
       font-size: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     .resume-section p, .resume-section li {
       color: #ccc;
       margin-bottom: 0.5rem;
     }
-
     ul {
       padding-left: 1.5rem;
       list-style-type: disc;
     }
 
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .skill {
+      background: #0f0f15;
+      border: 1px solid #8b5cf6;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .skill:hover {
+      background: #8b5cf6;
+      color: #fff;
+    }
+
+    /* Achievement Buttons */
+    .achievement-link {
+      display: inline-block;
+      background: #8b5cf6;
+      color: #fff;
+      padding: 0.7rem 1.5rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      margin: 0.3rem 0;
+      transition: 0.3s;
+    }
+    .achievement-link:hover {
+      background: #a47dfd;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(139,92,246,0.4);
+    }
+
     /* Responsive */
     @media(max-width:768px){
-      .container {
-        padding: 1rem;
-      }
-      h1 { font-size: 2rem; }
+      .container { padding: 1rem; }
+      .header-text h1 { font-size: 2rem; }
+      .header-text .tagline { font-size: 1rem; }
       .resume-section h2 { font-size: 1.5rem; }
     }
-
-    /* Subtle section hover effect for eye-catching feel */
-    .resume-section:hover {
-      transform: translateY(-2px);
-      transition: transform 0.3s ease;
-    }
-
   </style>
 </head>
 <body>
   <div class="container">
     <a href="index.html" class="back-btn">← Back to Portfolio</a>
-    
-    <h1>Marc Negrillo</h1>
+
+    <!-- Branded Resume Header -->
+    <div class="resume-header">
+      <div class="logo-container">
+        <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="MN Logo">
+      </div>
+      <div class="header-text">
+        <h1>Marc Negrillo</h1>
+        <p class="tagline">Building high-converting landing pages & AI automation workflows for businesses</p>
+      </div>
+    </div>
 
     <div class="resume-content">
 
-    <!-- Education Section -->
-<div class="resume-section">
-  <h2>Education</h2>
-  
-  <p><strong>ELEMENTARY</strong></p>
-  <p>CEGUERA TECHNOLOGICAL COLLEGES (2010 - 2015)</p>
-
-  <p><strong>HIGH SCHOOL</strong></p>
-  <p>MIZPAH COMMUNITY CHRISTIAN ACADEME INC. (2016 - 2019)</p>
-
-  <p><strong>SENIOR HIGH SCHOOL</strong></p>
-  <p>MIZPAH COMMUNITY CHRISTIAN ACADEME INC. – GAS Strand (2019 - 2021)</p>
-
-  <p><strong>COLLEGE</strong></p>
-  <p>CEGUERA TECHNOLOGICAL COLLEGES – Bachelor of Science in Information Technology (2021 - 2025)</p>
-</div>
+      <!-- Education Section -->
+      <div class="resume-section">
+        <h2>🎓 Education</h2>
+        <p><strong>Elementary:</strong> CEGUERA TECHNOLOGICAL COLLEGES (2010 - 2015)</p>
+        <p><strong>High School:</strong> MIZPAH COMMUNITY CHRISTIAN ACADEME INC. (2016 - 2019)</p>
+        <p><strong>Senior High School:</strong> MIZPAH COMMUNITY CHRISTIAN ACADEME INC. – GAS Strand (2019 - 2021)</p>
+        <p><strong>College:</strong> CEGUERA TECHNOLOGICAL COLLEGES – Bachelor of Science in IT (2021 - 2025)</p>
+      </div>
 
       <!-- Experience Section -->
       <div class="resume-section">
-        <h2>Experience</h2>
+        <h2>💼 Experience</h2>
         <p><strong>Equity Track PH</strong></p>
         <ul>
           <li>Basic Automation</li>
@@ -134,25 +200,42 @@
 
       <!-- Technical Skills Section -->
       <div class="resume-section">
-        <h2>Technical Skills</h2>
-        <ul>
-          <li>Programming Languages: C, C++, JavaScript</li>
-          <li>Web Development: HTML, CSS, JavaScript, Responsive Design</li>
-          <li>Automation & AI: n8n Workflows, Agentic AI</li>
-          <li>Tools & Practices: Git, GitHub, Web Performance</li>
-        </ul>
+        <h2>🛠 Technical Skills</h2>
+        <div class="skills-grid">
+          <div class="skill">C</div>
+          <div class="skill">C++</div>
+          <div class="skill">JavaScript</div>
+          <div class="skill">HTML & CSS</div>
+          <div class="skill">Responsive Design</div>
+          <div class="skill">n8n Workflows</div>
+          <div class="skill">Agentic AI</div>
+          <div class="skill">Git & GitHub</div>
+        </div>
       </div>
 
       <!-- Achievements Section -->
       <div class="resume-section">
-        <h2>Achievements</h2>
-        <ul>
-          <li>Created multiple AI automation workflows</li>
-          <li>Designed responsive landing pages</li>
-        </ul>
+        <h2>🏆 Achievements</h2>
+        <p>Click to explore my work:</p>
+        <div class="achievement-container">
+          <a href="ai-automation.html" target="_blank" class="achievement-link">AI Automation Workflows</a>
+          <a href="web-development.html" target="_blank" class="achievement-link">Web Development Projects</a>
+        </div>
       </div>
 
     </div>
-  </div>
+
+    <script>
+      // Fade-in sections on scroll
+      const sections = document.querySelectorAll('.resume-section');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.2 });
+      sections.forEach(section => observer.observe(section));
+    </script>
 </body>
 </html>
