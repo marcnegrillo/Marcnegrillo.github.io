@@ -25,6 +25,28 @@
     blockquote { padding-left: 1rem; border-left: 3px solid #8b5cf6; font-style: italic; }
     .highlight { color: #8b5cf6; font-weight: 600; }
 
+    /* Fixed Top Back Button */
+    .back-portfolio-fixed {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+    .back-portfolio-fixed a {
+      display: inline-block;
+      background-color: #8b5cf6;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .back-portfolio-fixed a:hover {
+      background-color: #a47dfd;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139,92,246,0.5);
+    }
+
     /* Workflow Grid */
     .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
     .workflow-step {
@@ -91,22 +113,29 @@
       h1 { font-size: 2rem; }
       h2 { font-size: 1.75rem; }
       .workflow-step img { max-width: 90%; }
+      .back-portfolio-fixed { top: 10px; left: 10px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Fixed Back Button -->
+  <div class="back-portfolio-fixed">
+    <a href="index.html">Back to Portfolio</a>
+  </div>
+
   <div class="container">
 
     <header>
       <div class="logo"><img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="Marc Negrillo"></div>
     </header>
 
-<section class="hero">
-  <h1>AI Automation Samples</h1>
-  <p style="text-align: center;">
-    Explore AI-powered workflows and automations using <span class="highlight">n8n</span> and <span class="highlight">Agentic AI</span>.
-  </p>
-</section>
+    <section class="hero">
+      <h1>AI Automation Samples</h1>
+      <p style="text-align: center;">
+        Explore AI-powered workflows and automations using <span class="highlight">n8n</span> and <span class="highlight">Agentic AI</span>.
+      </p>
+    </section>
 
     <!-- Workflow Examples -->
     <section>
@@ -134,27 +163,24 @@
         </div>
       </div>
 
-<!-- Workflow Text Steps -->
-<div class="workflow-text">
-  <h3>Workflow Steps Details</h3>
-  <h4>1. Form Trigger</h4>
-  <p>When the user submits the form, the workflow automatically triggers in n8n.</p>
+      <!-- Workflow Text Steps -->
+      <div class="workflow-text">
+        <h3>Workflow Steps Details</h3>
+        <h4>1. Form Trigger</h4>
+        <p>When the user submits the form, the workflow automatically triggers in n8n.</p>
 
-  <h4>2. Confirmation Message</h4>
-  <blockquote>“Thank you! Your message has been submitted successfully.”</blockquote>
+        <h4>2. Confirmation Message</h4>
+        <blockquote>“Thank you! Your message has been submitted successfully.”</blockquote>
 
-  <h4>3. Edit Fields (Set Node)</h4>
-  <p>Data is cleaned, formatted, and structured with timestamps for easy tracking.</p>
+        <h4>3. Edit Fields (Set Node)</h4>
+        <p>Data is cleaned, formatted, and structured with timestamps for easy tracking.</p>
 
-  <h4>4. Google Sheets – Append Row</h4>
-  <p>All form submissions are saved automatically as new rows in Google Sheets.</p>
-</div>
+        <h4>4. Google Sheets – Append Row</h4>
+        <p>All form submissions are saved automatically as new rows in Google Sheets.</p>
+      </div>
 
-
-
-    <section class="cta">
-      <a href="index.html" class="primary">Back to Portfolio</a>
     </section>
+
   </div>
 
   <!-- Click-to-Zoom Script -->
