@@ -1,62 +1,104 @@
 // ==========================
-// Base JS for Portfolio
+// Portfolio Interactions JS
 // ==========================
 
-// Smooth scroll for all anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ==========================
+  // Smooth Scroll (Accessible)
+  // ==========================
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const targetId = anchor.getAttribute('href');
+      const target = document.querySelector(targetId);
+
+      if (!target) return;
+
+      e.preventDefault();
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+  });
+
+  // ==========================
+  // Hover Effects via Classes
+  // ==========================
+  const hoverCards = document.querySelectorAll(
+    '.tech-card, .project-card, .why-card'
+  );
+
+  hoverCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.classList.add('is-hovered');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.classList.remove('is-hovered');
+    });
+  });
+
+  // ==========================
+  // Fade-In on Scroll (Cards + Sections)
+  // ==========================
+  const fadeElements = document.querySelectorAll(
+    '.tech-card, .project-card, .achievement, .card, .why-card, section'
+  );
+
+  const fadeObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add('fade-in');
+
+        // ✅ Section fade-in
+        if (entry.target.tagName === 'SECTION') {
+          entry.target.classList.add('visible');
+        }
+
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.15,
+      rootMargin: '0px 0px -80px 0px'
     }
-  });
-});
+  );
 
-// Hover animation for tech cards
-const techCards = document.querySelectorAll('.tech-card');
-techCards.forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    card.style.transform = 'translateY(-8px)';
-    card.style.boxShadow = '0 0 0 1px rgba(139,92,246,0.5), 0 20px 40px rgba(0,0,0,0.6)';
+  fadeElements.forEach((el, i) => {
+    el.style.transitionDelay = `${i * 80}ms`;
+    fadeObserver.observe(el);
   });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'translateY(0)';
-    card.style.boxShadow = '0 0 0 1px rgba(139,92,246,0.15), 0 10px 30px rgba(0,0,0,0.4)';
-  });
-});
 
-// Hover animation for project cards
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    card.style.transform = 'translateY(-4px)';
-    card.style.backgroundColor = '#2a2a40';
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'translateY(0)';
-    card.style.backgroundColor = '#1a1a27';
-  });
-});
+  // ==========================
+  // Active Navigation on Scroll
+  // ==========================
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('header nav a');
 
-// ==========================
-// Fade-in effect on scroll
-// ==========================
-const faders = document.querySelectorAll('.tech-card, .project-card, .achievement');
-const appearOptions = {
-  threshold: 0.1,
-  rootMargin: "0px 0px -50px 0px"
-};
+  window.addEventListener('scroll', () => {
+    let current = '';
 
-const appearOnScroll = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add('fade-in');
-    observer.unobserve(entry.target); // Only animate once
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      const sectionHeight = section.offsetHeight;
+
+      if (
+        window.pageYOffset >= sectionTop &&
+        window.pageYOffset < sectionTop + sectionHeight
+      ) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
   });
-}, appearOptions);
 
-// Apply observer to all fade-in elements
-faders.forEach(fader => {
-  appearOnScroll.observe(fader);
 });
