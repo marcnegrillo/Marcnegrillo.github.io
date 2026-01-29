@@ -607,3 +607,89 @@ section.visible {
 .about-card p strong {
   color: var(--text-main);
 }
+
+
+/* ============================= */
+/* Resume / Section Header Polish */
+/* ============================= */
+
+.resume-section h2,
+.about-me h2 {
+  border-bottom: 1px solid rgba(139,92,246,0.25);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================= */
+/* Resume / Section Header Polish */
+/* ============================= */
+
+.resume-section h2,
+.about-me h2 {
+  border-bottom: 1px solid rgba(139,92,246,0.25);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================= */
+/* Impact List (Resume Bullets)  */
+/* ============================= */
+
+.impact-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.8rem;
+}
+
+.impact-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.impact-list li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+/* ============================= */
+/* About Me – Text Refinement    */
+/* ============================= */
+
+.about-card p {
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.about-card p:not(:last-child) {
+  margin-bottom: 1.2rem;
+}
+
+/* ============================= */
+/* Impact List (Experience)      */
+/* ============================= */
+
+.impact-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.8rem;
+}
+
+.impact-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin-bottom: 0.6rem;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.impact-list li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: #8b5cf6;
+}
