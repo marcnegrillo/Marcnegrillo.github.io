@@ -1,238 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marc Negrillo | Resume</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* ============================= */
-    /* Base Styles */
-    /* ============================= */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f0f15;
-      color: #fff;
-      line-height: 1.6;
-    }
-    a { text-decoration: none; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume — Marc Negrillo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#07070a; --panel:#0f0f1a; --surface:#14141f;
+  --border:rgba(255,255,255,0.07); --border-2:rgba(255,255,255,0.12);
+  --gold:#e8c97a; --amber:#d4a853; --gold-dim:rgba(232,201,122,0.12);
+  --gold-glow:rgba(232,201,122,0.3);
+  --text:#f0ece8; --warm:#f5ede0; --warm-dim:rgba(245,237,224,0.55);
+  --muted:rgba(240,236,232,0.35);
+  --r:1rem; --r-lg:1.6rem;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Space Grotesk',sans-serif;
+  --mono:'Space Mono',monospace;
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
 
-    .container {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 1rem 2rem;
-    }
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:100;mix-blend-mode:overlay;
+}
 
-    /* Back Button */
-    .back-btn {
-      display: inline-block;
-      margin-bottom: 2rem;
-      padding: 0.8rem 2rem;
-      background: #8b5cf6;
-      color: #fff;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-    .back-btn:hover {
-      background: #a47dfd;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(139,92,246,0.4);
-    }
+.page{max-width:800px;margin:0 auto;padding:2.5rem 2.5rem 8rem;position:relative;z-index:1;}
 
-    /* ============================= */
-    /* Branded Resume Header */
-    /* ============================= */
-    .resume-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .logo-container img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2px solid #8b5cf6;
-      padding: 5px;
-      background: #1a1a27;
-    }
-    .header-text h1 {
-      font-size: 2.5rem;
-      color: #fff;
-      text-align: center;
-      margin-bottom: 0.3rem;
-    }
-    .header-text .tagline {
-      text-align: center;
-      color: #ccc;
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+.back-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(7,7,10,0.6);backdrop-filter:blur(16px);
+  border:1px solid var(--border-2);padding:.65rem 1.4rem;border-radius:999px;
+  font-family:var(--sans);font-weight:500;font-size:.78rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--warm-dim);
+  transition:all .3s var(--ease);margin-bottom:3.5rem;margin-top:.5rem;
+  width:fit-content;
+}
+.back-btn:hover{border-color:rgba(232,201,122,0.4);color:var(--warm);transform:translateX(-4px);}
 
-    /* Resume Sections */
-    .resume-content {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .resume-section {
-      background: #1a1a27;
-      padding: 1.5rem 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    .resume-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .resume-section:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 15px 40px rgba(139,92,246,0.4);
-    }
-    .resume-section h2 {
-      color: #8b5cf6;
-      margin-bottom: 1rem;
-      font-size: 1.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .resume-section p, .resume-section li {
-      color: #ccc;
-      margin-bottom: 0.5rem;
-    }
-    ul {
-      padding-left: 1.5rem;
-      list-style-type: disc;
-    }
+/* Header */
+.resume-header{
+  text-align:center;margin-bottom:4rem;padding-bottom:3rem;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.resume-header::after{
+  content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+  width:80px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.logo-wrap{
+  width:72px;height:72px;border-radius:50%;
+  border:2px solid var(--amber);padding:4px;
+  margin:0 auto 1.5rem;
+  background:rgba(232,201,122,0.05);
+}
+.logo-wrap img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
+.resume-header h1{
+  font-family:var(--serif);font-size:clamp(2.5rem,5vw,4rem);
+  font-weight:900;letter-spacing:-.03em;margin-bottom:.6rem;
+}
+.resume-header h1 em{font-style:italic;color:var(--gold);}
+.tagline{color:var(--warm-dim);font-size:.95rem;font-weight:300;max-width:480px;margin:0 auto;}
 
-    /* Skills Grid */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-    .skill {
-      background: #0f0f15;
-      border: 1px solid #8b5cf6;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      text-align: center;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-    .skill:hover {
-      background: #8b5cf6;
-      color: #fff;
-    }
+/* Section cards */
+.resume-section{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:2.5rem;margin-bottom:1.5rem;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease),border-color .3s,box-shadow .3s;
+}
+.resume-section.in{opacity:1;transform:translateY(0);}
+.resume-section:hover{
+  border-color:rgba(232,201,122,0.2);
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
+}
+.section-head{
+  display:flex;align-items:center;gap:.75rem;
+  margin-bottom:1.5rem;padding-bottom:1.2rem;
+  border-bottom:1px solid var(--border);
+}
+.section-head h2{
+  font-family:var(--serif);font-size:1.3rem;font-weight:700;
+  color:var(--text);
+}
+.section-head .section-icon{
+  width:36px;height:36px;border-radius:.6rem;
+  background:rgba(232,201,122,0.08);border:1px solid rgba(232,201,122,0.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+}
 
-    /* Achievement Buttons */
-    .achievement-link {
-      display: inline-block;
-      background: #8b5cf6;
-      color: #fff;
-      padding: 0.7rem 1.5rem;
-      border-radius: 3rem;
-      font-weight: 600;
-      margin: 0.3rem 0;
-      transition: 0.3s;
-    }
-    .achievement-link:hover {
-      background: #a47dfd;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(139,92,246,0.4);
-    }
+.detail-title{
+  font-size:.82rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;
+}
+.detail-sub{font-size:.9rem;color:var(--warm-dim);margin-bottom:.5rem;}
+.detail-meta{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--muted);
+}
 
-    /* Responsive */
-    @media(max-width:768px){
-      .container { padding: 1rem; }
-      .header-text h1 { font-size: 2rem; }
-      .header-text .tagline { font-size: 1rem; }
-      .resume-section h2 { font-size: 1.5rem; }
-    }
-  </style>
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-top:.5rem;}
+.bullet-list li{
+  display:flex;align-items:flex-start;gap:.75rem;
+  font-size:.9rem;color:var(--warm-dim);
+}
+.bullet-list li::before{content:'→';color:var(--gold);font-size:.8rem;margin-top:.2rem;flex-shrink:0;}
+
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;}
+.skill-tag{
+  background:rgba(232,201,122,0.05);border:1px solid rgba(232,201,122,0.15);
+  border-radius:.6rem;padding:.65rem 1rem;
+  text-align:center;font-family:var(--mono);font-size:.72rem;
+  font-weight:700;letter-spacing:.08em;color:var(--warm-dim);
+  transition:all .25s var(--ease);cursor:default;
+}
+.skill-tag:hover{background:var(--gold);color:var(--ink);border-color:var(--gold);transform:translateY(-2px);}
+
+/* Achievements */
+.ach-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.5rem;}
+.ach-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(232,201,122,0.08);border:1px solid rgba(232,201,122,0.2);
+  color:var(--gold);padding:.7rem 1.5rem;border-radius:999px;
+  font-family:var(--sans);font-weight:600;font-size:.8rem;
+  letter-spacing:.06em;transition:all .3s var(--ease);
+}
+.ach-btn:hover{background:var(--gold);color:var(--ink);border-color:var(--gold);transform:translateY(-3px);box-shadow:0 10px 28px var(--gold-glow);}
+
+@media(max-width:640px){
+  .page{padding:1.5rem 1.2rem 5rem;}
+  .resume-section{padding:1.8rem 1.4rem;}
+  .skills-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <a href="index.html" class="back-btn">← Back to Portfolio</a>
+<div class="page">
 
-    <!-- Branded Resume Header -->
-    <div class="resume-header">
-      <div class="logo-container">
-        <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="MN Logo">
-      </div>
-      <div class="header-text">
-        <h1>Marc Negrillo</h1>
-        <p class="tagline">Building high-converting landing pages & AI automation workflows for businesses</p>
-      </div>
+  <a href="index.html" class="back-btn">← Back to OS</a>
+
+  <!-- Header -->
+  <div class="resume-header">
+    <div class="logo-wrap">
+      <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="MN Logo">
     </div>
+    <h1>Marc <em>Negrillo</em></h1>
+    <p class="tagline">Building high-converting landing pages &amp; AI automation workflows for businesses</p>
+  </div>
 
-    <div class="resume-content">
-
-      <!-- Education Section -->
-      <div class="resume-section">
-        <h2>🎓 Education</h2>
-        <p><strong>College:</strong> CEGUERA TECHNOLOGICAL COLLEGES – Bachelor of Science in IT (2021 - 2025)</p>
-      </div>
-
-      <!-- Experience Section -->
-      <div class="resume-section">
-        <h2>💼 Experience</h2>
-        <p><strong>Equity Track PH</strong></p>
-        <ul class="impact-list">
-  <li>Built basic automation workflows to reduce manual tasks</li>
-  <li>Supported direct mail campaigns and lead handling</li>
-  <li>Developed and maintained responsive web pages</li>
-</ul>
-
-      </div>
-
-      <!-- Technical Skills Section -->
-      <div class="resume-section">
-        <h2>🛠 Technical Skills</h2>
-        <div class="skills-grid">
-          <div class="skill">C</div>
-          <div class="skill">C++</div>
-          <div class="skill">JavaScript</div>
-          <div class="skill">HTML & CSS</div>
-          <div class="skill">Responsive Design</div>
-          <div class="skill">n8n Workflows</div>
-          <div class="skill">Git & GitHub</div>
-        </div>
-      </div>
-
-      <!-- Achievements Section -->
-      <div class="resume-section">
-        <h2>🏆 Achievements</h2>
-        <p>Click to explore my work:</p>
-        <div class="achievement-container">
-          <a href="ai-automation.html" target="_blank" class="achievement-link">AI Automation Workflows</a>
-          <a href="web-development.html" target="_blank" class="achievement-link">Web Development Projects</a>
-        </div>
-      </div>
-
+  <!-- Education -->
+  <div class="resume-section">
+    <div class="section-head">
+      <div class="section-icon">🎓</div>
+      <h2>Education</h2>
     </div>
+    <div class="detail-title">Ceguera Technological Colleges</div>
+    <div class="detail-sub">Bachelor of Science in Information Technology</div>
+    <div class="detail-meta">2021 – 2025</div>
+  </div>
 
-    <script>
-      // Fade-in sections on scroll
-      const sections = document.querySelectorAll('.resume-section');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.2 });
-      sections.forEach(section => observer.observe(section));
-    </script>
+  <!-- Experience -->
+  <div class="resume-section">
+    <div class="section-head">
+      <div class="section-icon">💼</div>
+      <h2>Experience</h2>
+    </div>
+    <div class="detail-title">Equity Track PH</div>
+    <ul class="bullet-list">
+      <li>Built basic automation workflows to reduce manual tasks</li>
+      <li>Supported direct mail campaigns and lead handling</li>
+      <li>Developed and maintained responsive web pages</li>
+    </ul>
+  </div>
+
+  <!-- Technical Skills -->
+  <div class="resume-section">
+    <div class="section-head">
+      <div class="section-icon">🛠</div>
+      <h2>Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-tag">C</div>
+      <div class="skill-tag">C++</div>
+      <div class="skill-tag">JavaScript</div>
+      <div class="skill-tag">HTML &amp; CSS</div>
+      <div class="skill-tag">Responsive</div>
+      <div class="skill-tag">n8n</div>
+      <div class="skill-tag">Git</div>
+      <div class="skill-tag">GitHub</div>
+    </div>
+  </div>
+
+  <!-- Achievements -->
+  <div class="resume-section">
+    <div class="section-head">
+      <div class="section-icon">🏆</div>
+      <h2>Achievements</h2>
+    </div>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">Explore my work:</p>
+    <div class="ach-grid">
+      <a href="Ai_automation.html" class="ach-btn">AI Automation →</a>
+      <a href="Web_development.html" class="ach-btn">Web Development →</a>
+      <a href="Email.html" class="ach-btn">✉ Contact →</a>
+      <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/" target="_blank" class="ach-btn">LinkedIn ↗</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.resume-section').forEach(s => obs.observe(s));
+</script>
 </body>
 </html>
