@@ -1,169 +1,1419 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marc Negrillo Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marc Negrillo — OS Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0c10;
+  --bg2: #0e1117;
+  --panel: #12151c;
+  --glass: rgba(18,21,28,0.85);
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.1);
+  --cyan: #00e5ff;
+  --cyan-dim: rgba(0,229,255,0.12);
+  --cyan-glow: rgba(0,229,255,0.25);
+  --green: #00ff88;
+  --green-dim: rgba(0,255,136,0.1);
+  --amber: #ffb347;
+  --text: #e8eaf0;
+  --text2: rgba(232,234,240,0.6);
+  --text3: rgba(232,234,240,0.35);
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Syne', sans-serif;
+  --body: 'Inter', sans-serif;
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --taskbar-h: 48px;
+}
 
-  <!-- Main Styles -->
-  <link rel="stylesheet" href="style.css">
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { height:100%; }
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ─── BOOT SCREEN ─── */
+#boot {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2rem;
+}
+#boot .boot-logo {
+  width: 72px; height: 72px; border-radius: 50%;
+  border: 2px solid var(--cyan);
+  padding: 3px;
+  box-shadow: 0 0 30px var(--cyan-glow), inset 0 0 20px rgba(0,229,255,0.05);
+}
+#boot .boot-logo img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
+#boot .boot-name {
+  font-family: var(--sans);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+#boot .boot-bar-wrap {
+  width: 220px; height: 2px;
+  background: rgba(0,229,255,0.1);
+  border-radius: 2px; overflow: hidden;
+}
+#boot .boot-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  width: 0%;
+  transition: width 0.05s linear;
+  box-shadow: 0 0 12px var(--cyan);
+}
+#boot .boot-text {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.12em;
+  min-height: 1em;
+}
+
+/* ─── WALLPAPER / DESKTOP ─── */
+#desktop {
+  position: fixed; inset: 0;
+  bottom: var(--taskbar-h);
+  background:
+    radial-gradient(ellipse 80% 60% at 70% -10%, rgba(0,229,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 5% 90%, rgba(0,255,136,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 80%, rgba(255,179,71,0.03) 0%, transparent 50%),
+    var(--bg);
+  overflow: hidden;
+}
+#desktop::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 0%, transparent 80%);
+}
+#desktop-icons {
+  position: absolute;
+  top: 1.5rem; left: 1.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.d-icon {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.4rem; cursor: pointer; width: 72px;
+  padding: 0.5rem 0.25rem; border-radius: 8px;
+  transition: background 0.2s;
+}
+.d-icon:hover { background: rgba(0,229,255,0.08); }
+.d-icon:active { background: rgba(0,229,255,0.15); }
+.d-icon .icon-img {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  border: 1px solid var(--border2);
+}
+.d-icon .icon-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--text2);
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+.d-icon.active .icon-label { color: var(--cyan); }
+
+/* ─── TASKBAR ─── */
+#taskbar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: var(--taskbar-h);
+  background: rgba(10,12,16,0.92);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 1.2rem;
+  z-index: 800;
+  gap: 0.75rem;
+}
+.tb-logo {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-right: 0.5rem;
+}
+.tb-logo img {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid var(--cyan);
+}
+.tb-logo span {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.05em;
+}
+.tb-sep { width: 1px; height: 24px; background: var(--border2); margin: 0 0.25rem; }
+.tb-btn {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.75rem; border-radius: 6px;
+  font-family: var(--mono); font-size: 0.62rem;
+  color: var(--text3); cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.tb-btn:hover { color: var(--text2); background: rgba(255,255,255,0.04); border-color: var(--border); }
+.tb-btn.active { color: var(--cyan); border-color: rgba(0,229,255,0.25); background: var(--cyan-dim); }
+.tb-btn .tb-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.tb-clock {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--text2); letter-spacing: 0.08em;
+  text-align: right;
+}
+.tb-clock .tb-date { font-size: 0.55rem; color: var(--text3); }
+.tb-status {
+  display: flex; align-items: center; gap: 0.3rem;
+  font-family: var(--mono); font-size: 0.55rem;
+  color: var(--green); letter-spacing: 0.1em;
+}
+.tb-status .pulse {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* ─── WINDOWS ─── */
+.win {
+  position: absolute;
+  background: var(--glass);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,229,255,0.04);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.2s, opacity 0.3s, transform 0.3s var(--ease);
+  min-width: 320px; min-height: 200px;
+}
+.win.opening { animation: winOpen 0.35s var(--ease) both; }
+.win.closing { animation: winClose 0.25s var(--ease) both; }
+.win.minimizing { animation: winMinimize 0.25s var(--ease) both; }
+@keyframes winOpen { from { opacity:0; transform: scale(0.92) translateY(16px); } to { opacity:1; transform: scale(1) translateY(0); } }
+@keyframes winClose { from { opacity:1; transform: scale(1); } to { opacity:0; transform: scale(0.9); } }
+@keyframes winMinimize { from { opacity:1; transform: scale(1) translateY(0); } to { opacity:0; transform: scale(0.7) translateY(60px); } }
+.win.focused { border-color: rgba(0,229,255,0.15); box-shadow: 0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,229,255,0.08), 0 0 40px rgba(0,229,255,0.03); }
+.win.maximized { border-radius: 0 !important; }
+
+/* Title Bar */
+.win-titlebar {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  cursor: move; flex-shrink: 0;
+}
+.win-controls { display: flex; gap: 6px; }
+.win-btn {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: none; cursor: pointer;
+  transition: filter 0.15s, transform 0.15s;
+  position: relative;
+}
+.win-btn:hover { filter: brightness(1.3); transform: scale(1.1); }
+.win-btn.close { background: #ff5f57; }
+.win-btn.minimize { background: #ffbd2e; }
+.win-btn.maximize { background: #28c840; }
+.win-title {
+  font-family: var(--mono); font-size: 0.68rem;
+  color: var(--text2); letter-spacing: 0.1em;
+  flex: 1; text-align: center;
+}
+.win-icon { font-size: 0.85rem; }
+.win-body {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,229,255,0.2) transparent;
+}
+.win-body::-webkit-scrollbar { width: 4px; }
+.win-body::-webkit-scrollbar-track { background: transparent; }
+.win-body::-webkit-scrollbar-thumb { background: rgba(0,229,255,0.2); border-radius: 2px; }
+.win-resize {
+  position: absolute; bottom: 0; right: 0;
+  width: 14px; height: 14px;
+  cursor: se-resize;
+}
+.win-resize::after {
+  content: '';
+  position: absolute; bottom: 3px; right: 3px;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--text3);
+  border-bottom: 2px solid var(--text3);
+}
+
+/* ─── WINDOW CONTENT STYLES ─── */
+.wc-section { margin-bottom: 1.8rem; }
+.wc-label {
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.wc-label::after { content:''; flex:1; height:1px; background: rgba(0,229,255,0.15); }
+.wc-title {
+  font-family: var(--sans); font-size: 1.8rem;
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: 0.8rem;
+}
+.wc-title .hi { color: var(--cyan); }
+.wc-body { font-size: 0.88rem; color: var(--text2); line-height: 1.75; }
+
+/* About */
+.about-hero {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 1.5rem; background: var(--cyan-dim);
+  border: 1px solid rgba(0,229,255,0.1); border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+.about-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 2px solid var(--cyan); flex-shrink: 0;
+  object-fit: cover;
+}
+.about-name { font-family: var(--sans); font-size: 1.3rem; font-weight: 700; }
+.about-role { font-family: var(--mono); font-size: 0.65rem; color: var(--cyan); letter-spacing: 0.12em; text-transform: uppercase; }
+.available-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2);
+  padding: 0.2rem 0.6rem; border-radius: 999px;
+  font-family: var(--mono); font-size: 0.55rem; color: var(--green);
+  letter-spacing: 0.1em; margin-top: 0.4rem;
+}
+.stat-row { display: flex; gap: 0.75rem; margin: 1rem 0; flex-wrap: wrap; }
+.stat-box {
+  flex: 1; min-width: 80px;
+  padding: 0.75rem; background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border); border-radius: 8px;
+  text-align: center;
+}
+.stat-box .num { font-family: var(--sans); font-size: 1.4rem; font-weight: 800; color: var(--cyan); }
+.stat-box .lbl { font-family: var(--mono); font-size: 0.52rem; color: var(--text3); letter-spacing: 0.1em; margin-top: 0.15rem; }
+
+/* Skills */
+.skill-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-pill {
+  font-family: var(--mono); font-size: 0.65rem;
+  padding: 0.4rem 0.85rem; border-radius: 6px;
+  background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.15);
+  color: var(--text2); cursor: default; letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+.skill-pill:hover { background: rgba(0,229,255,0.12); color: var(--cyan); border-color: rgba(0,229,255,0.3); transform: translateY(-2px); }
+
+/* Projects */
+.proj-card {
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.2rem; margin-bottom: 1rem;
+  background: rgba(255,255,255,0.02);
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.proj-card:hover { border-color: rgba(0,229,255,0.25); background: var(--cyan-dim); transform: translateX(4px); }
+.proj-num { font-family: var(--mono); font-size: 0.6rem; color: var(--cyan); margin-bottom: 0.4rem; }
+.proj-title { font-family: var(--sans); font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+.proj-desc { font-size: 0.82rem; color: var(--text2); margin-bottom: 0.75rem; line-height: 1.6; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.proj-tag { font-family: var(--mono); font-size: 0.55rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(255,179,71,0.08); border: 1px solid rgba(255,179,71,0.2); color: var(--amber); }
+.proj-arrow { float: right; font-size: 1rem; color: var(--cyan); }
+
+/* Experience / Education */
+.timeline-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; position: relative; }
+.timeline-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--cyan); flex-shrink: 0; margin-top: 0.25rem;
+  box-shadow: 0 0 8px var(--cyan-glow);
+}
+.timeline-line {
+  position: absolute; left: 4px; top: 15px; bottom: -10px;
+  width: 1px; background: rgba(0,229,255,0.15);
+}
+.tl-head { font-family: var(--sans); font-size: 0.95rem; font-weight: 700; }
+.tl-sub { font-family: var(--mono); font-size: 0.65rem; color: var(--cyan); margin: 0.2rem 0; letter-spacing: 0.06em; }
+.tl-meta { font-family: var(--mono); font-size: 0.58rem; color: var(--text3); }
+.tl-bullets { margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.tl-bullets li { font-size: 0.82rem; color: var(--text2); list-style: none; padding-left: 1rem; position: relative; }
+.tl-bullets li::before { content: '▹'; position: absolute; left: 0; color: var(--cyan); font-size: 0.7rem; }
+
+/* Terminal */
+.term-body {
+  background: rgba(0,0,0,0.6) !important;
+  border-radius: 0 !important;
+  font-family: var(--mono) !important;
+  font-size: 0.78rem !important;
+  padding: 1.2rem !important;
+}
+.term-line { margin-bottom: 0.35rem; line-height: 1.5; }
+.term-prompt { color: var(--green); }
+.term-cmd { color: var(--text); }
+.term-out { color: var(--text2); }
+.term-out.cyan { color: var(--cyan); }
+.term-out.amber { color: var(--amber); }
+.term-out.green { color: var(--green); }
+.term-input-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 0.75rem;
+}
+.term-input {
+  flex: 1; background: none; border: none; outline: none;
+  font-family: var(--mono); font-size: 0.78rem; color: var(--text);
+  caret-color: var(--green);
+}
+.term-cursor-blink {
+  width: 8px; height: 14px;
+  background: var(--green); opacity: 1;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50%{opacity:0;} }
+
+/* Contact */
+.contact-btn {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 1rem 1.2rem; border-radius: 10px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+  font-family: var(--mono); font-size: 0.75rem; color: var(--text2);
+  cursor: pointer; transition: all 0.25s; text-decoration: none;
+  width: 100%; margin-bottom: 0.75rem;
+}
+.contact-btn:hover { border-color: rgba(0,229,255,0.3); background: var(--cyan-dim); color: var(--cyan); }
+.contact-btn .c-icon { font-size: 1.1rem; }
+.contact-btn .c-label { font-size: 0.68rem; color: var(--text3); }
+
+/* Why section */
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.why-card {
+  padding: 1rem; border-radius: 8px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+}
+.why-icon { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.why-text { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+
+/* Resume window */
+.resume-section { margin-bottom: 1.5rem; }
+.resume-section-title {
+  font-family: var(--sans); font-weight: 700; font-size: 0.85rem;
+  color: var(--cyan); letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+}
+.resume-section-title::after { content:''; flex:1; height:1px; background:rgba(0,229,255,0.15); }
+
+/* AI Automation window */
+.automation-step {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1rem; border-radius: 8px;
+  border: 1px solid var(--border); margin-bottom: 0.75rem;
+  background: rgba(255,255,255,0.02); transition: all 0.2s;
+}
+.automation-step:hover { border-color: rgba(0,229,255,0.2); }
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0,229,255,0.3), rgba(0,255,136,0.2));
+  border: 1px solid rgba(0,229,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.62rem; font-weight: 700;
+  color: var(--cyan); flex-shrink: 0;
+}
+.step-content h4 { font-family: var(--sans); font-size: 0.88rem; font-weight: 700; margin-bottom: 0.3rem; }
+.step-content p { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
+
+/* Impact tags */
+.impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 1rem 0; }
+.impact-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.75rem; border-radius: 6px;
+  background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.12);
+  font-size: 0.75rem; color: var(--text2);
+}
+.impact-item::before { content:'▹'; color: var(--green); flex-shrink:0; }
+
+/* Scrollbar */
+* { scrollbar-width: thin; scrollbar-color: rgba(0,229,255,0.15) transparent; }
+
+/* Context menu */
+#ctx-menu {
+  position: fixed; z-index: 9000;
+  background: rgba(14,17,23,0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border2);
+  border-radius: 8px; padding: 0.3rem;
+  min-width: 160px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+  display: none;
+}
+.ctx-item {
+  padding: 0.5rem 0.85rem; border-radius: 5px;
+  font-family: var(--mono); font-size: 0.68rem;
+  color: var(--text2); cursor: pointer; letter-spacing: 0.04em;
+  transition: background 0.15s;
+}
+.ctx-item:hover { background: var(--cyan-dim); color: var(--cyan); }
+.ctx-sep { height: 1px; background: var(--border); margin: 0.25rem 0; }
+
+/* AI Automation window */
+.ia-hero-label{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);background:rgba(255,179,71,0.08);border:1px solid rgba(255,179,71,0.2);padding:.35rem 1rem;border-radius:999px;margin-bottom:1rem;}
+.ia-intro{font-size:.88rem;color:var(--text2);line-height:1.75;margin-bottom:1.8rem;}
+.ia-impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:2rem;}
+.ia-impact-item{display:flex;align-items:flex-start;gap:.6rem;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.12);border-radius:8px;padding:.75rem 1rem;font-size:.8rem;color:var(--text2);line-height:1.5;}
+.ia-impact-item::before{content:'▹';color:var(--green);flex-shrink:0;font-size:.75rem;margin-top:.1rem;}
+.ia-section-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;}
+.ia-section-label::after{content:'';flex:1;height:1px;background:rgba(255,179,71,0.2);}
+.ia-workflow-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;}
+.ia-step{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:zoom-in;transition:all .3s var(--ease);}
+.ia-step:hover{border-color:rgba(255,179,71,0.25);transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.5);}
+.ia-step-img{position:relative;overflow:hidden;}
+.ia-step-img img{width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .4s var(--ease);}
+.ia-step:hover .ia-step-img img{transform:scale(1.04);}
+.ia-step-badge{position:absolute;top:.6rem;left:.6rem;width:24px;height:24px;background:linear-gradient(135deg,var(--amber),#e8c97a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:.6rem;color:#07070a;}
+.ia-step-body{padding:1rem;}
+.ia-step-body p{font-size:.78rem;color:var(--text2);line-height:1.55;}
+.ia-zoom-hint{display:flex;align-items:center;gap:.35rem;margin-top:.5rem;font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);}
+.ia-zoom-hint::before{content:'⊕';}
+.ia-case{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:2rem;}
+.ia-case-img{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:zoom-in;transition:all .3s var(--ease);}
+.ia-case-img:hover{border-color:rgba(255,179,71,0.25);transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.5);}
+.ia-case-img img{width:100%;display:block;border-bottom:1px solid var(--border);}
+.ia-case-img-caption{padding:.75rem 1rem;font-family:var(--mono);font-size:.6rem;color:var(--text3);letter-spacing:.06em;}
+.ia-how-steps{display:flex;flex-direction:column;gap:.75rem;}
+.ia-how-row{display:flex;align-items:flex-start;gap:.65rem;}
+.ia-how-dot{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--amber),#e8c97a);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:.58rem;color:#07070a;margin-top:.1rem;}
+.ia-how-row p{font-size:.8rem;color:var(--text2);line-height:1.6;}
+.ia-how-row p strong{color:var(--text);}
+.ia-notify-grid{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;}
+.ia-notify-tag{font-family:var(--mono);font-size:.65rem;padding:.4rem .85rem;border-radius:6px;background:rgba(255,179,71,0.07);border:1px solid rgba(255,179,71,0.18);color:var(--amber);}
+.ia-cta{background:rgba(255,179,71,0.04);border:1px solid rgba(255,179,71,0.15);border-radius:10px;padding:1.5rem;text-align:center;margin-top:.5rem;}
+.ia-cta p{font-size:.85rem;color:var(--text2);margin-bottom:1rem;}
+.ia-cta a{display:inline-flex;align-items:center;gap:.4rem;background:var(--amber);color:#07070a;font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.08em;padding:.65rem 1.6rem;border-radius:999px;transition:all .25s;text-decoration:none;}
+.ia-cta a:hover{background:#e8c97a;transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,179,71,0.3);}
+.ia-lb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:99999;align-items:center;justify-content:center;cursor:zoom-out;}
+.ia-lb-overlay.active{display:flex;}
+.ia-lb-overlay img{max-width:90vw;max-height:85vh;border-radius:8px;box-shadow:0 40px 80px rgba(0,0,0,.8);cursor:default;}
+.ia-lb-close{position:fixed;top:1.2rem;right:1.2rem;width:38px;height:38px;border-radius:50%;background:rgba(14,17,23,0.9);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#f0ece8;cursor:pointer;transition:all .2s;}
+.ia-lb-close:hover{background:var(--amber);color:#07070a;}
+
+/* Mobile fallback message */
+.mobile-msg {
+  display: none;
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 99999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+@media (max-width: 700px) {
+  .mobile-msg { display: flex; }
+  #desktop, #taskbar, #boot { display: none !important; }
+  body { overflow: auto; }
+}
+.mobile-msg .m-logo img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--cyan); }
+.mobile-msg h1 { font-family: var(--sans); font-size: 1.4rem; font-weight: 800; }
+.mobile-msg p { font-size: 0.88rem; color: var(--text2); line-height: 1.7; max-width: 320px; }
+.mobile-links { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; max-width: 280px; }
+.mobile-link {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.9rem 1.2rem; border-radius: 10px;
+  border: 1px solid var(--border2); background: var(--panel);
+  font-family: var(--mono); font-size: 0.75rem; color: var(--text2);
+  cursor: pointer; text-decoration: none;
+}
+.mobile-link:hover { border-color: rgba(0,229,255,0.3); color: var(--cyan); }
+</style>
 </head>
-
 <body>
-  <div class="container">
 
-    <!-- Header -->
-    <header>
-      <div class="logo">
-        <img 
-          src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" 
-          alt="Marc Negrillo Logo"
-        >
-      </div>
+<!-- Mobile fallback -->
+<div class="mobile-msg">
+  <div class="m-logo"><img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="MN Logo"></div>
+  <h1>Marc <span style="color:var(--cyan)">Negrillo</span></h1>
+  <p>This portfolio is designed as an immersive desktop OS experience. For the full experience, please visit on a desktop or laptop browser.</p>
+  <div class="mobile-links">
+    <a href="mailto:marcnegrillo2002@gmail.com" class="mobile-link">✉ Send Email</a>
+    <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/" target="_blank" class="mobile-link">↗ LinkedIn Profile</a>
+    <a href="resume.html" class="mobile-link">📄 View Resume</a>
+  </div>
+</div>
 
-      <nav>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
+<!-- Boot Screen -->
+<div id="boot">
+  <div class="boot-logo"><img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="MN"></div>
+  <div class="boot-name">MN / OS</div>
+  <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
+  <div class="boot-text" id="bootText">Initializing system...</div>
+</div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="about">
-      <h1>Marc Negrillo</h1>
-      <p>
-        I build high-converting landing pages and simple AI automations using
-        <span class="highlight">n8n and modern web tools</span>.
-      </p>
-
-      <div class="buttons">
-        <a href="resume.html" class="secondary">View My Work</a>
-      </div>
-    </section>
-
-    <!-- About Me -->
-    <section class="about-me">
-      <div class="about-card">
-        <h2>About Me</h2>
-
-        <p>
-          I help businesses turn visitors into leads through clean landing pages and smart automations.
-        </p>
-
-        <p>
-          I enjoy creating landing pages, automating tasks, and learning new
-          technologies. Outside of coding, I explore AI tools, web design ideas,
-          and ways to make everyday tasks easier.
-        </p>
-      </div>
-    </section>
-
-    <!-- Why Hire Me -->
-    <section class="why-hire">
-      <h2>Why Hire Me?</h2>
-      <div class="why-grid">
-        <div class="why-card">🚀 Adapts quickly to new tools to ship faster</div>
-        <div class="why-card">⚙️ Strong focus on automation and efficiency</div>
-        <div class="why-card">🎨 Clean, responsive, and user-friendly designs</div>
-        <div class="why-card">🧠 Comfortable working independently or with a team</div>
-      </div>
-    </section>
-
-    <!-- Technical Arsenal -->
-    <section id="skills">
-      <h2>Technical Arsenal</h2>
-      <div class="tech-grid">
-        <div class="tech-card">Programming Fundamentals: C, C++, JavaScript</div>
-        <div class="tech-card">Web Development: HTML, CSS, JavaScript, Responsive Design</div>
-        <div class="tech-card">Automation & AI: n8n, workflow automation, AI tools</div>
-        <div class="tech-card">Tools & Platforms: Git, GitHub, WordPress, WP Engine</div>
-      </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects">
-      <h2>Projects</h2>
-
-      <div class="projects">
-
-        <div class="project-card">
-          <h3>AI Automation</h3>
-          <p class="project-desc">
-            Automated lead capture and follow-ups using n8n to reduce manual work
-            and improve response time.
-          </p>
-
-          <ul class="project-stack">
-            <li>n8n</li>
-            <li>APIs</li>
-            <li>Webhooks</li>
-          </ul>
-
-          <a href="ai-automation.html" class="project-btn">View Project</a>
-        </div>
-
-        <div class="project-card">
-          <h3>Web Development</h3>
-          <p class="project-desc">
-            Designed and built responsive landing pages focused on clarity,
-            usability, and conversion.
-          </p>
-
-          <ul class="project-stack">
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-          </ul>
-
-          <a href="web-development.html" class="project-btn">View Project</a>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Education & Experience -->
-    <section class="grid-two">
-      <div class="card">
-        <h2>Education</h2>
-        <div class="education-item">
-          <h3>CEGUERA TECHNOLOGICAL COLLEGES</h3>
-          <p>Bachelor of Science in Information Technology</p>
-          <span class="edu-year">(2021 – 2025)</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Experience</h2>
-        <div class="experience-item">
-          <h3>Equity Track PH</h3>
-          <ul class="exp-list">
-            <li>Basic automation</li>
-            <li>Direct mail</li>
-            <li>Web Development</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer / CTA -->
-    <section class="cta" id="contact">
-      <h2>Let’s Work Together</h2>
-      <p class="cta-text">
-        Need a landing page or simple automation to save time and grow your business?
-        I’m open to freelance and collaboration opportunities.
-      </p>
-
-      <div class="cta-buttons">
-        <a href="mailto:marcnegrillo2002@gmail.com" class="back-button">Email Me</a>
-          <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/"  class="back-button"> LinkedIn</a>
-        </a>
-      </div>
-    </section>
-
+<!-- Desktop -->
+<div id="desktop">
+  <div id="desktop-icons">
+    <div class="d-icon" onclick="openWindow('about')" id="icon-about">
+      <div class="icon-img" style="background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,229,255,0.05))">👤</div>
+      <div class="icon-label">About.exe</div>
+    </div>
+    <div class="d-icon" onclick="openWindow('projects')" id="icon-projects">
+      <div class="icon-img" style="background:linear-gradient(135deg,rgba(255,179,71,0.15),rgba(255,179,71,0.05))">📁</div>
+      <div class="icon-label">Projects</div>
+    </div>
+    <div class="d-icon" onclick="openWindow('skills')" id="icon-skills">
+      <div class="icon-img" style="background:linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,255,136,0.05))">⚙️</div>
+      <div class="icon-label">Skills.db</div>
+    </div>
+    <div class="d-icon" onclick="openWindow('experience')" id="icon-experience">
+      <div class="icon-img" style="background:linear-gradient(135deg,rgba(180,120,255,0.15),rgba(180,120,255,0.05))">💼</div>
+      <div class="icon-label">Experience</div>
+    </div>
+    <div class="d-icon" onclick="openWindow('ai_automation')" id="icon-ai_automation">
+      <div class="icon-img" style="background:linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,229,255,0.08))">🤖</div>
+      <div class="icon-label">AI.auto</div>
+    </div>
+    <div class="d-icon" onclick="openWindow('terminal')" id="icon-terminal">
+      <div class="icon-img" style="background:linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,0,0,0.3))">⌨️</div>
+      <div class="icon-label">Terminal</div>
+    </div>
+    <div class="d-icon" onclick="openWindow('contact')" id="icon-contact">
+      <div class="icon-img" style="background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,229,255,0.02))">✉️</div>
+      <div class="icon-label">Contact</div>
+    </div>
+    <div class="d-icon" onclick="openWindow('resume')" id="icon-resume">
+      <div class="icon-img" style="background:linear-gradient(135deg,rgba(255,179,71,0.15),rgba(255,179,71,0.02))">📄</div>
+      <div class="icon-label">Resume.pdf</div>
+    </div>
   </div>
 
-  <!-- JS -->
-  <script src="script.js"></script>
+  <!-- Desktop hint -->
+  <div id="desktop-hint" style="position:absolute;bottom:2rem;right:2rem;font-family:var(--mono);font-size:0.6rem;color:var(--text3);text-align:right;letter-spacing:0.08em;pointer-events:none;line-height:1.8;">
+    Double-click icons to open apps<br>Drag windows to move · Resize from corner
+  </div>
+</div>
+
+<!-- Taskbar -->
+<div id="taskbar">
+  <div class="tb-logo">
+    <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="MN">
+    <span>MN/OS</span>
+  </div>
+  <div class="tb-sep"></div>
+  <div id="taskbar-btns" style="display:flex;gap:0.5rem;flex-wrap:nowrap;overflow:hidden;"></div>
+  <div class="tb-sep"></div>
+  <div class="tb-status"><div class="pulse"></div>Available for hire</div>
+  <div class="tb-clock">
+    <div id="tb-time">--:--</div>
+    <div class="tb-date" id="tb-date">---</div>
+  </div>
+</div>
+
+<!-- Context Menu -->
+<div id="ctx-menu">
+  <div class="ctx-item" onclick="openWindow('about')">👤 About Me</div>
+  <div class="ctx-item" onclick="openWindow('ai_automation')">🤖 AI Automation</div>
+  <div class="ctx-item" onclick="openWindow('projects')">📁 Projects</div>
+  <div class="ctx-item" onclick="openWindow('skills')">⚙️ Skills</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" onclick="openWindow('terminal')">⌨️ Terminal</div>
+  <div class="ctx-item" onclick="openWindow('contact')">✉️ Contact</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" onclick="closeAllWindows()">✕ Close All</div>
+</div>
+
+<!-- AI Automation Lightbox -->
+<div class="ia-lb-overlay" id="ia-lb">
+  <button class="ia-lb-close" id="ia-lb-close">✕</button>
+  <img id="ia-lb-img" src="" alt="">
+</div>
+
+<!-- Window templates rendered by JS -->
+<div id="win-container"></div>
+
+<script>
+/* ══════════════════════════════════════════
+   BOOT SEQUENCE
+══════════════════════════════════════════ */
+const bootMsgs = [
+  'Initializing system...',
+  'Loading portfolio kernel...',
+  'Mounting user data...',
+  'Starting Marc Negrillo OS...',
+  'Welcome.'
+];
+let bootPct = 0;
+const bootBar = document.getElementById('bootBar');
+const bootText = document.getElementById('bootText');
+let msgIdx = 0;
+
+function bootStep() {
+  bootPct = Math.min(bootPct + Math.random() * 22 + 8, 100);
+  bootBar.style.width = bootPct + '%';
+  if (bootPct > (msgIdx + 1) * 20 && msgIdx < bootMsgs.length - 1) {
+    msgIdx++;
+    bootText.textContent = bootMsgs[msgIdx];
+  }
+  if (bootPct >= 100) {
+    bootBar.style.width = '100%';
+    bootText.textContent = 'Welcome.';
+    setTimeout(finishBoot, 600);
+  } else {
+    setTimeout(bootStep, 120 + Math.random() * 100);
+  }
+}
+bootStep();
+
+function finishBoot() {
+  const boot = document.getElementById('boot');
+  boot.style.transition = 'opacity 0.6s ease';
+  boot.style.opacity = '0';
+  setTimeout(() => {
+    boot.style.display = 'none';
+    document.getElementById('desktop-hint').style.opacity = '1';
+    setTimeout(() => openWindow('about'), 400);
+  }, 600);
+}
+
+/* ══════════════════════════════════════════
+   CLOCK
+══════════════════════════════════════════ */
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('tb-time').textContent = h + ':' + m;
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('tb-date').textContent = `${days[now.getDay()]} ${months[now.getMonth()]} ${now.getDate()}`;
+}
+updateClock();
+setInterval(updateClock, 5000);
+
+/* ══════════════════════════════════════════
+   WINDOW MANAGER
+══════════════════════════════════════════ */
+const windowDefs = {
+  about: {
+    title: 'About Me — Marc Negrillo',
+    icon: '👤',
+    w: 520, h: 560,
+    content: `
+      <div class="about-hero">
+        <img class="about-avatar" src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="Marc Negrillo">
+        <div>
+          <div class="about-name">Marc Negrillo</div>
+          <div class="about-role">Frontend Dev · AI Automation</div>
+          <div class="available-badge"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);"></span> Available for hire</div>
+        </div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-label">Profile</div>
+        <div class="wc-body">Building high-converting landing pages &amp; AI automation workflows for businesses. Passionate about clean code, great UX, and automating the boring stuff so teams can focus on what matters.</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num">1+</div><div class="lbl">Years study</div></div>
+        <div class="stat-box"><div class="num">2</div><div class="lbl">Key skills</div></div>
+        <div class="stat-box"><div class="num">∞</div><div class="lbl">Curiosity</div></div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-label">Why Hire Me</div>
+        <div class="why-grid">
+          <div class="why-card"><div class="why-icon">🚀</div><div class="why-text">Adapts quickly to new tools to ship faster and meet deadlines.</div></div>
+          <div class="why-card"><div class="why-icon">⚙️</div><div class="why-text">Strong focus on automation and efficiency to reduce repetitive work.</div></div>
+          <div class="why-card"><div class="why-icon">🎨</div><div class="why-text">Clean, responsive, and user-friendly designs that convert.</div></div>
+          <div class="why-card"><div class="why-icon">🧠</div><div class="why-text">Comfortable working independently or collaborating with a team.</div></div>
+        </div>
+      </div>
+    `
+  },
+  projects: {
+    title: 'Projects — Selected Work',
+    icon: '📁',
+    w: 500, h: 520,
+    content: `
+      <div class="wc-section">
+        <div class="wc-label">Selected Work</div>
+        <div class="proj-card" onclick="window.open('Ai automation.html','_blank')">
+          <span class="proj-arrow">↗</span>
+          <div class="proj-num">Project / 01</div>
+          <div class="proj-title">AI Automation</div>
+          <div class="proj-desc">Automated lead capture and follow-ups using n8n to reduce manual work and improve response time. Never miss a lead again.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">n8n</span>
+            <span class="proj-tag">APIs</span>
+            <span class="proj-tag">Webhooks</span>
+            <span class="proj-tag">Google Sheets</span>
+          </div>
+        </div>
+        <div class="proj-card" onclick="window.open('Web development.html','_blank')">
+          <span class="proj-arrow">↗</span>
+          <div class="proj-num">Project / 02</div>
+          <div class="proj-title">Web Development</div>
+          <div class="proj-desc">Designed and built responsive landing pages focused on clarity, usability, and conversion for real businesses.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">HTML</span>
+            <span class="proj-tag">CSS</span>
+            <span class="proj-tag">JavaScript</span>
+            <span class="proj-tag">WordPress</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-family:var(--mono);font-size:0.6rem;color:var(--text3);text-align:center;letter-spacing:0.1em;">Click any card to view full case study ↗</div>
+    `
+  },
+  skills: {
+    title: 'Skills.db — Technical Arsenal',
+    icon: '⚙️',
+    w: 480, h: 480,
+    content: `
+      <div class="wc-section">
+        <div class="wc-label">Languages</div>
+        <div class="skill-grid">
+          <div class="skill-pill">C</div>
+          <div class="skill-pill">C++</div>
+          <div class="skill-pill">JavaScript</div>
+          <div class="skill-pill">HTML &amp; CSS</div>
+        </div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-label">Frontend</div>
+        <div class="skill-grid">
+          <div class="skill-pill">Responsive Design</div>
+          <div class="skill-pill">WordPress</div>
+          <div class="skill-pill">WP Engine</div>
+          <div class="skill-pill">UI/UX</div>
+        </div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-label">Automation &amp; Tools</div>
+        <div class="skill-grid">
+          <div class="skill-pill">n8n Workflows</div>
+          <div class="skill-pill">Workflow Automation</div>
+          <div class="skill-pill">AI Tools</div>
+          <div class="skill-pill">APIs &amp; Webhooks</div>
+          <div class="skill-pill">Git &amp; GitHub</div>
+        </div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-label">Environment</div>
+        <div class="skill-grid">
+          <div class="skill-pill">VS Code</div>
+          <div class="skill-pill">Sublime</div>
+          <div class="skill-pill">Google Sheets</div>
+          <div class="skill-pill">Web Performance</div>
+        </div>
+      </div>
+    `
+  },
+  experience: {
+    title: 'Experience & Education',
+    icon: '💼',
+    w: 500, h: 500,
+    content: `
+      <div class="wc-section">
+        <div class="wc-label">Experience</div>
+        <div class="timeline-item">
+          <div style="position:relative;">
+            <div class="timeline-dot"></div>
+          </div>
+          <div>
+            <div class="tl-head">Equity Track PH</div>
+            <div class="tl-sub">Web Dev · Automation</div>
+            <div class="tl-meta">Professional Experience</div>
+            <ul class="tl-bullets">
+              <li>Built basic automation workflows to reduce manual tasks</li>
+              <li>Supported direct mail campaigns and lead handling</li>
+              <li>Developed and maintained responsive web pages</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-label">Education</div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="tl-head">Ceguera Technological Colleges</div>
+            <div class="tl-sub">BS Information Technology</div>
+            <div class="tl-meta">2021 – 2025</div>
+          </div>
+        </div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-label">Achievements</div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <a href="Ai automation.html" target="_blank" style="font-family:var(--mono);font-size:0.65rem;padding:0.4rem 0.85rem;border-radius:6px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);cursor:pointer;text-decoration:none;">AI Automation ↗</a>
+          <a href="Web development.html" target="_blank" style="font-family:var(--mono);font-size:0.65rem;padding:0.4rem 0.85rem;border-radius:6px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);cursor:pointer;text-decoration:none;">Web Dev ↗</a>
+          <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/" target="_blank" style="font-family:var(--mono);font-size:0.65rem;padding:0.4rem 0.85rem;border-radius:6px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);cursor:pointer;text-decoration:none;">LinkedIn ↗</a>
+        </div>
+      </div>
+    `
+  },
+  terminal: {
+    title: 'Terminal — marc@mnos:~',
+    icon: '⌨️',
+    w: 560, h: 480,
+    content: `
+      <div id="term-output">
+        <div class="term-line"><span class="term-out cyan">Marc Negrillo OS — Portfolio Terminal v1.0</span></div>
+        <div class="term-line"><span class="term-out" style="color:var(--text3);">Type 'help' to see available commands.</span></div>
+        <div class="term-line"></div>
+      </div>
+      <div class="term-input-row">
+        <span class="term-prompt">marc@mnos:~$</span>
+        <input class="term-input" id="term-input" type="text" autocomplete="off" spellcheck="false" placeholder="Type a command...">
+      </div>
+    `,
+    extraClass: 'term-body'
+  },
+  contact: {
+    title: 'Contact — Get In Touch',
+    icon: '✉️',
+    w: 420, h: 420,
+    content: `
+      <div class="wc-section">
+        <div class="wc-label">Let's Connect</div>
+        <div class="wc-body" style="margin-bottom:1.5rem;">Have a project in mind? I'm available for freelance work and collaboration opportunities.</div>
+      </div>
+      <a href="mailto:marcnegrillo2002@gmail.com" class="contact-btn">
+        <span class="c-icon">✉️</span>
+        <div>
+          <div>Send an Email</div>
+          <div class="c-label">marcnegrillo2002@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/" target="_blank" class="contact-btn">
+        <span class="c-icon">🔗</span>
+        <div>
+          <div>LinkedIn Profile</div>
+          <div class="c-label">linkedin.com/in/marc-negrillo</div>
+        </div>
+      </a>
+      <a href="resume.html" class="contact-btn">
+        <span class="c-icon">📄</span>
+        <div>
+          <div>View Full Resume</div>
+          <div class="c-label">resume.html</div>
+        </div>
+      </a>
+      <div style="font-family:var(--mono);font-size:0.62rem;color:var(--text3);text-align:center;margin-top:1rem;letter-spacing:0.1em;">
+        Naga, Bicol Region, Philippines
+      </div>
+    `
+  },
+  ai_automation: {
+    title: 'AI Automation — Case Studies',
+    icon: '🤖',
+    w: 680, h: 600,
+    content: `
+      <div class="ia-hero-label">🤖 Case Studies</div>
+      <p class="ia-intro">Automation workflows that capture leads, <strong style="color:var(--text);">reduce manual work</strong>, and <strong style="color:var(--text);">organize data automatically</strong> — so your business never misses an opportunity.</p>
+      <div class="wc-label">What This Automation Does</div>
+      <div class="ia-impact-grid">
+        <div class="ia-impact-item">Automatically captures leads without manual checking</div>
+        <div class="ia-impact-item">Prevents missed inquiries and lost opportunities</div>
+        <div class="ia-impact-item">Cleans and structures data for easy follow-ups</div>
+        <div class="ia-impact-item">Saves time for sales and admin teams</div>
+      </div>
+      <div class="ia-section-label">Workflow Examples</div>
+      <div class="ia-workflow-grid">
+        <div class="ia-step" data-img="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png">
+          <div class="ia-step-img"><span class="ia-step-badge">1</span><img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Form trigger node"></div>
+          <div class="ia-step-body"><p>Form Trigger – Captures leads instantly when a form is submitted.</p><div class="ia-zoom-hint">Click to enlarge</div></div>
+        </div>
+        <div class="ia-step" data-img="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png">
+          <div class="ia-step-img"><span class="ia-step-badge">2</span><img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Confirmation message"></div>
+          <div class="ia-step-body"><p>Confirmation Message – Immediate reassurance sent to the lead.</p><div class="ia-zoom-hint">Click to enlarge</div></div>
+        </div>
+        <div class="ia-step" data-img="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png">
+          <div class="ia-step-img"><span class="ia-step-badge">3</span><img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Set node"></div>
+          <div class="ia-step-body"><p>Set Node – Cleans and prepares data for storage and follow-up.</p><div class="ia-zoom-hint">Click to enlarge</div></div>
+        </div>
+        <div class="ia-step" data-img="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png">
+          <div class="ia-step-img"><span class="ia-step-badge">4</span><img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Google Sheets storage"></div>
+          <div class="ia-step-body"><p>Google Sheets – Stores leads in real time for instant access.</p><div class="ia-zoom-hint">Click to enlarge</div></div>
+        </div>
+      </div>
+      <div class="ia-section-label">Monday.com → Google Chat</div>
+      <div class="ia-case">
+        <div class="ia-case-img ia-step" data-img="https://www.image2url.com/r2/default/files/1781028371393-7d8b2c81-6adf-40e9-a1c5-fd9b3ca55c01.png">
+          <img src="https://www.image2url.com/r2/default/files/1781028371393-7d8b2c81-6adf-40e9-a1c5-fd9b3ca55c01.png" alt="Make.com workflow">
+          <div class="ia-case-img-caption">Make.com workflow — click to enlarge</div>
+        </div>
+        <div>
+          <div style="font-size:.82rem;color:var(--text2);margin-bottom:1rem;line-height:1.65;">Real-time team notifications triggered by any change in your project board.</div>
+          <div class="ia-how-steps">
+            <div class="ia-how-row"><span class="ia-how-dot">1</span><p>A team member makes <strong>any change</strong> to a Monday.com board — status, assignee, deadline, or department.</p></div>
+            <div class="ia-how-row"><span class="ia-how-dot">2</span><p>Make.com picks up the change and routes it through a smart workflow.</p></div>
+            <div class="ia-how-row"><span class="ia-how-dot">3</span><p>A formatted notification is sent automatically to the <strong>Google Chat space</strong>.</p></div>
+            <div class="ia-how-row"><span class="ia-how-dot">4</span><p>Everyone sees <strong>who changed it, what was changed, when, and which department</strong>.</p></div>
+          </div>
+          <div class="ia-notify-grid">
+            <div class="ia-notify-tag">👤 Who changed</div>
+            <div class="ia-notify-tag">✏️ What changed</div>
+            <div class="ia-notify-tag">🕐 Date &amp; time</div>
+            <div class="ia-notify-tag">🏢 Department</div>
+          </div>
+        </div>
+      </div>
+      <div class="ia-cta">
+        <p>Want a custom automation built for your business?</p>
+        <a href="Email.html" target="_blank">Request a Custom Automation →</a>
+      </div>
+    `
+  },
+  resume: {
+    title: 'Resume — Marc Negrillo',
+    icon: '📄',
+    w: 500, h: 560,
+    content: `
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);">
+        <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" style="width:52px;height:52px;border-radius:50%;border:2px solid var(--cyan);">
+        <div>
+          <div style="font-family:var(--sans);font-size:1.2rem;font-weight:800;">Marc Negrillo</div>
+          <div style="font-family:var(--mono);font-size:0.6rem;color:var(--cyan);letter-spacing:0.12em;text-transform:uppercase;">Frontend Dev · AI Automation Specialist</div>
+        </div>
+        <a href="resume.html" target="_blank" style="margin-left:auto;font-family:var(--mono);font-size:0.62rem;padding:0.4rem 0.85rem;border-radius:6px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);text-decoration:none;">Full Resume ↗</a>
+      </div>
+      <div class="resume-section">
+        <div class="resume-section-title">🎓 Education</div>
+        <div style="font-family:var(--sans);font-weight:700;font-size:0.9rem;">Ceguera Technological Colleges</div>
+        <div style="font-size:0.82rem;color:var(--text2);">Bachelor of Science in Information Technology</div>
+        <div style="font-family:var(--mono);font-size:0.62rem;color:var(--text3);margin-top:0.2rem;">2021 – 2025</div>
+      </div>
+      <div class="resume-section">
+        <div class="resume-section-title">💼 Experience</div>
+        <div style="font-family:var(--sans);font-weight:700;font-size:0.9rem;">Equity Track PH</div>
+        <ul class="tl-bullets" style="margin-top:0.5rem;">
+          <li>Built basic automation workflows to reduce manual tasks</li>
+          <li>Supported direct mail campaigns and lead handling</li>
+          <li>Developed and maintained responsive web pages</li>
+        </ul>
+      </div>
+      <div class="resume-section">
+        <div class="resume-section-title">🛠 Technical Skills</div>
+        <div class="skill-grid">
+          <div class="skill-pill">C</div><div class="skill-pill">C++</div>
+          <div class="skill-pill">JavaScript</div><div class="skill-pill">HTML &amp; CSS</div>
+          <div class="skill-pill">Responsive</div><div class="skill-pill">n8n</div>
+          <div class="skill-pill">Git</div><div class="skill-pill">GitHub</div>
+        </div>
+      </div>
+    `
+  }
+};
+
+let windows = {};
+let zCounter = 10;
+let activeWin = null;
+
+function openWindow(id) {
+  if (windows[id]) {
+    // Bring to front
+    focusWindow(id);
+    return;
+  }
+  const def = windowDefs[id];
+  if (!def) return;
+
+  const container = document.getElementById('win-container');
+  const el = document.createElement('div');
+  el.className = 'win opening' + (def.extraClass ? '' : '');
+  el.id = 'win-' + id;
+  el.style.cssText = `width:${def.w}px;height:${def.h}px;z-index:${++zCounter};`;
+
+  // Position
+  const taken = Object.keys(windows).length;
+  const ox = 120 + taken * 30;
+  const oy = 60 + taken * 25;
+  const maxX = window.innerWidth - def.w - 20;
+  const maxY = window.innerHeight - def.h - 60;
+  el.style.left = Math.min(ox, Math.max(20, maxX)) + 'px';
+  el.style.top = Math.min(oy, Math.max(10, maxY)) + 'px';
+
+  const bodyClass = def.extraClass || '';
+  el.innerHTML = `
+    <div class="win-titlebar" id="tb-${id}">
+      <div class="win-controls">
+        <button class="win-btn close" onclick="closeWindow('${id}')" title="Close"></button>
+        <button class="win-btn minimize" onclick="minimizeWindow('${id}')" title="Minimize"></button>
+        <button class="win-btn maximize" onclick="maximizeWindow('${id}')" title="Maximize"></button>
+      </div>
+      <div class="win-title">${def.icon} ${def.title}</div>
+    </div>
+    <div class="win-body ${bodyClass}" id="body-${id}">${def.content}</div>
+    <div class="win-resize" id="resize-${id}"></div>
+  `;
+
+  container.appendChild(el);
+  windows[id] = { el, minimized: false, maximized: false, savedRect: null };
+  focusWindow(id);
+  makeDraggable(id);
+  makeResizable(id);
+  addTaskbarBtn(id, def);
+
+  // Terminal init
+  if (id === 'terminal') initTerminal();
+
+  // Remove opening class after animation
+  setTimeout(() => el.classList.remove('opening'), 400);
+}
+
+function focusWindow(id) {
+  if (!windows[id]) return;
+  // Unfocus all
+  Object.keys(windows).forEach(k => windows[k].el.classList.remove('focused'));
+  windows[id].el.style.zIndex = ++zCounter;
+  windows[id].el.classList.add('focused');
+  activeWin = id;
+  // Update taskbar
+  document.querySelectorAll('.tb-btn').forEach(b => b.classList.toggle('active', b.dataset.wid === id));
+}
+
+function closeWindow(id) {
+  if (!windows[id]) return;
+  const el = windows[id].el;
+  el.classList.add('closing');
+  setTimeout(() => {
+    el.remove();
+    delete windows[id];
+    removeTaskbarBtn(id);
+  }, 280);
+}
+
+function minimizeWindow(id) {
+  if (!windows[id]) return;
+  const el = windows[id].el;
+  windows[id].minimized = true;
+  el.classList.add('minimizing');
+  setTimeout(() => {
+    el.style.visibility = 'hidden';
+    el.style.pointerEvents = 'none';
+    el.classList.remove('minimizing');
+  }, 260);
+  const btn = document.querySelector(`.tb-btn[data-wid="${id}"]`);
+  if (btn) btn.classList.remove('active');
+}
+
+function restoreWindow(id) {
+  if (!windows[id]) return;
+  const el = windows[id].el;
+  el.style.visibility = '';
+  el.style.pointerEvents = '';
+  windows[id].minimized = false;
+  el.classList.add('opening');
+  setTimeout(() => el.classList.remove('opening'), 400);
+  focusWindow(id);
+}
+
+function maximizeWindow(id) {
+  if (!windows[id]) return;
+  const el = windows[id].el;
+  const state = windows[id];
+  if (state.maximized) {
+    // Restore
+    const r = state.savedRect;
+    el.style.left = r.left; el.style.top = r.top;
+    el.style.width = r.width; el.style.height = r.height;
+    el.classList.remove('maximized');
+    state.maximized = false;
+  } else {
+    state.savedRect = { left: el.style.left, top: el.style.top, width: el.style.width, height: el.style.height };
+    el.style.left = '0'; el.style.top = '0';
+    el.style.width = '100vw';
+    el.style.height = `calc(100vh - var(--taskbar-h))`;
+    el.classList.add('maximized');
+    state.maximized = true;
+  }
+}
+
+function closeAllWindows() {
+  Object.keys(windows).forEach(id => closeWindow(id));
+}
+
+function addTaskbarBtn(id, def) {
+  const container = document.getElementById('taskbar-btns');
+  const btn = document.createElement('div');
+  btn.className = 'tb-btn active';
+  btn.dataset.wid = id;
+  btn.innerHTML = `<span class="tb-dot"></span>${def.icon} ${def.title.split(' — ')[0]}`;
+  btn.onclick = () => {
+    if (!windows[id]) return;
+    if (windows[id].minimized) restoreWindow(id);
+    else if (activeWin === id) minimizeWindow(id);
+    else focusWindow(id);
+  };
+  container.appendChild(btn);
+}
+
+function removeTaskbarBtn(id) {
+  const btn = document.querySelector(`.tb-btn[data-wid="${id}"]`);
+  if (btn) btn.remove();
+}
+
+/* Drag */
+function makeDraggable(id) {
+  const el = windows[id].el;
+  const tb = document.getElementById('tb-' + id);
+  let ox=0, oy=0, sx=0, sy=0, dragging=false;
+  tb.addEventListener('mousedown', e => {
+    if (e.target.classList.contains('win-btn')) return;
+    if (windows[id].maximized) return;
+    dragging = true;
+    sx = e.clientX; sy = e.clientY;
+    ox = el.offsetLeft; oy = el.offsetTop;
+    focusWindow(id);
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const nx = ox + e.clientX - sx;
+    const ny = oy + e.clientY - sy;
+    el.style.left = Math.max(-el.offsetWidth/2, Math.min(window.innerWidth - el.offsetWidth/2, nx)) + 'px';
+    el.style.top = Math.max(0, Math.min(window.innerHeight - 60, ny)) + 'px';
+  });
+  document.addEventListener('mouseup', () => { dragging = false; });
+  el.addEventListener('mousedown', () => focusWindow(id));
+}
+
+/* Resize */
+function makeResizable(id) {
+  const el = windows[id].el;
+  const handle = document.getElementById('resize-' + id);
+  let resizing=false, sx=0, sy=0, sw=0, sh=0;
+  handle.addEventListener('mousedown', e => {
+    resizing=true; sx=e.clientX; sy=e.clientY;
+    sw=el.offsetWidth; sh=el.offsetHeight;
+    e.preventDefault(); e.stopPropagation();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!resizing) return;
+    el.style.width = Math.max(320, sw + e.clientX - sx) + 'px';
+    el.style.height = Math.max(200, sh + e.clientY - sy) + 'px';
+  });
+  document.addEventListener('mouseup', () => { resizing=false; });
+}
+
+/* Double-click icons */
+document.querySelectorAll('.d-icon').forEach(ic => {
+  let clicks=0;
+  ic.addEventListener('click', () => {
+    clicks++;
+    if (clicks===2) { clicks=0; return; }
+    setTimeout(() => { clicks=0; }, 400);
+  });
+});
+
+/* Context menu */
+const ctxMenu = document.getElementById('ctx-menu');
+document.getElementById('desktop').addEventListener('contextmenu', e => {
+  e.preventDefault();
+  ctxMenu.style.display = 'block';
+  ctxMenu.style.left = Math.min(e.clientX, window.innerWidth - 170) + 'px';
+  ctxMenu.style.top = Math.min(e.clientY, window.innerHeight - 200) + 'px';
+});
+document.addEventListener('click', () => { ctxMenu.style.display = 'none'; });
+
+/* ══════════════════════════════════════════
+   TERMINAL LOGIC
+══════════════════════════════════════════ */
+const termCommands = {
+  help: () => [
+    { t:'cyan', v: '━━━ Available Commands ━━━' },
+    { t:'out', v: 'help          — Show this help' },
+    { t:'out', v: 'about         — Display about info' },
+    { t:'out', v: 'skills        — List technical skills' },
+    { t:'out', v: 'projects      — Show projects' },
+    { t:'out', v: 'experience    — Work experience' },
+    { t:'out', v: 'education     — Education info' },
+    { t:'out', v: 'contact       — Contact information' },
+    { t:'out', v: 'open [app]    — Open an app window' },
+    { t:'out', v: 'clear         — Clear terminal' },
+    { t:'out', v: 'whoami        — Who is this?' },
+    { t:'out', v: 'hire          — Why hire Marc?' },
+  ],
+  whoami: () => [
+    { t:'cyan', v: 'Marc Negrillo' },
+    { t:'out', v: 'Frontend Developer · AI Automation Specialist' },
+    { t:'out', v: 'Location: Naga, Bicol Region, Philippines' },
+    { t:'green', v: 'Status: Available for hire ✓' },
+  ],
+  about: () => [
+    { t:'cyan', v: '=== Marc Negrillo ===' },
+    { t:'out', v: 'Building high-converting landing pages &' },
+    { t:'out', v: 'AI automation workflows for businesses.' },
+    { t:'amber', v: 'Email: marcnegrillo2002@gmail.com' },
+  ],
+  skills: () => [
+    { t:'cyan', v: '=== Technical Skills ===' },
+    { t:'amber', v: '[Languages]  C, C++, JavaScript, HTML, CSS' },
+    { t:'amber', v: '[Automation] n8n, APIs, Webhooks, AI Tools' },
+    { t:'amber', v: '[Frontend]   Responsive, WordPress, WP Engine' },
+    { t:'amber', v: '[DevTools]   Git, GitHub, VS Code' },
+  ],
+  projects: () => [
+    { t:'cyan', v: '=== Projects ===' },
+    { t:'out', v: '[01] AI Automation — n8n lead capture workflows' },
+    { t:'out', v: '     Stack: n8n, APIs, Webhooks, Google Sheets' },
+    { t:'out', v: '' },
+    { t:'out', v: '[02] Web Development — Responsive landing pages' },
+    { t:'out', v: '     Stack: HTML, CSS, JavaScript, WordPress' },
+  ],
+  experience: () => [
+    { t:'cyan', v: '=== Experience ===' },
+    { t:'amber', v: 'Equity Track PH' },
+    { t:'out', v: '• Built automation workflows to reduce manual tasks' },
+    { t:'out', v: '• Supported mail campaigns and lead handling' },
+    { t:'out', v: '• Developed and maintained responsive web pages' },
+  ],
+  education: () => [
+    { t:'cyan', v: '=== Education ===' },
+    { t:'amber', v: 'Ceguera Technological Colleges' },
+    { t:'out', v: 'BS Information Technology — 2021 to 2025' },
+  ],
+  contact: () => [
+    { t:'cyan', v: '=== Contact ===' },
+    { t:'green', v: 'Email: marcnegrillo2002@gmail.com' },
+    { t:'green', v: 'LinkedIn: linkedin.com/in/marc-negrillo-159ab73a5' },
+    { t:'out', v: 'Open contact window: open contact' },
+  ],
+  hire: () => [
+    { t:'cyan', v: '=== Why Hire Marc? ===' },
+    { t:'green', v: '✓ Adapts quickly to new tools, ships fast' },
+    { t:'green', v: '✓ Strong automation & efficiency focus' },
+    { t:'green', v: '✓ Clean, responsive, converting designs' },
+    { t:'green', v: '✓ Works well independently or in a team' },
+    { t:'amber', v: '→ Available for freelance & collaborations' },
+  ],
+  clear: () => 'CLEAR',
+};
+
+function initTerminal() {
+  const input = document.getElementById('term-input');
+  if (!input) return;
+  input.focus();
+  const history = [];
+  let histIdx = -1;
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowUp') {
+      if (histIdx < history.length - 1) histIdx++;
+      input.value = history[histIdx] || '';
+      e.preventDefault();
+    }
+    if (e.key === 'ArrowDown') {
+      if (histIdx > 0) histIdx--;
+      else histIdx = -1;
+      input.value = history[histIdx] || '';
+      e.preventDefault();
+    }
+    if (e.key !== 'Enter') return;
+    const raw = input.value.trim();
+    input.value = '';
+    if (!raw) return;
+    history.unshift(raw); histIdx = -1;
+
+    const output = document.getElementById('term-output');
+    // Echo command
+    const echo = document.createElement('div');
+    echo.className = 'term-line';
+    echo.innerHTML = `<span class="term-prompt">marc@mnos:~$</span> <span class="term-cmd">${raw}</span>`;
+    output.appendChild(echo);
+
+    const parts = raw.split(' ');
+    const cmd = parts[0].toLowerCase();
+    const arg = parts[1];
+
+    // Handle 'open' command
+    if (cmd === 'open') {
+      const appMap = { about:'about', projects:'projects', skills:'skills', experience:'experience', terminal:'terminal', contact:'contact', resume:'resume', automation:'ai_automation', ai:'ai_automation' };
+      const app = appMap[arg];
+      if (app) {
+        appendTermLine(output, 'cyan', `Opening ${arg}...`);
+        setTimeout(() => openWindow(app), 200);
+      } else {
+        appendTermLine(output, 'out', arg ? `Unknown app: ${arg}` : 'Usage: open [app]');
+        appendTermLine(output, 'out', 'Apps: about, projects, skills, experience, terminal, contact, resume');
+      }
+    } else if (termCommands[cmd]) {
+      const result = termCommands[cmd]();
+      if (result === 'CLEAR') {
+        output.innerHTML = '';
+      } else {
+        result.forEach(line => appendTermLine(output, line.t, line.v));
+      }
+    } else {
+      appendTermLine(output, 'out', `Command not found: ${cmd}. Type 'help' for commands.`);
+    }
+
+    appendTermLine(output, 'out', '');
+    output.scrollTop = output.scrollHeight;
+  });
+}
+
+function appendTermLine(parent, type, text) {
+  const div = document.createElement('div');
+  div.className = 'term-line';
+  const cls = type === 'cyan' ? 'cyan' : type === 'amber' ? 'amber' : type === 'green' ? 'green' : '';
+  div.innerHTML = `<span class="term-out ${cls}">${text}</span>`;
+  parent.appendChild(div);
+}
+
+/* ══════════════════════════════════════════
+   AI AUTOMATION LIGHTBOX
+══════════════════════════════════════════ */
+(function() {
+  const lb = document.getElementById('ia-lb');
+  const lbImg = document.getElementById('ia-lb-img');
+  function closeLb() { lb.classList.remove('active'); }
+
+  // Wire up lightbox after window opens
+  const _origOpen = window.openWindow;
+  window.openWindow = function(id) {
+    _origOpen(id);
+    if (id === 'ai_automation') {
+      setTimeout(function() {
+        document.querySelectorAll('#body-ai_automation .ia-step').forEach(function(s) {
+          s.addEventListener('click', function() {
+            lbImg.src = s.dataset.img || s.querySelector('img').src;
+            lb.classList.add('active');
+          });
+        });
+      }, 50);
+    }
+  };
+
+  lb.addEventListener('click', closeLb);
+  lbImg.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('ia-lb-close').addEventListener('click', closeLb);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLb(); });
+})();
+
+/* ══════════════════════════════════════════
+   KEYBOARD SHORTCUTS
+══════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey) return;
+  if (document.activeElement.tagName === 'INPUT') return;
+});
+</script>
 </body>
 </html>
