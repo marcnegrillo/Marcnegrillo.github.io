@@ -3,412 +3,1364 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Automation Samples – Marc Negrillo</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+<title>AI Automation — Marc Negrillo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ============================= */
-/* Base                          */
-/* ============================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --ink:#07070a; --panel:#0f0f1a; --surface:#14141f; --surface-2:#1a1a28;
+  --border:rgba(255,255,255,0.07); --border-2:rgba(255,255,255,0.12);
+  --gold:#e8c97a; --amber:#d4a853; --gold-dim:rgba(232,201,122,0.12);
+  --gold-glow:rgba(232,201,122,0.3);
+  --text:#f0ece8; --warm:#f5ede0; --warm-dim:rgba(245,237,224,0.55);
+  --muted:rgba(240,236,232,0.35);
+  /* Platform accent colors */
+  --n8n:#ea4b71; --n8n-dim:rgba(234,75,113,0.12); --n8n-glow:rgba(234,75,113,0.25);
+  --make:#6d28d9; --make-dim:rgba(109,40,217,0.12); --make-glow:rgba(109,40,217,0.28);
+  --ghl:#16a34a; --ghl-dim:rgba(22,163,74,0.10); --ghl-glow:rgba(22,163,74,0.25);
+  --r:1rem; --r-lg:1.6rem;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Space Grotesk',sans-serif;
+  --mono:'Space Mono',monospace;
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:100;mix-blend-mode:overlay;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background:
-    radial-gradient(circle at top, rgba(139,92,246,0.08), transparent),
-    #0f0f15;
-  color: #fff;
-  line-height: 1.7;
+/* Back Button */
+.back-fixed{position:fixed;top:1.8rem;left:1.8rem;z-index:500;}
+.back-fixed a{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(7,7,10,0.85);backdrop-filter:blur(16px);
+  border:1px solid var(--border-2);padding:.65rem 1.4rem;border-radius:999px;
+  font-family:var(--sans);font-weight:500;font-size:.78rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--warm-dim);
+  transition:all .3s var(--ease);
+}
+.back-fixed a:hover{border-color:rgba(232,201,122,0.4);color:var(--warm);transform:translateX(-3px);box-shadow:0 8px 24px rgba(0,0,0,.5);}
+
+.page{max-width:1100px;margin:0 auto;padding:0 2.5rem 8rem;}
+
+/* ─── HERO ─── */
+.hero{padding:9rem 0 5rem;text-align:center;position:relative;}
+.hero::before{
+  content:'';position:absolute;
+  width:700px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(232,201,122,0.05),transparent);
+  left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;
+}
+.hero-label{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--mono);font-size:.65rem;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  background:rgba(232,201,122,0.08);border:1px solid rgba(232,201,122,0.2);
+  padding:.45rem 1.2rem;border-radius:999px;margin-bottom:2rem;
+}
+.hero-label .dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero h1{
+  font-family:var(--serif);font-size:clamp(3rem,7vw,6rem);
+  font-weight:900;letter-spacing:-.03em;line-height:.95;margin-bottom:1.8rem;
+}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-desc{
+  font-size:1.05rem;font-weight:300;color:var(--warm-dim);
+  max-width:580px;margin:0 auto 3rem;line-height:1.8;
+}
+.hero-desc strong{color:var(--warm);font-weight:500;}
+
+/* Platform badges in hero */
+.hero-platforms{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:0;}
+.platform-badge{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.6rem 1.3rem;border-radius:999px;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  transition:all .3s var(--ease);cursor:default;
+}
+.platform-badge.n8n{background:var(--n8n-dim);border:1px solid rgba(234,75,113,0.28);color:#f0829b;}
+.platform-badge.make{background:var(--make-dim);border:1px solid rgba(109,40,217,0.3);color:#a78bfa;}
+.platform-badge.ghl{background:var(--ghl-dim);border:1px solid rgba(22,163,74,0.28);color:#4ade80;}
+.platform-badge:hover{transform:translateY(-2px);}
+.platform-badge .pb-icon{font-size:.95rem;}
+
+/* ─── PLATFORM NAV TABS ─── */
+.platform-nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(7,7,10,0.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:.85rem 0;margin-bottom:5rem;
+}
+.platform-nav-inner{
+  max-width:1100px;margin:0 auto;padding:0 2.5rem;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;
+}
+.tab-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.6rem 1.6rem;border-radius:999px;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  cursor:pointer;border:1px solid var(--border-2);background:transparent;color:var(--muted);
+  transition:all .3s var(--ease);
+}
+.tab-btn:hover{color:var(--warm);border-color:var(--border-2);}
+.tab-btn.active-n8n{background:var(--n8n-dim);border-color:rgba(234,75,113,0.4);color:#f0829b;box-shadow:0 0 20px rgba(234,75,113,0.15);}
+.tab-btn.active-make{background:var(--make-dim);border-color:rgba(109,40,217,0.4);color:#a78bfa;box-shadow:0 0 20px rgba(109,40,217,0.18);}
+.tab-btn.active-ghl{background:var(--ghl-dim);border-color:rgba(22,163,74,0.35);color:#4ade80;box-shadow:0 0 20px rgba(22,163,74,0.15);}
+.tab-btn.tab-all.active-all{background:var(--gold-dim);border-color:rgba(232,201,122,0.35);color:var(--gold);box-shadow:0 0 20px var(--gold-glow);}
+
+/* ─── CATEGORY SECTION ─── */
+.cat-section{margin-bottom:6rem;transition:opacity .4s var(--ease),transform .4s var(--ease);}
+.cat-section.hidden{display:none;}
+
+.cat-header{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:4rem 2.5rem;border-radius:var(--r-lg);margin-bottom:3rem;
+  border:1px solid;position:relative;overflow:hidden;
+}
+.cat-header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,var(--accent-glow,rgba(232,201,122,0.08)),transparent 70%);
+  pointer-events:none;
+}
+.cat-header.n8n-header{border-color:rgba(234,75,113,0.2);background:rgba(234,75,113,0.04);--accent-glow:rgba(234,75,113,0.1);}
+.cat-header.make-header{border-color:rgba(109,40,217,0.22);background:rgba(109,40,217,0.04);--accent-glow:rgba(109,40,217,0.1);}
+.cat-header.ghl-header{border-color:rgba(22,163,74,0.2);background:rgba(22,163,74,0.04);--accent-glow:rgba(22,163,74,0.1);}
+
+.cat-platform-logo{
+  width:64px;height:64px;border-radius:1rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;margin-bottom:1.2rem;
+  border:1px solid;position:relative;z-index:1;
+}
+.n8n-header .cat-platform-logo{background:var(--n8n-dim);border-color:rgba(234,75,113,0.3);}
+.make-header .cat-platform-logo{background:var(--make-dim);border-color:rgba(109,40,217,0.3);}
+.ghl-header .cat-platform-logo{background:var(--ghl-dim);border-color:rgba(22,163,74,0.28);}
+
+.cat-platform-name{
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
+  margin-bottom:.6rem;position:relative;z-index:1;
+}
+.n8n-header .cat-platform-name{color:#f0829b;}
+.make-header .cat-platform-name{color:#a78bfa;}
+.ghl-header .cat-platform-name{color:#4ade80;}
+
+.cat-header h2{
+  font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:900;
+  letter-spacing:-.03em;line-height:1.05;margin-bottom:.8rem;
+  position:relative;z-index:1;
+}
+.cat-header p{
+  font-size:.95rem;color:var(--warm-dim);max-width:560px;line-height:1.75;
+  position:relative;z-index:1;
+}
+.project-count{
+  position:absolute;top:1.2rem;right:1.4rem;
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);z-index:1;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
+/* ─── PROJECT CARD (case study) ─── */
+.project-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;margin-bottom:3rem;
+  transition:border-color .3s var(--ease);
+}
+.project-card:hover{border-color:var(--border-2);}
+.project-card.n8n-card:hover{border-color:rgba(234,75,113,0.2);}
+.project-card.make-card:hover{border-color:rgba(109,40,217,0.22);}
+.project-card.ghl-card:hover{border-color:rgba(22,163,74,0.18);}
+
+/* Card top bar */
+.project-card-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 2rem;border-bottom:1px solid var(--border);
+}
+.project-card-bar-left{display:flex;align-items:center;gap:.8rem;}
+.project-platform-chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .9rem;border-radius:999px;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+}
+.chip-n8n{background:var(--n8n-dim);border:1px solid rgba(234,75,113,0.28);color:#f0829b;}
+.chip-make{background:var(--make-dim);border:1px solid rgba(109,40,217,0.3);color:#a78bfa;}
+.chip-ghl{background:var(--ghl-dim);border:1px solid rgba(22,163,74,0.28);color:#4ade80;}
+.project-type-label{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);
+}
+.case-study-badge{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-dim);border:1px solid rgba(232,201,122,0.18);
+  padding:.28rem .8rem;border-radius:999px;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 5rem;
+/* Card inner layout */
+.project-card-inner{padding:2.5rem;}
+.project-title{
+  font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;
+  letter-spacing:-.02em;margin-bottom:.6rem;line-height:1.15;
 }
+.project-title em{font-style:italic;color:var(--gold);}
+.project-tagline{font-size:.93rem;color:var(--warm-dim);margin-bottom:2rem;max-width:680px;line-height:1.7;}
 
-/* ============================= */
-/* Back Button                   */
-/* ============================= */
-.back-portfolio-fixed {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
+/* Overview meta row */
+.project-meta{
+  display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem;
+  padding-bottom:2rem;border-bottom:1px solid var(--border);
 }
-
-.back-portfolio-fixed a {
-  background: #8b5cf6;
-  padding: 0.75rem 1.5rem;
-  border-radius: 999px;
-  font-weight: 600;
-  transition: 0.25s ease;
+.meta-chip{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  padding:.4rem .9rem;border-radius:.6rem;
+  font-size:.78rem;color:var(--warm-dim);
 }
+.meta-chip strong{color:var(--warm);font-weight:600;font-size:.75rem;}
 
-.back-portfolio-fixed a:hover {
-  background: #a47dfd;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(139,92,246,0.45);
+/* Challenge / Solution block */
+.cs-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
+.cs-block{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:1.6rem;
 }
-
-/* ============================= */
-/* Header                        */
-/* ============================= */
-header {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 3rem;
+.cs-block-label{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;
 }
+.label-challenge{color:#f87171;}
+.label-solution{color:#4ade80;}
+.cs-block p{font-size:.87rem;color:var(--warm-dim);line-height:1.65;}
 
-.logo img {
-  width: 140px;
+/* Workflow process */
+.workflow-process{margin-bottom:2rem;}
+.wp-label{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem;
 }
-
-/* ============================= */
-/* Typography                    */
-/* ============================= */
-h1 {
-  font-size: clamp(2.2rem, 5vw, 3rem);
-  text-align: center;
-  margin-bottom: 1rem;
+.workflow-steps{display:flex;flex-direction:column;gap:.7rem;}
+.wf-step{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:1rem 1.2rem;background:var(--surface);
+  border:1px solid var(--border);border-radius:.8rem;
+  transition:all .25s var(--ease);
 }
-
-h2 {
-  font-size: 2rem;
-  text-align: center;
-  margin: 3rem 0 1.2rem;
+.wf-step:hover{background:var(--surface-2);transform:translateX(4px);}
+.wf-step-num{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:700;font-size:.65rem;color:var(--ink);margin-top:.1rem;
 }
+.num-n8n{background:linear-gradient(135deg,#c9375e,#ea4b71);}
+.num-make{background:linear-gradient(135deg,#5b21b6,#7c3aed);}
+.num-ghl{background:linear-gradient(135deg,#15803d,#22c55e);}
+.num-gold{background:linear-gradient(135deg,var(--amber),var(--gold));}
+.wf-step-content p{font-size:.87rem;color:var(--warm-dim);line-height:1.55;}
+.wf-step-content p strong{color:var(--warm);font-weight:600;}
 
-h3 {
-  font-size: 1.6rem;
-  margin-top: 3rem;
+/* Flow bar */
+.flow-bar{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:.4rem;margin-bottom:2rem;padding:1.2rem;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
 }
-
-h4 {
-  font-size: 1.25rem;
-  margin-top: 1.5rem;
+.flow-pill{
+  background:rgba(232,201,122,0.08);border:1px solid rgba(232,201,122,0.18);
+  border-radius:999px;padding:.35rem .9rem;
+  font-size:.78rem;color:var(--warm);font-weight:500;
 }
+.flow-arrow{color:var(--gold);font-size:.9rem;padding:0 .1rem;}
 
-p {
-  color: #c6c6dd;
-  margin-bottom: 1rem;
+/* Screenshots grid */
+.screenshots-section{margin-bottom:2rem;}
+.screenshots-label{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem;
 }
+.screenshots-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;}
+.screenshots-grid.single{grid-template-columns:1fr;}
+.screenshots-grid.two-col{grid-template-columns:1fr 1fr;}
 
-.highlight {
-  color: #8b5cf6;
-  font-weight: 600;
+.ss-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;cursor:zoom-in;
+  transition:all .35s var(--ease);
 }
-
-blockquote {
-  padding-left: 1rem;
-  border-left: 3px solid #8b5cf6;
-  font-style: italic;
-  color: #c6c6dd;
+.ss-card:hover{transform:translateY(-6px);border-color:var(--border-2);box-shadow:0 24px 50px rgba(0,0,0,.5);}
+.ss-card:hover img{transform:scale(1.04);}
+.ss-card-img{overflow:hidden;position:relative;}
+.ss-card-img img{width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);}
+.ss-card-step{
+  position:absolute;top:.8rem;left:.8rem;
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:700;font-size:.62rem;color:var(--ink);
 }
-
-/* ============================= */
-/* Hero                          */
-/* ============================= */
-.hero {
-  text-align: center;
-  margin-bottom: 3rem;
+.ss-card-body{padding:1rem 1.2rem;}
+.ss-card-title{font-size:.82rem;color:var(--warm);font-weight:600;margin-bottom:.25rem;}
+.ss-card-desc{font-size:.78rem;color:var(--muted);font-family:var(--mono);letter-spacing:.04em;line-height:1.5;}
+.zoom-hint{
+  display:flex;align-items:center;gap:.35rem;margin-top:.5rem;
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
 }
+.zoom-hint::before{content:'⊕';}
 
-.outcome {
-  max-width: 720px;
-  margin: 1.5rem auto 0;
-  font-size: 1.05rem;
+/* Tools & Results row */
+.tools-results{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
+.tr-block{
+  background:rgba(232,201,122,0.04);border:1px solid rgba(232,201,122,0.12);
+  border-radius:var(--r);padding:1.5rem;
 }
-
-/* ============================= */
-/* Impact List                   */
-/* ============================= */
-.impact-list {
-  list-style: none;
-  max-width: 800px;
-  margin: 1.5rem auto;
+.tr-label{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
 }
-
-.impact-list li {
-  padding-left: 1.4rem;
-  margin-bottom: 0.7rem;
-  position: relative;
+.tags-wrap{display:flex;flex-wrap:wrap;gap:.5rem;}
+.tag{
+  background:rgba(232,201,122,0.08);border:1px solid rgba(232,201,122,0.18);
+  border-radius:.6rem;padding:.5rem .9rem;
+  font-size:.79rem;color:var(--warm);font-weight:500;
+  transition:all .22s var(--ease);
 }
+.tag:hover{background:rgba(232,201,122,0.16);transform:translateY(-2px);}
 
-.impact-list li::before {
-  content: "▹";
-  position: absolute;
-  left: 0;
-  color: #8b5cf6;
+/* Email preview */
+.email-preview{
+  background:var(--surface-2);border:1px solid var(--border);
+  border-radius:.8rem;padding:1.4rem;font-size:.84rem;line-height:1.7;
 }
+.email-subject{color:var(--gold);font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;margin-bottom:.8rem;}
+.email-body{color:var(--warm-dim);}
 
-.trust-note {
-  text-align: center;
-  font-size: 0.95rem;
-  color: #8a8aa3;
-  margin-top: 1.2rem;
+/* Execution logs */
+.exec-logs-header{text-align:center;margin-bottom:1.8rem;}
+.exec-logs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.2rem;}
+
+/* Impact row */
+.impact-row{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:1.8rem;margin-bottom:2rem;
 }
-
-/* ============================= */
-/* Workflow Grid                 */
-/* ============================= */
-.workflow-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+.impact-row-label{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.2rem;
 }
-
-.workflow-step {
-  background: #1a1a27;
-  padding: 1.2rem;
-  border-radius: 1rem;
-  text-align: center;
-  position: relative;
-  cursor: zoom-in;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+.impact-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem;}
+.impact-item{
+  display:flex;align-items:flex-start;gap:.6rem;
+  padding:.9rem 1.1rem;background:rgba(232,201,122,0.04);
+  border:1px solid rgba(232,201,122,0.1);border-radius:.7rem;
+  transition:all .25s var(--ease);
 }
+.impact-item:hover{background:rgba(232,201,122,0.08);transform:translateX(3px);}
+.impact-item::before{content:'▹';color:var(--gold);font-size:.78rem;margin-top:.22rem;flex-shrink:0;}
+.impact-item p{font-size:.83rem;color:var(--warm-dim);line-height:1.5;}
 
-.workflow-step:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 40px rgba(139,92,246,0.25);
+/* Section divider */
+.section-divider{
+  display:flex;align-items:center;gap:1.5rem;margin:4rem 0;
+  opacity:.4;
 }
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-divider span{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
 
-.workflow-step img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 0.75rem;
-  margin-bottom: 0.75rem;
+/* CTA */
+.cta{
+  margin-top:5rem;padding:5rem 3rem;text-align:center;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r-lg);position:relative;overflow:hidden;
 }
-
-/* Step Number */
-.step-number {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 32px;
-  height: 32px;
-  background: #8b5cf6;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
+.cta::before{
+  content:'';position:absolute;width:500px;height:300px;
+  background:radial-gradient(ellipse,rgba(232,201,122,0.08),transparent);
+  left:50%;top:50%;transform:translate(-50%,-50%);
 }
-
-/* Lightbox overlay */
-.lightbox-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(6px);
-  align-items: center;
-  justify-content: center;
-  cursor: zoom-out;
-  padding: 1.5rem;
+.cta h2{font-family:var(--serif);font-size:2.2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:1rem;position:relative;}
+.cta h2 em{font-style:italic;color:var(--gold);}
+.cta p{color:var(--warm-dim);max-width:480px;margin:0 auto 2.5rem;position:relative;font-size:.95rem;}
+.btn-gold{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--gold);color:var(--ink);
+  font-family:var(--sans);font-size:.82rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.9rem 2.5rem;border-radius:999px;
+  transition:all .3s var(--ease);position:relative;
 }
+.btn-gold:hover{background:var(--warm);transform:translateY(-3px);box-shadow:0 16px 40px var(--gold-glow);}
 
-.lightbox-overlay.active {
-  display: flex;
+/* Lightbox */
+.lightbox-overlay{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.94);backdrop-filter:blur(16px);
+  align-items:center;justify-content:center;cursor:zoom-out;padding:2rem;
 }
-
-.lightbox-overlay img {
-  max-width: 90vw;
-  max-height: 90vh;
-  border-radius: 1rem;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.9);
-  object-fit: contain;
-  cursor: default;
+.lightbox-overlay.active{display:flex;}
+.lightbox-overlay img{
+  max-width:88vw;max-height:88vh;border-radius:var(--r-lg);
+  box-shadow:0 40px 100px rgba(0,0,0,.9);object-fit:contain;
+  cursor:default;border:1px solid rgba(232,201,122,0.15);
 }
-
-.lightbox-close {
-  position: fixed;
-  top: 1.2rem;
-  right: 1.5rem;
-  font-size: 2rem;
-  color: #fff;
-  cursor: pointer;
-  line-height: 1;
-  background: rgba(139,92,246,0.3);
-  border: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
+.lb-close{
+  position:fixed;top:1.5rem;right:1.5rem;width:42px;height:42px;border-radius:50%;
+  background:var(--panel);border:1px solid var(--border-2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:var(--warm-dim);cursor:pointer;
+  transition:all .25s var(--ease);
 }
+.lb-close:hover{background:var(--gold);color:var(--ink);border-color:var(--gold);}
 
-.lightbox-close:hover {
-  background: #8b5cf6;
+/* Reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* Responsive */
+@media(max-width:860px){
+  .cs-two-col,.tools-results{grid-template-columns:1fr;}
+  .screenshots-grid.two-col{grid-template-columns:1fr;}
 }
-
-/* ============================= */
-/* CTA                           */
-/* ============================= */
-.cta-section {
-  margin-top: 5rem;
-  padding: 3.5rem 2rem;
-  text-align: center;
-  background: radial-gradient(circle at center, rgba(139,92,246,0.18), transparent 70%);
-  border-radius: 1rem;
-}
-
-.cta-section p {
-  max-width: 600px;
-  margin: 0 auto 1.8rem;
-}
-
-.cta-btn {
-  display: inline-block;
-  padding: 0.9rem 2.5rem;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-  font-weight: 600;
-  transition: 0.25s ease;
-}
-
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(139,92,246,0.4);
-}
-
-/* ============================= */
-/* Responsive                    */
-/* ============================= */
-@media (max-width: 768px) {
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.6rem; }
+@media(max-width:768px){
+  .page{padding:0 1.2rem 6rem;}
+  .hero{padding:7rem 0 4rem;}
+  .cta{padding:3rem 1.5rem;}
+  .project-card-inner{padding:1.5rem;}
+  .platform-nav-inner{gap:.35rem;}
+  .tab-btn{padding:.5rem 1rem;font-size:.63rem;}
 }
 </style>
 </head>
-
 <body>
 
-<div class="back-portfolio-fixed">
-  <a href="index.html">← Back to Portfolio</a>
-</div>
+<div class="back-fixed"><a href="index.html">← Back to OS</a></div>
 
-<div class="container">
+<div class="page">
 
-<header>
-  <div class="logo">
-    <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="Marc Negrillo Logo">
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero">
+    <div class="hero-label"><span class="dot"></span>AI Automation Portfolio</div>
+    <h1>Automation That<br><em>Works While You Sleep</em></h1>
+    <p class="hero-desc">
+      End-to-end workflows that capture leads, <strong>eliminate repetitive tasks</strong>,
+      and keep businesses running — built across <strong>n8n, Make.com, and GoHighLevel</strong>.
+    </p>
+    <div class="hero-platforms">
+      <span class="platform-badge n8n"><span class="pb-icon">⚡</span>n8n</span>
+      <span class="platform-badge make"><span class="pb-icon">⬡</span>Make.com</span>
+      <span class="platform-badge ghl"><span class="pb-icon">🔷</span>GoHighLevel</span>
+    </div>
+  </section>
+
+</div><!-- end .page before sticky nav -->
+
+<!-- ═══════════════ STICKY PLATFORM NAV ═══════════════ -->
+<nav class="platform-nav" id="platformNav">
+  <div class="platform-nav-inner">
+    <button class="tab-btn tab-all active-all" data-filter="all">All Projects</button>
+    <button class="tab-btn" data-filter="n8n">⚡ n8n Automation</button>
+    <button class="tab-btn" data-filter="make">⬡ Make.com</button>
+    <button class="tab-btn" data-filter="ghl">🔷 GoHighLevel</button>
   </div>
-</header>
+</nav>
 
-<section class="hero">
-  <h1>AI Automation Samples</h1>
-  <p>
-    Explore automation workflows that capture leads,
-    <span class="highlight">reduce manual work</span>, and
-    <span class="highlight">organize data automatically</span>.
-  </p>
-  <div class="outcome">
-    This automation helps businesses respond faster, never miss leads,
-    and save hours of manual work every week.
+<div class="page">
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 — n8n AUTOMATION
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="cat-section reveal" id="section-n8n" data-cat="n8n">
+
+    <div class="cat-header n8n-header">
+      <div class="cat-platform-logo">⚡</div>
+      <div class="cat-platform-name">Platform · n8n</div>
+      <h2>n8n <em>Automation</em></h2>
+      <p>Self-hosted, open-source workflow automation. These projects connect multiple apps and APIs to eliminate manual data entry and create real-time data pipelines with zero latency.</p>
+      <span class="project-count">1 Project</span>
+    </div>
+
+    <!-- ── PROJECT: Lead Capture → Google Sheets ── -->
+    <div class="project-card n8n-card reveal">
+      <div class="project-card-bar">
+        <div class="project-card-bar-left">
+          <span class="project-platform-chip chip-n8n">⚡ n8n</span>
+          <span class="project-type-label">Lead Capture Workflow</span>
+        </div>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <div class="project-card-inner">
+
+        <h3 class="project-title">Lead Capture &amp; <em>Data Pipeline</em></h3>
+        <p class="project-tagline">An automated intake system that captures form submissions in real time, sends instant confirmations, cleans the data, and stores leads directly to Google Sheets — without a single manual step.</p>
+
+        <div class="project-meta">
+          <span class="meta-chip">📥 <strong>Trigger:</strong> Form Submission</span>
+          <span class="meta-chip">🔗 <strong>Integrations:</strong> n8n Forms, Gmail, Google Sheets</span>
+          <span class="meta-chip">⚡ <strong>Latency:</strong> Real-time</span>
+          <span class="meta-chip">💼 <strong>Use Case:</strong> Sales &amp; Lead Gen</span>
+        </div>
+
+        <!-- Challenge / Solution -->
+        <div class="cs-two-col">
+          <div class="cs-block">
+            <div class="cs-block-label label-challenge">⚠ Challenge</div>
+            <p>Sales teams were manually checking inboxes for new inquiries, copy-pasting contact details into spreadsheets, and often missing leads entirely — costing opportunities and wasting hours each week.</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-block-label label-solution">✓ Solution</div>
+            <p>A four-node n8n workflow that automatically captures every submission, confirms receipt instantly, normalizes field data, and writes it to a shared Google Sheet in under two seconds.</p>
+          </div>
+        </div>
+
+        <!-- Workflow Process -->
+        <div class="workflow-process">
+          <div class="wp-label">⚡ Workflow Process</div>
+          <div class="flow-bar">
+            <span class="flow-pill">📋 Form Submitted</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">📩 Confirmation Sent</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">🔧 Data Cleaned</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">📊 Sheet Updated</span>
+          </div>
+          <div class="workflow-steps">
+            <div class="wf-step">
+              <span class="wf-step-num num-n8n">1</span>
+              <div class="wf-step-content"><p><strong>Form Trigger</strong> — The workflow fires the instant a visitor submits the lead form. n8n receives the raw payload and begins processing with zero delay.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-n8n">2</span>
+              <div class="wf-step-content"><p><strong>Confirmation Message</strong> — An automated reply is sent immediately to the lead, confirming receipt and setting expectations — reducing drop-off and building trust from the first touchpoint.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-n8n">3</span>
+              <div class="wf-step-content"><p><strong>Set Node (Data Cleaning)</strong> — Field values are normalized: names are trimmed, phone numbers are formatted, and empty fields are flagged — so the data arriving in the sheet is always clean and consistent.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-n8n">4</span>
+              <div class="wf-step-content"><p><strong>Google Sheets Write</strong> — The prepared record is appended to the live spreadsheet in real time. The sales team sees new leads the moment they arrive, with all fields ready for follow-up.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screenshots -->
+        <div class="screenshots-section">
+          <div class="screenshots-label">🖼 Workflow Screenshots</div>
+          <div class="screenshots-grid">
+            <div class="ss-card zoomable">
+              <div class="ss-card-img">
+                <span class="ss-card-step num-n8n">1</span>
+                <img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Form trigger node in n8n">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Form Trigger Node</div>
+                <div class="ss-card-desc">Captures leads the moment the form is submitted</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable">
+              <div class="ss-card-img">
+                <span class="ss-card-step num-n8n">2</span>
+                <img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Confirmation message node">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Confirmation Message</div>
+                <div class="ss-card-desc">Immediate reassurance sent to the lead</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable">
+              <div class="ss-card-img">
+                <span class="ss-card-step num-n8n">3</span>
+                <img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Set node for data cleaning">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Set Node — Data Clean</div>
+                <div class="ss-card-desc">Normalizes and prepares data for storage</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable">
+              <div class="ss-card-img">
+                <span class="ss-card-step num-n8n">4</span>
+                <img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Google Sheets node">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Google Sheets Write</div>
+                <div class="ss-card-desc">Stores every lead in real time — no manual entry</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools & Results -->
+        <div class="tools-results">
+          <div class="tr-block">
+            <div class="tr-label">🛠 Tools Used</div>
+            <div class="tags-wrap">
+              <span class="tag">n8n</span>
+              <span class="tag">Form Trigger</span>
+              <span class="tag">Set Node</span>
+              <span class="tag">Google Sheets</span>
+              <span class="tag">Email Node</span>
+            </div>
+          </div>
+          <div class="tr-block">
+            <div class="tr-label">📈 Results &amp; Benefits</div>
+            <div class="tags-wrap">
+              <span class="tag">✅ Zero missed leads</span>
+              <span class="tag">⚡ Real-time capture</span>
+              <span class="tag">🧹 Clean structured data</span>
+              <span class="tag">⏱ Hours saved weekly</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Impact -->
+        <div class="impact-row">
+          <div class="impact-row-label">Business Impact</div>
+          <div class="impact-items">
+            <div class="impact-item"><p>Automatically captures leads without manual inbox checking</p></div>
+            <div class="impact-item"><p>Prevents missed inquiries and lost sales opportunities</p></div>
+            <div class="impact-item"><p>Cleans and structures data for instant follow-ups</p></div>
+            <div class="impact-item"><p>Saves hours per week for sales and admin teams</p></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — MAKE.COM
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="cat-section reveal" id="section-make" data-cat="make">
+
+    <div class="cat-header make-header">
+      <div class="cat-platform-logo">⬡</div>
+      <div class="cat-platform-name">Platform · Make.com</div>
+      <h2>Make.com <em>Automation</em></h2>
+      <p>Visual no-code integration platform. These workflows connect business tools with intelligent routing logic, delivering real-time notifications and keeping every team member in sync automatically.</p>
+      <span class="project-count">1 Project</span>
+    </div>
+
+    <!-- ── PROJECT: Monday.com → Google Chat ── -->
+    <div class="project-card make-card reveal">
+      <div class="project-card-bar">
+        <div class="project-card-bar-left">
+          <span class="project-platform-chip chip-make">⬡ Make.com</span>
+          <span class="project-type-label">Team Notification Workflow</span>
+        </div>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <div class="project-card-inner">
+
+        <h3 class="project-title">Monday.com <em>→ Google Chat</em></h3>
+        <p class="project-tagline">Real-time team notifications triggered by any change in a Monday.com project board — keeping the entire team informed of who changed what, when it happened, and which department it belongs to.</p>
+
+        <div class="project-meta">
+          <span class="meta-chip">🔄 <strong>Trigger:</strong> Board Item Changed</span>
+          <span class="meta-chip">🔗 <strong>Integrations:</strong> Monday.com, Google Chat</span>
+          <span class="meta-chip">👥 <strong>Use Case:</strong> Team Collaboration</span>
+          <span class="meta-chip">⚡ <strong>Latency:</strong> Instant</span>
+        </div>
+
+        <!-- Challenge / Solution -->
+        <div class="cs-two-col">
+          <div class="cs-block">
+            <div class="cs-block-label label-challenge">⚠ Challenge</div>
+            <p>Teams working across departments had no reliable way to know when project statuses, deadlines, or assignments changed in Monday.com — leading to miscommunication, duplicated work, and missed handoffs.</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-block-label label-solution">✓ Solution</div>
+            <p>A Make.com scenario that watches the Monday.com board for any item change and instantly formats and dispatches a rich notification to the team's Google Chat space with full context.</p>
+          </div>
+        </div>
+
+        <!-- Workflow Process -->
+        <div class="workflow-process">
+          <div class="wp-label">⬡ Workflow Process</div>
+          <div class="flow-bar">
+            <span class="flow-pill">📋 Board Change Detected</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">🔀 Make.com Routes</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">✍️ Message Formatted</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">💬 Chat Notified</span>
+          </div>
+          <div class="workflow-steps">
+            <div class="wf-step">
+              <span class="wf-step-num num-make">1</span>
+              <div class="wf-step-content"><p><strong>Monday.com Watch Trigger</strong> — Make.com monitors the board continuously. Any change — status update, assignee swap, deadline shift, or department field edit — fires the scenario immediately.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-make">2</span>
+              <div class="wf-step-content"><p><strong>Smart Routing &amp; Filtering</strong> — Make.com picks up the change and routes it through smart workflow logic, ensuring only meaningful updates trigger notifications and avoiding alert fatigue.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-make">3</span>
+              <div class="wf-step-content"><p><strong>Message Formatting</strong> — The change data is structured into a clean, readable notification: who made the change, what was changed, the timestamp, and the department — formatted for quick scanning in chat.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-make">4</span>
+              <div class="wf-step-content"><p><strong>Google Chat Dispatch</strong> — The formatted message is posted to the connected Google Chat space. Every team member sees exactly what changed without checking Monday.com manually.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screenshot -->
+        <div class="screenshots-section">
+          <div class="screenshots-label">🖼 Workflow Screenshot</div>
+          <div class="screenshots-grid single">
+            <div class="ss-card zoomable" id="caseStudyCard">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781028371393-7d8b2c81-6adf-40e9-a1c5-fd9b3ca55c01.png" alt="Monday.com to Google Chat workflow in Make.com" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Make.com Scenario — Monday.com → Google Chat</div>
+                <div class="ss-card-desc">Full workflow: Watch → Route → Format → Notify</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notification details -->
+        <div class="impact-row" style="margin-bottom:1.5rem;">
+          <div class="impact-row-label">Each Notification Includes</div>
+          <div class="impact-items">
+            <div class="impact-item"><p>👤 Who made the change</p></div>
+            <div class="impact-item"><p>✏️ Exactly what was changed</p></div>
+            <div class="impact-item"><p>🕐 Date &amp; exact timestamp</p></div>
+            <div class="impact-item"><p>🏢 Department affected</p></div>
+          </div>
+        </div>
+
+        <!-- Tools & Results -->
+        <div class="tools-results">
+          <div class="tr-block">
+            <div class="tr-label">🛠 Tools Used</div>
+            <div class="tags-wrap">
+              <span class="tag">Make.com</span>
+              <span class="tag">Monday.com</span>
+              <span class="tag">Google Chat</span>
+              <span class="tag">Webhooks</span>
+              <span class="tag">Message Formatting</span>
+            </div>
+          </div>
+          <div class="tr-block">
+            <div class="tr-label">📈 Results &amp; Benefits</div>
+            <div class="tags-wrap">
+              <span class="tag">✅ Zero missed updates</span>
+              <span class="tag">⚡ Instant notifications</span>
+              <span class="tag">👥 Better team alignment</span>
+              <span class="tag">📉 Fewer missed handoffs</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — GOHIGHLEVEL
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="cat-section reveal" id="section-ghl" data-cat="ghl">
+
+    <div class="cat-header ghl-header">
+      <div class="cat-platform-logo">🔷</div>
+      <div class="cat-platform-name">Platform · GoHighLevel</div>
+      <h2>GoHighLevel <em>Automation</em></h2>
+      <p>All-in-one CRM and marketing automation platform. These workflows manage the entire client lifecycle — from first booking through to active client status — with intelligent branching and zero manual intervention.</p>
+      <span class="project-count">2 Projects</span>
+    </div>
+
+    <!-- ── PROJECT 1: Appointment Booking ── -->
+    <div class="project-card ghl-card reveal">
+      <div class="project-card-bar">
+        <div class="project-card-bar-left">
+          <span class="project-platform-chip chip-ghl">🔷 GoHighLevel</span>
+          <span class="project-type-label">Appointment Booking Automation</span>
+        </div>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <div class="project-card-inner">
+
+        <h3 class="project-title">Appointment Booking <em>Automation</em></h3>
+        <p class="project-tagline">A self-booking calendar fully integrated with GoHighLevel — clients pick a time, receive instant confirmation, and the business receives an automatic record update. No admin overhead, no missed bookings.</p>
+
+        <div class="project-meta">
+          <span class="meta-chip">📅 <strong>Trigger:</strong> Appointment Booked</span>
+          <span class="meta-chip">🔗 <strong>Integrations:</strong> GHL Calendar, Email, CRM</span>
+          <span class="meta-chip">💼 <strong>Use Case:</strong> Client Acquisition</span>
+          <span class="meta-chip">⚡ <strong>Latency:</strong> Instant</span>
+        </div>
+
+        <!-- Challenge / Solution -->
+        <div class="cs-two-col">
+          <div class="cs-block">
+            <div class="cs-block-label label-challenge">⚠ Challenge</div>
+            <p>Booking appointments manually required back-and-forth emails to find available times, resulting in slow scheduling, double-bookings, and no automatic confirmation sent to clients — creating a poor first impression.</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-block-label label-solution">✓ Solution</div>
+            <p>A GoHighLevel calendar with an automated workflow that confirms bookings instantly, logs every appointment in the CRM dashboard, and dispatches a professional confirmation email — all in under 5 seconds.</p>
+          </div>
+        </div>
+
+        <!-- Workflow Process -->
+        <div class="workflow-process">
+          <div class="wp-label">🔷 Workflow Process</div>
+          <div class="flow-bar">
+            <span class="flow-pill">📅 Client Selects Slot</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">✅ Instant Confirmation</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">📋 CRM Updated</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">📧 Email Dispatched</span>
+          </div>
+          <div class="workflow-steps">
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">1</span>
+              <div class="wf-step-content"><p><strong>Booking Calendar</strong> — The client visits the self-booking page and selects an available date and time. Scheduling conflicts are prevented automatically by real-time calendar availability.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">2</span>
+              <div class="wf-step-content"><p><strong>Instant Confirmation Page</strong> — A confirmation screen shows the booked time with an option to add the appointment to their personal calendar. No waiting, no friction.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">3</span>
+              <div class="wf-step-content"><p><strong>CRM Dashboard Log</strong> — GoHighLevel automatically records the booking with the client's contact information, appointment status, and time — creating a central source of truth for all upcoming meetings.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">4</span>
+              <div class="wf-step-content"><p><strong>Automated Email Notification</strong> — A workflow triggers and dispatches a professional confirmation email with full appointment details, building trust and reducing no-shows before a single reminder is sent.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screenshots -->
+        <div class="screenshots-section">
+          <div class="screenshots-label">🖼 Booking Flow Screenshots</div>
+          <div class="screenshots-grid">
+            <div class="ss-card zoomable" id="appt-step1">
+              <div class="ss-card-img">
+                <span class="ss-card-step num-ghl">1</span>
+                <img src="https://www.image2url.com/r2/default/files/1781273538076-da6c089e-444e-4354-99b0-d66843c8920b.png" alt="Booking calendar with date and time selection">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Self-Booking Calendar</div>
+                <div class="ss-card-desc">Clients pick an available slot — conflicts blocked automatically</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="appt-step2">
+              <div class="ss-card-img">
+                <span class="ss-card-step num-ghl">2</span>
+                <img src="https://www.image2url.com/r2/default/files/1781273572894-a0f57a08-8faf-4dbd-9e89-175c6366c0e1.png" alt="Appointment scheduled confirmation screen">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Instant Confirmation</div>
+                <div class="ss-card-desc">Full appointment details shown immediately after booking</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="appt-step3">
+              <div class="ss-card-img">
+                <span class="ss-card-step num-ghl">3</span>
+                <img src="https://www.image2url.com/r2/default/files/1781273600422-9cfce166-7577-45b6-90f1-6a384fb28c06.png" alt="Appointment management dashboard">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">CRM Dashboard</div>
+                <div class="ss-card-desc">All bookings centralized with contact info &amp; status</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="appt-step4">
+              <div class="ss-card-img">
+                <span class="ss-card-step num-ghl">4</span>
+                <img src="https://www.image2url.com/r2/default/files/1781273925539-57e346e9-e1a5-4ef5-80f9-ef12a949848f.png" alt="Email confirmation sent to client">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Email Notification</div>
+                <div class="ss-card-desc">Auto-dispatched confirmation with date, time &amp; details</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workflow builder screenshots -->
+        <div class="screenshots-section">
+          <div class="screenshots-label">⚙️ Workflow Builder</div>
+          <div class="screenshots-grid two-col">
+            <div class="ss-card zoomable" id="appt-wf1">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781273427623-2eafc41a-c278-4584-b49b-6b33f8983b25.png" alt="Workflow published in GoHighLevel" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Workflow Published</div>
+                <div class="ss-card-desc">Active and enrolled — live in production</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="appt-wf2">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781273468679-53c89e8e-d1c3-4c69-8c97-619eb5b0c04a.png" alt="Workflow builder showing trigger and email step" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Trigger → Email Flow</div>
+                <div class="ss-card-desc">Booking trigger routes to automated email step</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools & Results -->
+        <div class="tools-results">
+          <div class="tr-block">
+            <div class="tr-label">🛠 Tools Used</div>
+            <div class="tags-wrap">
+              <span class="tag">GoHighLevel</span>
+              <span class="tag">Calendar Booking</span>
+              <span class="tag">Workflow Automation</span>
+              <span class="tag">Email Notifications</span>
+              <span class="tag">CRM Dashboard</span>
+            </div>
+          </div>
+          <div class="tr-block">
+            <div class="tr-label">📈 Results &amp; Benefits</div>
+            <div class="tags-wrap">
+              <span class="tag">📅 Self-booking 24/7</span>
+              <span class="tag">✅ Zero admin overhead</span>
+              <span class="tag">📧 Auto confirmation</span>
+              <span class="tag">🔄 Real-time CRM sync</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section-divider"><span>GoHighLevel · Project 2 of 2</span></div>
+
+    <!-- ── PROJECT 2: Appointment Reminder ── -->
+    <div class="project-card ghl-card reveal">
+      <div class="project-card-bar">
+        <div class="project-card-bar-left">
+          <span class="project-platform-chip chip-ghl">🔷 GoHighLevel</span>
+          <span class="project-type-label">Appointment Reminder Automation</span>
+        </div>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <div class="project-card-inner">
+
+        <h3 class="project-title">Appointment Reminder <em>Sequence</em></h3>
+        <p class="project-tagline">An automated two-stage reminder system that fires after every booking — sending a first reminder ahead of the meeting and a final reminder one hour before start — eliminating no-shows without a single manual follow-up.</p>
+
+        <div class="project-meta">
+          <span class="meta-chip">⏱ <strong>Trigger:</strong> Appointment Confirmed</span>
+          <span class="meta-chip">🔗 <strong>Integrations:</strong> GHL Workflow, Email</span>
+          <span class="meta-chip">💼 <strong>Use Case:</strong> No-Show Reduction</span>
+          <span class="meta-chip">📧 <strong>Touchpoints:</strong> 2 Automated Emails</span>
+        </div>
+
+        <!-- Challenge / Solution -->
+        <div class="cs-two-col">
+          <div class="cs-block">
+            <div class="cs-block-label label-challenge">⚠ Challenge</div>
+            <p>Clients were frequently missing scheduled appointments because reminders relied on manual follow-up — which was inconsistent, time-consuming, and often skipped entirely during busy periods, leading to wasted time slots.</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-block-label label-solution">✓ Solution</div>
+            <p>A GoHighLevel workflow that auto-enrolls every confirmed booking and sends two timed reminder emails — completely hands-free. The sequence runs reliably for every client, every time.</p>
+          </div>
+        </div>
+
+        <!-- Workflow Process -->
+        <div class="workflow-process">
+          <div class="wp-label">🔷 Workflow Process</div>
+          <div class="flow-bar">
+            <span class="flow-pill">📅 Appointment Booked</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">⏱ Wait</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">📧 First Reminder</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">⏱ Wait</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">📧 Final Reminder</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">✅ Done</span>
+          </div>
+          <div class="workflow-steps">
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">1</span>
+              <div class="wf-step-content"><p><strong>Appointment Booked Trigger</strong> — The workflow starts the moment a customer confirms their booking. Auto-enrollment means no contact is ever missed, regardless of volume.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">2</span>
+              <div class="wf-step-content"><p><strong>First Reminder</strong> — After a timed wait condition, a reminder email is sent confirming the upcoming appointment date and time, giving the client enough notice to prepare and reschedule if needed.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">3</span>
+              <div class="wf-step-content"><p><strong>Final Reminder</strong> — A second wait condition triggers a final email approximately one hour before the meeting starts, ensuring the client is ready and reducing last-minute no-shows.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">4</span>
+              <div class="wf-step-content"><p><strong>Workflow Ends</strong> — Once both reminders are delivered, the automation completes cleanly with no further action required from the team.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screenshots -->
+        <div class="screenshots-section">
+          <div class="screenshots-label">🖼 Workflow Screenshots</div>
+          <div class="screenshots-grid two-col">
+            <div class="ss-card zoomable" id="rem-wf1">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781274314725-6474a0b0-436d-47d8-9382-0619594be57e.png" alt="Appointment Reminder Automation in workflows list" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Workflows List</div>
+                <div class="ss-card-desc">Appointment Reminder Automation — active &amp; published</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="rem-wf2">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781274344607-eee7bb4c-91d2-4bea-a4d7-e9b1e4c80762.png" alt="Workflow builder — trigger, wait, email, wait, email sequence" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Workflow Builder</div>
+                <div class="ss-card-desc">Trigger → Wait → Email → Wait → Email visual sequence</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+          <!-- Delivered email screenshot -->
+          <div class="screenshots-grid single" style="margin-top:1rem;">
+            <div class="ss-card zoomable" id="rem-email">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781274570925-34cbf6e3-cae3-40ca-9fa9-a2637d99004a.png" alt="Final reminder email delivered to client inbox" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Final Reminder Delivered — "Starts in 1 Hour"</div>
+                <div class="ss-card-desc">Real email delivered to client inbox — automated, professional, on time</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample email preview -->
+        <div class="tr-block" style="margin-bottom:1.5rem;">
+          <div class="tr-label">📧 Sample Reminder Email</div>
+          <div class="email-preview">
+            <div class="email-subject">SUBJECT: Final Reminder: Your Appointment Starts in 1 Hour</div>
+            <div class="email-body">
+              <p>Hi [Customer],</p>
+              <p style="margin-top:.4rem;">This is a reminder that your appointment starts in 1 hour. Please make sure you are ready to join the meeting.</p>
+              <p style="margin-top:.4rem;">We look forward to speaking with you.</p>
+              <p style="margin-top:.8rem;color:var(--warm);font-weight:500;">— Marc Negrillo</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools & Results -->
+        <div class="tools-results">
+          <div class="tr-block">
+            <div class="tr-label">🛠 Tools Used</div>
+            <div class="tags-wrap">
+              <span class="tag">GoHighLevel</span>
+              <span class="tag">Workflow Automation</span>
+              <span class="tag">Email Automation</span>
+              <span class="tag">Wait Conditions</span>
+              <span class="tag">Auto-Enrollment</span>
+            </div>
+          </div>
+          <div class="tr-block">
+            <div class="tr-label">📈 Results &amp; Benefits</div>
+            <div class="tags-wrap">
+              <span class="tag">🔔 Auto-enrolled on booking</span>
+              <span class="tag">📉 Reduced no-shows</span>
+              <span class="tag">🚫 No manual follow-up</span>
+              <span class="tag">⚡ Saves admin time</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section-divider"><span>GoHighLevel · Project 3 of 3</span></div>
+
+    <!-- ── PROJECT 3: Multi-Pipeline Client Journey ── -->
+    <div class="project-card ghl-card reveal">
+      <div class="project-card-bar">
+        <div class="project-card-bar-left">
+          <span class="project-platform-chip chip-ghl">🔷 GoHighLevel</span>
+          <span class="project-type-label">CRM Pipeline Automation</span>
+        </div>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <div class="project-card-inner">
+
+        <h3 class="project-title">Multi-Pipeline Client Journey <em>Automation</em></h3>
+        <p class="project-tagline">A complete sales-to-onboarding automation that detects pipeline stage changes in real time and automatically routes every client through the correct journey — from qualified lead to active client — with zero manual task creation.</p>
+
+        <div class="project-meta">
+          <span class="meta-chip">🔁 <strong>Trigger:</strong> Pipeline Stage Changed</span>
+          <span class="meta-chip">🔗 <strong>Integrations:</strong> GHL CRM, Tasks, Tags</span>
+          <span class="meta-chip">💼 <strong>Use Case:</strong> Full Client Lifecycle</span>
+          <span class="meta-chip">🔀 <strong>Branches:</strong> 7 Stage Conditions</span>
+        </div>
+
+        <!-- Challenge / Solution -->
+        <div class="cs-two-col">
+          <div class="cs-block">
+            <div class="cs-block-label label-challenge">⚠ Challenge</div>
+            <p>Sales teams were manually updating CRM records, creating follow-up tasks, and tracking pipeline stages — leading to inconsistent client experiences, missed follow-ups, and no visibility into where each deal stood in the pipeline.</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-block-label label-solution">✓ Solution</div>
+            <p>A GoHighLevel workflow with 7-branch intelligent routing that fires on every stage change — automatically creating the right task, applying the correct tag, and logging every action in real time for full lifecycle visibility.</p>
+          </div>
+        </div>
+
+        <!-- Workflow Process -->
+        <div class="workflow-process">
+          <div class="wp-label">🔷 Workflow Process</div>
+          <div class="flow-bar">
+            <span class="flow-pill">🔁 Stage Changed</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">🔀 Branch Condition</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">✅ Task Created</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">🏷 Status Updated</span><span class="flow-arrow">→</span>
+            <span class="flow-pill">📊 Logged</span>
+          </div>
+          <div class="workflow-steps">
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">1</span>
+              <div class="wf-step-content"><p><strong>Pipeline Stage Detection</strong> — The workflow fires the moment a contact's stage changes inside the Client Journey Pipeline, instantly identifying where the client has been moved — no polling, no delay.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">2</span>
+              <div class="wf-step-content"><p><strong>Intelligent Stage Routing</strong> — A condition node evaluates the current stage and routes the contact into one of seven branches. Every client receives actions that are precisely relevant to their current position in the journey.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">3</span>
+              <div class="wf-step-content"><p><strong>Automated Task &amp; Status Actions</strong> — Each branch creates the correct task (review, discovery call, proposal follow-up, onboarding, requirement collection, check-in, or lost lead review) and updates the contact's tag and pipeline status automatically.</p></div>
+            </div>
+            <div class="wf-step">
+              <span class="wf-step-num num-ghl">4</span>
+              <div class="wf-step-content"><p><strong>Complete Execution Logging</strong> — Every action is recorded in real time. The team gets full visibility into client journey progress, performance auditing, and easy troubleshooting across the entire lifecycle.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pipeline Stages -->
+        <div class="impact-row" style="margin-bottom:1.5rem;">
+          <div class="impact-row-label">7 Pipeline Stages Handled Automatically</div>
+          <div class="impact-items">
+            <div class="impact-item"><p>📌 Qualified Lead → Review task created</p></div>
+            <div class="impact-item"><p>📌 Discovery Call → Call task assigned</p></div>
+            <div class="impact-item"><p>📌 Follow-Up Proposal → Proposal task created</p></div>
+            <div class="impact-item"><p>📌 Client Onboarding → Onboarding workflow started</p></div>
+            <div class="impact-item"><p>📌 Collect Requirements → Requirements task created</p></div>
+            <div class="impact-item"><p>📌 Active Client → Check-in scheduled</p></div>
+            <div class="impact-item"><p>📌 Lost Lead → Re-engagement logged</p></div>
+          </div>
+        </div>
+
+        <!-- Workflow builder screenshot -->
+        <div class="screenshots-section">
+          <div class="screenshots-label">🖼 Workflow Builder</div>
+          <div class="screenshots-grid single">
+            <div class="ss-card zoomable" id="mpj-builder">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/images/1781277075824-8a0c1356-90f0-485b-ae53-f8dbb99ed981.png" alt="GoHighLevel workflow builder showing pipeline stage condition with seven branches" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">Pipeline Stage Automation — 7-Branch Condition</div>
+                <div class="ss-card-desc">Pipeline Stage Changed → Condition → 7 branches: Qualified Lead · Discovery Call · Follow-Up Proposal · Client Onboarding · Collect Requirements · Active Client · Lost Lead</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Execution Logs -->
+        <div class="screenshots-section">
+          <div class="screenshots-label">📊 Live Execution Logs</div>
+          <p style="font-size:.87rem;color:var(--warm-dim);margin-bottom:1.2rem;line-height:1.65;">Every action performed throughout the client journey is tracked in real time — from stage detection through task creation to workflow completion.</p>
+          <div class="exec-logs-grid">
+            <div class="ss-card zoomable" id="mpj-log1">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781276735387-35a76823-2ea1-4062-8bd4-ab1586d1c5e8.png" alt="Execution log — Qualified Lead: Review Qualified Lead task created" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">📌 Qualified Lead</div>
+                <div class="ss-card-desc">Branch executed → #1 Review Qualified Lead task created → tag applied</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="mpj-log2">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781276786489-73baefef-061e-4c78-9618-4221abbfab0c.png" alt="Execution log — Discovery Call Task executed" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">📌 Discovery Call</div>
+                <div class="ss-card-desc">Branch executed → #2 Discovery Call Task created → tag applied</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="mpj-log3">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781276824801-944de57f-3d98-4e44-86ef-d43bb258623b.png" alt="Execution log — Follow Up Proposal task created" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">📌 Follow-Up Proposal</div>
+                <div class="ss-card-desc">Branch executed → #3 Follow Up Proposal task created → tag applied</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+          <div class="exec-logs-grid">
+            <div class="ss-card zoomable" id="mpj-log4">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781276849167-bce1adf7-4f96-4a13-941d-e12a26056398.png" alt="Execution log — Start Client Onboarding executed" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">📌 Client Onboarding</div>
+                <div class="ss-card-desc">Branch → #4 Start Client Onboarding → Client tag → workflow started</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="mpj-log5">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/files/1781276884965-73f716ab-7fec-4018-a233-710b66d72b60.png" alt="Execution log — Collect Client Requirements and Active Client" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">📌 Collect Requirements → Active Client</div>
+                <div class="ss-card-desc">#5 Collect Requirements → #6 Monthly Check-In → Active Client tag</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+            <div class="ss-card zoomable" id="mpj-log6">
+              <div class="ss-card-img">
+                <img src="https://www.image2url.com/r2/default/images/1781276971062-81a111a1-4218-4165-aa01-fb8abf7185cb.png" alt="Execution log — Lost Lead and Review Lost Lead task" style="width:100%;display:block;border-bottom:1px solid var(--border);transition:transform .5s var(--ease);">
+              </div>
+              <div class="ss-card-body">
+                <div class="ss-card-title">📌 Lost Lead</div>
+                <div class="ss-card-desc">Branch → #6 Review Lost Lead task → tag applied → logged for re-engagement</div>
+                <div class="zoom-hint">Click to enlarge</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools & Results -->
+        <div class="tools-results">
+          <div class="tr-block">
+            <div class="tr-label">🛠 Tools Used</div>
+            <div class="tags-wrap">
+              <span class="tag">GoHighLevel</span>
+              <span class="tag">Pipeline Triggers</span>
+              <span class="tag">Conditional Logic</span>
+              <span class="tag">Task Automation</span>
+              <span class="tag">Contact Tagging</span>
+              <span class="tag">Pipeline Management</span>
+              <span class="tag">Execution Logging</span>
+            </div>
+          </div>
+          <div class="tr-block">
+            <div class="tr-label">📈 Results &amp; Benefits</div>
+            <div class="tags-wrap">
+              <span class="tag">✅ Reduced manual data entry</span>
+              <span class="tag">⚡ Faster sales management</span>
+              <span class="tag">🔍 Improved lead tracking</span>
+              <span class="tag">🚀 Consistent onboarding</span>
+              <span class="tag">👥 Better accountability</span>
+              <span class="tag">📊 Full lifecycle visibility</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <div class="cta reveal">
+    <h2>Want a Similar <em>Automation?</em></h2>
+    <p>I build custom workflows across n8n, Make.com, and GoHighLevel that save time, reduce errors, and help businesses scale efficiently.</p>
+    <a href="Email.html" class="btn-gold">Request a Custom Automation →</a>
   </div>
-</section>
-
-<section>
-  <h2>What This Automation Does</h2>
-  <ul class="impact-list">
-    <li>Automatically captures leads without manual checking</li>
-    <li>Prevents missed inquiries and lost opportunities</li>
-    <li>Cleans and structures data for easy follow-ups</li>
-    <li>Saves time for sales and admin teams</li>
-  </ul>
-  <p class="trust-note">
-    Built for real business inquiries and adaptable across industries.
-  </p>
-</section>
-
-<section>
-  <h2>Workflow Examples</h2>
-
-  <div class="workflow-grid">
-    <div class="workflow-step">
-      <span class="step-number">1</span>
-      <img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Form trigger node">
-      <p>Form Trigger – Captures leads instantly</p>
-    </div>
-
-    <div class="workflow-step">
-      <span class="step-number">2</span>
-      <img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Confirmation message">
-      <p>Confirmation Message – Immediate reassurance</p>
-    </div>
-
-    <div class="workflow-step">
-      <span class="step-number">3</span>
-      <img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Set node">
-      <p>Set Node – Cleans and prepares data</p>
-    </div>
-
-    <div class="workflow-step">
-      <span class="step-number">4</span>
-      <img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Google Sheets storage">
-      <p>Google Sheets – Stores leads in real time</p>
-    </div>
-  </div>
-</section>
-
-<section class="cta-section">
-  <h2>Want a Similar Automation?</h2>
-  <p>
-    I build custom workflows that save time, reduce errors,
-    and help businesses scale efficiently.
-  </p>
-  <a href="index.html#contact" class="cta-btn">Request a Custom Automation</a>
-</section>
 
 </div>
 
 <!-- Lightbox -->
 <div class="lightbox-overlay" id="lightbox">
-  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&#x2715;</button>
-  <img id="lightboxImg" src="" alt="Workflow step enlarged">
+  <button class="lb-close" id="lbClose">✕</button>
+  <img id="lbImg" src="" alt="">
 </div>
 
 <script>
-const steps = document.querySelectorAll('.workflow-step');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-const lightboxClose = document.getElementById('lightboxClose');
+  // ── Reveal on scroll ──
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-steps.forEach(step => {
-  step.addEventListener('click', () => {
-    const img = step.querySelector('img');
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
+  // ── Platform tab filtering ──
+  const tabs = document.querySelectorAll('.tab-btn');
+  const sections = document.querySelectorAll('.cat-section');
+
+  function setActiveTab(btn, filter) {
+    tabs.forEach(t => {
+      t.classList.remove('active-n8n','active-make','active-ghl','active-all');
+    });
+    if (filter === 'all') btn.classList.add('active-all');
+    else if (filter === 'n8n') btn.classList.add('active-n8n');
+    else if (filter === 'make') btn.classList.add('active-make');
+    else if (filter === 'ghl') btn.classList.add('active-ghl');
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      setActiveTab(btn, filter);
+      sections.forEach(sec => {
+        if (filter === 'all' || sec.dataset.cat === filter) {
+          sec.classList.remove('hidden');
+        } else {
+          sec.classList.add('hidden');
+        }
+      });
+      // Scroll to first visible section
+      if (filter !== 'all') {
+        const target = document.getElementById('section-' + filter);
+        if (target) {
+          setTimeout(() => { target.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
+        }
+      }
+    });
   });
-});
 
-lightbox.addEventListener('click', () => closeLightbox());
-lightboxImg.addEventListener('click', e => e.stopPropagation());
-lightboxClose.addEventListener('click', () => closeLightbox());
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  // ── Lightbox ──
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
 
-function closeLightbox() {
-  lightbox.classList.remove('active');
-  document.body.style.overflow = '';
-}
+  document.querySelectorAll('.zoomable').forEach(s => {
+    s.addEventListener('click', () => {
+      const img = s.querySelector('img');
+      if (!img) return;
+      lbImg.src = img.src; lbImg.alt = img.alt;
+      lb.classList.add('active'); document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLb() { lb.classList.remove('active'); document.body.style.overflow = ''; }
+  lb.addEventListener('click', closeLb);
+  lbImg.addEventListener('click', e => e.stopPropagation());
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 </script>
-
 </body>
 </html>
