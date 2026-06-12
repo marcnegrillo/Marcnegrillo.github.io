@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Marc Negrillo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#07070a; --panel:#0f0f1a;
+  --border:rgba(255,255,255,0.07); --border-2:rgba(255,255,255,0.14);
+  --gold:#e8c97a; --amber:#d4a853; --gold-dim:rgba(232,201,122,0.12);
+  --gold-glow:rgba(232,201,122,0.3);
+  --text:#f0ece8; --warm:#f5ede0; --warm-dim:rgba(245,237,224,0.55);
+  --muted:rgba(240,236,232,0.35);
+  --r:1rem; --r-lg:1.6rem;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Space Grotesk',sans-serif;
+  --mono:'Space Mono',monospace;
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:var(--sans);background:var(--ink);color:var(--text);
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:2rem;-webkit-font-smoothing:antialiased;overflow:hidden;
+}
+a{text-decoration:none;color:inherit;}
+
+/* Animated background */
+.bg{
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 60% at 20% 30%, rgba(232,201,122,0.05), transparent),
+    radial-gradient(ellipse 50% 50% at 80% 70%, rgba(124,100,60,0.06), transparent),
+    var(--ink);
+}
+.bg-grid{
+  position:fixed;inset:0;z-index:0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+  opacity:0.4;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:100;mix-blend-mode:overlay;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border-2);
+  border-radius:var(--r-lg);
+  padding:4rem 3.5rem;
+  max-width:480px;width:100%;text-align:center;
+  position:relative;z-index:1;
+  box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(232,201,122,0.05);
+  animation:cardIn .9s var(--ease) both;
+}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(24px) scale(0.98);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.logo-wrap{
+  width:64px;height:64px;border-radius:50%;
+  border:2px solid var(--amber);padding:3px;
+  margin:0 auto 2rem;
+}
+.logo-wrap img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
+
+.card-eyebrow{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
+}
+
+h1{
+  font-family:var(--serif);font-size:2.4rem;font-weight:900;
+  letter-spacing:-.03em;line-height:1.1;margin-bottom:.8rem;
+}
+h1 em{font-style:italic;color:var(--gold);}
+
+p{
+  font-size:.92rem;font-weight:300;color:var(--warm-dim);
+  line-height:1.75;margin-bottom:2.5rem;
+}
+
+.email-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  background:var(--gold);color:var(--ink);
+  font-family:var(--sans);font-weight:600;font-size:.85rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:1rem 2.5rem;border-radius:999px;
+  width:100%;margin-bottom:1.5rem;
+  transition:all .3s var(--ease);
+}
+.email-btn:hover{background:var(--warm);transform:translateY(-3px);box-shadow:0 16px 40px var(--gold-glow);}
+
+.divider{
+  display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.divider span{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;}
+
+.back-link{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font-size:.8rem;font-weight:500;letter-spacing:.06em;
+  color:var(--muted);transition:color .25s;
+  text-transform:uppercase;
+}
+.back-link:hover{color:var(--gold);}
+
+/* Glow circle */
+.card::before{
+  content:'';
+  position:absolute;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,201,122,0.06),transparent);
+  top:-100px;right:-80px;pointer-events:none;
+}
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="bg-grid"></div>
+
+  <div class="card">
+    <div class="logo-wrap">
+      <img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="MN Logo">
+    </div>
+    <div class="card-eyebrow">Get in Touch</div>
+    <h1>Let's <em>Connect</em></h1>
+    <p>Have a project in mind? Click below to send me an email and let's make something great together.</p>
+    <a href="mailto:marcnegrillo2002@gmail.com" class="email-btn">✉ Send an Email</a>
+    <div class="divider"><span>or</span></div>
+    <a href="index(1).html" class="back-link">← Back to OS</a>
+  </div>
+</body>
+</html>
