@@ -115,7 +115,7 @@ body::before{
 .tab-btn.tab-all.active-all{background:var(--gold-dim);border-color:rgba(232,201,122,0.35);color:var(--gold);box-shadow:0 0 20px var(--gold-glow);}
 
 /* ─── CATEGORY SECTION ─── */
-.cat-section{margin-bottom:6rem;transition:opacity .4s var(--ease),transform .4s var(--ease);}
+.cat-section{margin-bottom:6rem;opacity:1;transform:none;}
 .cat-section.hidden{display:none;}
 
 .cat-header{
@@ -488,7 +488,7 @@ body::before{
   <!-- ══════════════════════════════════════════════════════════
        SECTION 1 — n8n AUTOMATION
   ═══════════════════════════════════════════════════════════════ -->
-  <section class="cat-section reveal" id="section-n8n" data-cat="n8n">
+  <section class="cat-section" id="section-n8n" data-cat="n8n">
 
     <div class="cat-header n8n-header">
       <div class="cat-platform-logo">⚡</div>
@@ -653,7 +653,7 @@ body::before{
   <!-- ══════════════════════════════════════════════════════════
        SECTION 2 — MAKE.COM
   ═══════════════════════════════════════════════════════════════ -->
-  <section class="cat-section reveal" id="section-make" data-cat="make">
+  <section class="cat-section" id="section-make" data-cat="make">
 
     <div class="cat-header make-header">
       <div class="cat-platform-logo">⬡</div>
@@ -784,7 +784,7 @@ body::before{
   <!-- ══════════════════════════════════════════════════════════
        SECTION 3 — GOHIGHLEVEL
   ═══════════════════════════════════════════════════════════════ -->
-  <section class="cat-section reveal" id="section-ghl" data-cat="ghl">
+  <section class="cat-section" id="section-ghl" data-cat="ghl">
 
     <div class="cat-header ghl-header">
       <div class="cat-platform-logo">🔷</div>
@@ -1325,6 +1325,14 @@ body::before{
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // ── Fallback: force-show all reveal elements after 800ms in case observer doesn't fire ──
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }, 800);
+
+  // ── Ensure all cat-sections are visible on load (All Projects default) ──
+  document.querySelectorAll('.cat-section').forEach(sec => sec.classList.remove('hidden'));
 
   // ── Platform tab filtering ──
   const tabs = document.querySelectorAll('.tab-btn');
