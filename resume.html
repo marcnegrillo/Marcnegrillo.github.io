@@ -134,10 +134,19 @@ body::before{
 }
 .ach-btn:hover{background:var(--gold);color:var(--ink);border-color:var(--gold);transform:translateY(-3px);box-shadow:0 10px 28px var(--gold-glow);}
 
+/* CHANGED: Enhanced mobile responsiveness */
 @media(max-width:640px){
   .page{padding:1.5rem 1.2rem 5rem;}
   .resume-section{padding:1.8rem 1.4rem;}
   .skills-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));}
+  /* CHANGED: stack ach buttons, back button accessible */
+  .ach-grid{flex-direction:column;}
+  .back-btn{font-size:.7rem;padding:.55rem 1.1rem;}
+  .resume-header h1{font-size:2rem;}
+}
+@media(max-width:400px){
+  .resume-header h1{font-size:1.7rem;}
+  .skills-grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
 </head>
