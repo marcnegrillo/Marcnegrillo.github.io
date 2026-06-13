@@ -530,51 +530,117 @@ a { text-decoration: none; color: inherit; }
 .ia-card-btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;margin-top:.5rem;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1rem;border-radius:8px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.3);color:var(--cyan);text-decoration:none;transition:all .25s;}
 .ia-card-btn:hover{background:var(--cyan);color:#07070a;box-shadow:0 8px 20px rgba(0,229,255,0.25);}
 
-/* Mobile fallback message */
-.mobile-msg {
-  display: none;
-  position: fixed; inset: 0;
-  background: var(--bg);
-  z-index: 99999;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  gap: 1.5rem;
+/* ─── RESPONSIVE: MOBILE & TABLET ─── */
+/* CHANGED: Removed mobile blocking. Added full responsive support for 320px–1024px+ */
+
+/* Tablet (768px–1024px): shrink taskbar text, allow horizontal taskbar scroll */
+@media (max-width: 1024px) {
+  #taskbar-btns { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+  .tb-btn { font-size: 0.56rem; padding: 0.25rem 0.55rem; }
+  .tb-logo span { display: none; }
+  .tb-status { display: none; }
 }
-@media (max-width: 700px) {
-  .mobile-msg { display: flex; }
-  #desktop, #taskbar, #boot { display: none !important; }
-  body { overflow: auto; }
+
+/* Mobile (up to 767px): full responsive OS layout */
+@media (max-width: 767px) {
+  :root { --taskbar-h: 56px; }
+
+  /* Desktop area fills screen above taskbar */
+  #desktop {
+    bottom: var(--taskbar-h);
+    overflow: auto;
+  }
+
+  /* Desktop icons: horizontal scrollable row at top */
+  #desktop-icons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    top: 0.75rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    width: calc(100% - 1rem);
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .d-icon { width: 60px; padding: 0.4rem 0.2rem; }
+  .d-icon .icon-img { width: 40px; height: 40px; font-size: 1.1rem; }
+  .d-icon .icon-label { font-size: 0.52rem; }
+
+  /* Desktop hint hidden on mobile */
+  #desktop-hint { display: none; }
+
+  /* Taskbar: tighter layout on mobile */
+  #taskbar { padding: 0 0.75rem; gap: 0.4rem; }
+  .tb-logo span { display: none; }
+  .tb-status { display: none; }
+  .tb-clock { font-size: 0.58rem; }
+  #taskbar-btns { overflow-x: auto; flex-shrink: 1; min-width: 0; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; max-width: calc(100vw - 120px); }
+  .tb-btn { font-size: 0.52rem; padding: 0.22rem 0.45rem; white-space: nowrap; }
+
+  /* Windows: full-width on mobile, positioned near top */
+  .win {
+    width: 96vw !important;
+    height: 80vh !important;
+    left: 2vw !important;
+    top: 2vh !important;
+    min-width: 0 !important;
+    border-radius: 10px;
+  }
+  .win.maximized {
+    width: 100vw !important;
+    height: calc(100vh - var(--taskbar-h)) !important;
+    left: 0 !important;
+    top: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  /* Win body: allow comfortable scrolling on mobile */
+  .win-body { padding: 1rem; }
+
+  /* Make win titlebar non-draggable on mobile (touch drag handled below) */
+  .win-titlebar { cursor: default; }
+
+  /* Win resize handle hidden on mobile (pinch-to-zoom approach not needed) */
+  .win-resize { display: none; }
+
+  /* About hero: stack on mobile */
+  .about-hero { flex-direction: column; text-align: center; padding: 1rem; }
+
+  /* Why grid: single column on mobile */
+  .why-grid { grid-template-columns: 1fr; }
+
+  /* Impact grid: single column on mobile */
+  .impact-grid { grid-template-columns: 1fr; }
+
+  /* AI automation grid: single column on mobile */
+  .ia-grid { grid-template-columns: 1fr; }
+  .ia-workflow-grid { grid-template-columns: 1fr; }
+  .ia-impact-grid { grid-template-columns: 1fr; }
+  .ia-case { grid-template-columns: 1fr; }
+
+  /* Terminal: smaller font on mobile */
+  .term-body { font-size: 0.7rem !important; padding: 0.75rem !important; }
+  .term-input { font-size: 0.7rem; }
+
+  /* Context menu: hidden on mobile (touch long-press not standard) */
+  #ctx-menu { display: none !important; }
+
+  /* Boot screen: fits small screens */
+  #boot .boot-name { font-size: 1.1rem; }
+  #boot .boot-bar-wrap { width: 180px; }
 }
-.mobile-msg .m-logo img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--cyan); }
-.mobile-msg h1 { font-family: var(--sans); font-size: 1.4rem; font-weight: 800; }
-.mobile-msg p { font-size: 0.88rem; color: var(--text2); line-height: 1.7; max-width: 320px; }
-.mobile-links { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; max-width: 280px; }
-.mobile-link {
-  display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.9rem 1.2rem; border-radius: 10px;
-  border: 1px solid var(--border2); background: var(--panel);
-  font-family: var(--mono); font-size: 0.75rem; color: var(--text2);
-  cursor: pointer; text-decoration: none;
+
+/* Small phones (up to 400px) */
+@media (max-width: 400px) {
+  .d-icon { width: 52px; }
+  .d-icon .icon-img { width: 36px; height: 36px; font-size: 1rem; }
+  .d-icon .icon-label { font-size: 0.48rem; }
 }
-.mobile-link:hover { border-color: rgba(0,229,255,0.3); color: var(--cyan); }
 </style>
 </head>
 <body>
 
-<!-- Mobile fallback -->
-<div class="mobile-msg">
-  <div class="m-logo"><img src="https://monthly-crimson-xg89ovpnkp.edgeone.app/Mn%20Logo.png" alt="MN Logo"></div>
-  <h1>Marc <span style="color:var(--cyan)">Negrillo</span></h1>
-  <p>This portfolio is designed as an immersive desktop OS experience. For the full experience, please visit on a desktop or laptop browser.</p>
-  <div class="mobile-links">
-    <a href="mailto:marcnegrillo2002@gmail.com" class="mobile-link">✉ Send Email</a>
-    <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/" target="_blank" class="mobile-link">↗ LinkedIn Profile</a>
-    <a href="resume.html" class="mobile-link">📄 View Resume</a>
-  </div>
-</div>
+<!-- CHANGED: Mobile fallback block removed — OS now works on all screen sizes -->
 
 <!-- Boot Screen -->
 <div id="boot">
@@ -1070,16 +1136,22 @@ function openWindow(id) {
   const el = document.createElement('div');
   el.className = 'win opening' + (def.extraClass ? '' : '');
   el.id = 'win-' + id;
-  el.style.cssText = `width:${def.w}px;height:${def.h}px;z-index:${++zCounter};`;
 
-  // Position
-  const taken = Object.keys(windows).length;
-  const ox = 120 + taken * 30;
-  const oy = 60 + taken * 25;
-  const maxX = window.innerWidth - def.w - 20;
-  const maxY = window.innerHeight - def.h - 60;
-  el.style.left = Math.min(ox, Math.max(20, maxX)) + 'px';
-  el.style.top = Math.min(oy, Math.max(10, maxY)) + 'px';
+  /* CHANGED: On mobile (≤767px), open windows full-width; on desktop use original sizing */
+  const isMobile = window.innerWidth <= 767;
+  if (isMobile) {
+    el.style.cssText = `width:96vw;height:80vh;left:2vw;top:2vh;z-index:${++zCounter};`;
+  } else {
+    el.style.cssText = `width:${def.w}px;height:${def.h}px;z-index:${++zCounter};`;
+    // Position (desktop)
+    const taken = Object.keys(windows).length;
+    const ox = 120 + taken * 30;
+    const oy = 60 + taken * 25;
+    const maxX = window.innerWidth - def.w - 20;
+    const maxY = window.innerHeight - def.h - 60;
+    el.style.left = Math.min(ox, Math.max(20, maxX)) + 'px';
+    el.style.top = Math.min(oy, Math.max(10, maxY)) + 'px';
+  }
 
   const bodyClass = def.extraClass || '';
   el.innerHTML = `
@@ -1201,7 +1273,7 @@ function removeTaskbarBtn(id) {
   if (btn) btn.remove();
 }
 
-/* Drag */
+/* Drag (mouse) */
 function makeDraggable(id) {
   const el = windows[id].el;
   const tb = document.getElementById('tb-' + id);
@@ -1224,6 +1296,27 @@ function makeDraggable(id) {
   });
   document.addEventListener('mouseup', () => { dragging = false; });
   el.addEventListener('mousedown', () => focusWindow(id));
+
+  /* CHANGED: Touch drag support for mobile/tablet */
+  tb.addEventListener('touchstart', e => {
+    if (e.target.classList.contains('win-btn')) return;
+    if (windows[id] && windows[id].maximized) return;
+    const t = e.touches[0];
+    sx = t.clientX; sy = t.clientY;
+    ox = el.offsetLeft; oy = el.offsetTop;
+    dragging = true;
+    focusWindow(id);
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const t = e.touches[0];
+    const nx = ox + t.clientX - sx;
+    const ny = oy + t.clientY - sy;
+    el.style.left = Math.max(0, Math.min(window.innerWidth - el.offsetWidth, nx)) + 'px';
+    el.style.top = Math.max(0, Math.min(window.innerHeight - 80, ny)) + 'px';
+  }, { passive: true });
+  document.addEventListener('touchend', () => { dragging = false; });
+  el.addEventListener('touchstart', () => focusWindow(id), { passive: true });
 }
 
 /* Resize */
@@ -1244,7 +1337,7 @@ function makeResizable(id) {
   document.addEventListener('mouseup', () => { resizing=false; });
 }
 
-/* Double-click icons */
+/* Double-click icons (desktop) + single-tap (mobile touch) */
 document.querySelectorAll('.d-icon').forEach(ic => {
   let clicks=0;
   ic.addEventListener('click', () => {
@@ -1252,6 +1345,12 @@ document.querySelectorAll('.d-icon').forEach(ic => {
     if (clicks===2) { clicks=0; return; }
     setTimeout(() => { clicks=0; }, 400);
   });
+  /* CHANGED: On touch devices, single tap opens the window immediately */
+  ic.addEventListener('touchend', e => {
+    e.preventDefault();
+    const onclick = ic.getAttribute('onclick');
+    if (onclick) { try { eval(onclick); } catch(err) {} }
+  }, { passive: false });
 });
 
 /* Context menu */
