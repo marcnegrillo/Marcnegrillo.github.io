@@ -143,10 +143,22 @@ body::before{
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
 .reveal.in{opacity:1;transform:translateY(0);}
 
+/* CHANGED: Enhanced mobile responsiveness */
 @media(max-width:768px){
   .page{padding:0 1.5rem 6rem;}
   .hero{padding:7rem 0 3.5rem;}
   .cta{padding:3rem 1.5rem;}
+  .back-fixed{top:1rem;left:1rem;}
+  .back-fixed a{padding:.5rem 1rem;font-size:.72rem;}
+  .services-grid{grid-template-columns:1fr;}
+  .portfolio-grid{grid-template-columns:1fr;}
+}
+@media(max-width:480px){
+  .hero h1{font-size:2.4rem;}
+  .hero-desc{font-size:.9rem;}
+  .service-card{padding:1.8rem 1.5rem;}
+  .section-title{font-size:1.6rem;}
+  .cta h2{font-size:1.6rem;}
 }
 </style>
 </head>
