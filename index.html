@@ -512,6 +512,23 @@ a { text-decoration: none; color: inherit; }
 .ia-lb-overlay img{max-width:90vw;max-height:85vh;border-radius:8px;box-shadow:0 40px 80px rgba(0,0,0,.8);cursor:default;}
 .ia-lb-close{position:fixed;top:1.2rem;right:1.2rem;width:38px;height:38px;border-radius:50%;background:rgba(14,17,23,0.9);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#f0ece8;cursor:pointer;transition:all .2s;}
 .ia-lb-close:hover{background:var(--amber);color:#07070a;}
+.ia-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.ia-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:all .3s var(--ease);}
+.ia-card:hover{border-color:rgba(255,179,71,0.25);transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.5);}
+.ia-card-img{position:relative;overflow:hidden;aspect-ratio:16/10;background:#000;}
+.ia-card-img img{width:100%;height:100%;object-fit:cover;display:block;border-bottom:1px solid var(--border);transition:transform .4s var(--ease);}
+.ia-card:hover .ia-card-img img{transform:scale(1.05);}
+.ia-card-platform{position:absolute;top:.55rem;left:.55rem;font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:.25rem .65rem;border-radius:999px;backdrop-filter:blur(6px);}
+.ia-card-platform.pf-n8n{background:rgba(234,75,113,0.18);border:1px solid rgba(234,75,113,0.4);color:#f0829b;}
+.ia-card-platform.pf-make{background:rgba(109,40,217,0.2);border:1px solid rgba(109,40,217,0.45);color:#c4b5fd;}
+.ia-card-platform.pf-ghl{background:rgba(22,163,74,0.2);border:1px solid rgba(22,163,74,0.4);color:#4ade80;}
+.ia-card-body{padding:.9rem 1rem 1.1rem;display:flex;flex-direction:column;flex:1;gap:.5rem;}
+.ia-card-title{font-family:var(--sans);font-size:.88rem;font-weight:700;color:var(--text);line-height:1.3;}
+.ia-card-desc{font-size:.76rem;color:var(--text2);line-height:1.55;flex:1;}
+.ia-card-tools{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.1rem;}
+.ia-card-tool{font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;color:var(--text2);background:rgba(255,255,255,0.04);border:1px solid var(--border2);padding:.2rem .5rem;border-radius:5px;}
+.ia-card-btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;margin-top:.5rem;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1rem;border-radius:8px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.3);color:var(--cyan);text-decoration:none;transition:all .25s;}
+.ia-card-btn:hover{background:var(--cyan);color:#07070a;box-shadow:0 8px 20px rgba(0,229,255,0.25);}
 
 /* Mobile fallback message */
 .mobile-msg {
@@ -860,7 +877,7 @@ const windowDefs = {
       <div class="wc-section">
         <div class="wc-label">Achievements</div>
         <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
-          <a href="ai-automation.html" target="_blank" style="font-family:var(--mono);font-size:0.65rem;padding:0.4rem 0.85rem;border-radius:6px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);cursor:pointer;text-decoration:none;">AI Automation ↗</a>
+          <a href="Ai automation.html" target="_blank" style="font-family:var(--mono);font-size:0.65rem;padding:0.4rem 0.85rem;border-radius:6px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);cursor:pointer;text-decoration:none;">AI Automation ↗</a>
           <a href="Web development.html" target="_blank" style="font-family:var(--mono);font-size:0.65rem;padding:0.4rem 0.85rem;border-radius:6px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);cursor:pointer;text-decoration:none;">Web Dev ↗</a>
           <a href="https://www.linkedin.com/in/marc-negrillo-159ab73a5/" target="_blank" style="font-family:var(--mono);font-size:0.65rem;padding:0.4rem 0.85rem;border-radius:6px;background:var(--cyan-dim);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);cursor:pointer;text-decoration:none;">LinkedIn ↗</a>
         </div>
@@ -922,55 +939,70 @@ const windowDefs = {
   ai_automation: {
     title: 'AI Automation — Case Studies',
     icon: '🤖',
-    w: 680, h: 600,
+    w: 760, h: 640,
     content: `
       <div class="ia-hero-label">🤖 Case Studies</div>
       <p class="ia-intro">Automation workflows that capture leads, <strong style="color:var(--text);">reduce manual work</strong>, and <strong style="color:var(--text);">organize data automatically</strong> — so your business never misses an opportunity.</p>
-      <div class="wc-label">What This Automation Does</div>
-      <div class="ia-impact-grid">
-        <div class="ia-impact-item">Automatically captures leads without manual checking</div>
-        <div class="ia-impact-item">Prevents missed inquiries and lost opportunities</div>
-        <div class="ia-impact-item">Cleans and structures data for easy follow-ups</div>
-        <div class="ia-impact-item">Saves time for sales and admin teams</div>
-      </div>
-      <div class="ia-section-label">Workflow Examples</div>
-      <div class="ia-workflow-grid">
-        <div class="ia-step" data-img="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png">
-          <div class="ia-step-img"><span class="ia-step-badge">1</span><img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Form trigger node"></div>
-          <div class="ia-step-body"><p>Form Trigger – Captures leads instantly when a form is submitted.</p><div class="ia-zoom-hint">Click to enlarge</div></div>
-        </div>
-        <div class="ia-step" data-img="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png">
-          <div class="ia-step-img"><span class="ia-step-badge">2</span><img src="https://confident-copper-a9ymxevlbz.edgeone.app/Screenshot%202026-01-26%20211538.png" alt="Confirmation message"></div>
-          <div class="ia-step-body"><p>Confirmation Message – Immediate reassurance sent to the lead.</p><div class="ia-zoom-hint">Click to enlarge</div></div>
-        </div>
-        <div class="ia-step" data-img="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png">
-          <div class="ia-step-img"><span class="ia-step-badge">3</span><img src="https://bloody-pink-cgeoj8rwkt.edgeone.app/Screenshot%202026-01-26%20211556.png" alt="Set node"></div>
-          <div class="ia-step-body"><p>Set Node – Cleans and prepares data for storage and follow-up.</p><div class="ia-zoom-hint">Click to enlarge</div></div>
-        </div>
-        <div class="ia-step" data-img="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png">
-          <div class="ia-step-img"><span class="ia-step-badge">4</span><img src="https://gross-violet-iwc2ffoljk.edgeone.app/Screenshot%202026-01-26%20211618.png" alt="Google Sheets storage"></div>
-          <div class="ia-step-body"><p>Google Sheets – Stores leads in real time for instant access.</p><div class="ia-zoom-hint">Click to enlarge</div></div>
-        </div>
-      </div>
-      <div class="ia-section-label">Monday.com → Google Chat</div>
-      <div class="ia-case">
-        <div class="ia-case-img ia-step" data-img="https://www.image2url.com/r2/default/files/1781028371393-7d8b2c81-6adf-40e9-a1c5-fd9b3ca55c01.png">
-          <img src="https://www.image2url.com/r2/default/files/1781028371393-7d8b2c81-6adf-40e9-a1c5-fd9b3ca55c01.png" alt="Make.com workflow">
-          <div class="ia-case-img-caption">Make.com workflow — click to enlarge</div>
-        </div>
-        <div>
-          <div style="font-size:.82rem;color:var(--text2);margin-bottom:1rem;line-height:1.65;">Real-time team notifications triggered by any change in your project board.</div>
-          <div class="ia-how-steps">
-            <div class="ia-how-row"><span class="ia-how-dot">1</span><p>A team member makes <strong>any change</strong> to a Monday.com board — status, assignee, deadline, or department.</p></div>
-            <div class="ia-how-row"><span class="ia-how-dot">2</span><p>Make.com picks up the change and routes it through a smart workflow.</p></div>
-            <div class="ia-how-row"><span class="ia-how-dot">3</span><p>A formatted notification is sent automatically to the <strong>Google Chat space</strong>.</p></div>
-            <div class="ia-how-row"><span class="ia-how-dot">4</span><p>Everyone sees <strong>who changed it, what was changed, when, and which department</strong>.</p></div>
+      <div class="ia-section-label">All Projects</div>
+      <div class="ia-grid">
+        <div class="ia-card">
+          <div class="ia-card-img">
+            <span class="ia-card-platform pf-n8n">⚡ n8n</span>
+            <img src="https://payable-coral-hcoh0dgro2.edgeone.app/Screenshot%202026-01-26%20211221.png" alt="Lead Capture & Data Pipeline">
           </div>
-          <div class="ia-notify-grid">
-            <div class="ia-notify-tag">👤 Who changed</div>
-            <div class="ia-notify-tag">✏️ What changed</div>
-            <div class="ia-notify-tag">🕐 Date &amp; time</div>
-            <div class="ia-notify-tag">🏢 Department</div>
+          <div class="ia-card-body">
+            <div class="ia-card-title">Lead Capture &amp; Data Pipeline</div>
+            <div class="ia-card-desc">Captures form submissions in real time, sends instant confirmations, cleans the data, and stores leads to Google Sheets automatically.</div>
+            <div class="ia-card-tools"><span class="ia-card-tool">n8n</span><span class="ia-card-tool">Gmail</span><span class="ia-card-tool">Google Sheets</span></div>
+            <a class="ia-card-btn" href="ai-automation.html#proj-lead-" target="_blank">🔍 Full View</a>
+          </div>
+        </div>
+        <div class="ia-card">
+          <div class="ia-card-img">
+            <span class="ia-card-platform pf-make">⬡ Make.com</span>
+            <img src="https://www.image2url.com/r2/default/files/1781028371393-7d8b2c81-6adf-40e9-a1c5-fd9b3ca55c01.png" alt="Monday.com to Google Chat">
+          </div>
+          <div class="ia-card-body">
+            <div class="ia-card-title">Monday.com → Google Chat</div>
+            <div class="ia-card-desc">Real-time team notifications triggered by any change in a Monday.com board, instantly posted to Google Chat with full context.</div>
+            <div class="ia-card-tools"><span class="ia-card-tool">Make.com</span><span class="ia-card-tool">Monday.com</span><span class="ia-card-tool">Google Chat</span></div>
+            <a class="ia-card-btn" href="ai-automation.html#proj-monday-chat" target="_blank">🔍 Full View</a>
+          </div>
+        </div>
+        <div class="ia-card">
+          <div class="ia-card-img">
+            <span class="ia-card-platform pf-ghl">🔷 GoHighLevel</span>
+            <img src="https://www.image2url.com/r2/default/files/1781273538076-da6c089e-444e-4354-99b0-d66843c8920b.png" alt="Appointment Booking Automation">
+          </div>
+          <div class="ia-card-body">
+            <div class="ia-card-title">Appointment Booking Automation</div>
+            <div class="ia-card-desc">A self-booking calendar that confirms appointments instantly, updates the CRM, and emails confirmations — zero admin overhead.</div>
+            <div class="ia-card-tools"><span class="ia-card-tool">GoHighLevel</span><span class="ia-card-tool">CRM</span><span class="ia-card-tool">Email</span></div>
+            <a class="ia-card-btn" href="ai-automation.html#proj-appt-booking" target="_blank">🔍 Full View</a>
+          </div>
+        </div>
+        <div class="ia-card">
+          <div class="ia-card-img">
+            <span class="ia-card-platform pf-ghl">🔷 GoHighLevel</span>
+            <img src="https://www.image2url.com/r2/default/files/1781274314725-6474a0b0-436d-47d8-9382-0619594be57e.png" alt="Appointment Reminder Sequence">
+          </div>
+          <div class="ia-card-body">
+            <div class="ia-card-title">Appointment Reminder Sequence</div>
+            <div class="ia-card-desc">A two-stage email reminder sequence that fires automatically after booking to reduce no-shows — no manual follow-up.</div>
+            <div class="ia-card-tools"><span class="ia-card-tool">GoHighLevel</span><span class="ia-card-tool">Email Automation</span><span class="ia-card-tool">Wait Conditions</span></div>
+            <a class="ia-card-btn" href="ai-automation.html#proj-appt-reminder" target="_blank">🔍 Full View</a>
+          </div>
+        </div>
+        <div class="ia-card">
+          <div class="ia-card-img">
+            <span class="ia-card-platform pf-ghl">🔷 GoHighLevel</span>
+            <img src="https://www.image2url.com/r2/default/images/1781276971062-81a111a1-4218-4165-aa01-fb8abf7185cb.png" alt="Multi-Pipeline Client Journey Automation">
+          </div>
+          <div class="ia-card-body">
+            <div class="ia-card-title">Multi-Pipeline Client Journey Automation</div>
+            <div class="ia-card-desc">Detects pipeline stage changes and automatically routes clients through the right journey — from lead to active client — with 7 branch conditions.</div>
+            <div class="ia-card-tools"><span class="ia-card-tool">GoHighLevel</span><span class="ia-card-tool">Pipelines</span><span class="ia-card-tool">Tagging</span></div>
+            <a class="ia-card-btn" href="ai-automation.html#proj-multi-pipeline" target="_blank">🔍 Full View</a>
           </div>
         </div>
       </div>
